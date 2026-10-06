@@ -12,11 +12,12 @@ Pick your agent. Both get the same skill, the same routines and the same remote 
 
 ### Claude Code
 
+```bash
+claude plugin marketplace add shipfound/shipfound
+claude plugin install shipfound@shipfound
 ```
-/plugin marketplace add shipfound/shipfound
-/plugin install shipfound@shipfound
-/shipfound:audit
-```
+
+Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
 
 The first Shipfound tool call opens your browser to sign in (OAuth). If it does not, run `/mcp`, pick the Shipfound server and choose Authenticate.
 
