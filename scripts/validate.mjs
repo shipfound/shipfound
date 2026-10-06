@@ -36,6 +36,7 @@ const fail = (file, msg) => errors.push(`${relative(ROOT, file) || file}: ${msg}
 
 // ─── The tool table (copy of docs/shipfound/BUILD.md, "MCP tools") ──────────
 const TOOLS = {
+  sign_in: 0,
   workspace: 0,
   record_access: 0,
   access: 0,
@@ -85,7 +86,7 @@ const NOT_TOOLS = new Set([
   "manifest_version",
   "env_http_headers",
 ]);
-const COMMANDS = ["audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test"];
+const COMMANDS = ["login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
@@ -169,7 +170,8 @@ if (mcp) {
   if (!s) fail(mcpFile, 'mcpServers.shipfound is missing');
   else {
     if (s.type !== "http") fail(mcpFile, `shipfound.type must be "http", got ${s.type}`);
-    if (!/^\$\{SHIPFOUND_API_URL:-https:\/\/api\.shipfound\.co\}\/mcp$/.test(s.url ?? "")) fail(mcpFile, `url must be \${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp, got ${s.url}`);
+    // /mcp/plugin, not /mcp: it never answers 401, so Claude Code loads the tools signed out and sign_in works from the chat.
+    if (!/^\$\{SHIPFOUND_API_URL:-https:\/\/api\.shipfound\.co\}\/mcp\/plugin$/.test(s.url ?? "")) fail(mcpFile, `url must be \${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin, got ${s.url}`);
     if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; API-key users add their own server (README)");
     if (s.headersHelper) {
       const m = /\$\{CLAUDE_PLUGIN_ROOT\}\/([^"\s]+)/.exec(s.headersHelper);
@@ -253,8 +255,9 @@ if (codex) {
   }
 }
 if (mcp?.mcpServers?.shipfound?.url) {
-  const fallback = /:-([^}]+)\}(\/mcp)$/.exec(mcp.mcpServers.shipfound.url);
-  if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}, the same as the Codex manifest`);
+  // Same API as the Codex manifest; Codex stays on /mcp, where `codex mcp login` finds OAuth through the 401.
+  const fallback = /:-([^}]+)\}(\/mcp)\/plugin$/.exec(mcp.mcpServers.shipfound.url);
+  if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}/plugin, on the same API as the Codex manifest`);
 }
 if (codexMarket) {
   if (codexMarket.name !== (market?.name ?? "shipfound")) fail(codexMarketFile, `marketplace name must match .claude-plugin/marketplace.json (${market?.name})`);

@@ -8,7 +8,7 @@ Input: an optional domain.
 
 ## Procedure
 
-1. Call `workspace`. If the call fails with an auth error, tell the founder how to sign in for their host (SKILL.md, "Hosts"), then to run the audit again. If there is no Shipfound workspace for this product, send them to https://www.shipfound.co to create one (it takes the product URL) and stop.
+1. Call `workspace`. If it says you are not signed in, run the login routine now (the approval page also lets a founder with no workspace add their site), then call `workspace` again and carry on. If the call fails with an auth error and there is no `sign_in` tool, tell the founder how to sign in for their host (SKILL.md, "Hosts"), then to run the audit again.
 2. Work out the domain: the one the founder gave, else the workspace's product URL. If the repo's homepage or deploy config points at a different domain, ask which one is right before going on.
 3. Tell the founder in one line what happens next: "Checking 12 areas, read only, about 3 minutes. I will use your browser for Search Console, Bing, Reddit, X and the review sites."
 4. Check the twelve areas in this order: repo, hosting, github, tracking, assets, marketplace (local, `gh` and live fetches), then gsc, bing, reddit, x, profiles (browser), then gmail (Gmail connector). For the tracking area, call `tracking_check` only if `workspace` shows a site. If browser tools or a Gmail connector are missing, mark those areas amber with "Not checked" and the step that lets you check.

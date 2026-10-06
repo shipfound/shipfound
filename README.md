@@ -8,7 +8,7 @@ This repo is the plugin for both hosts: one skill with its routines, the `/shipf
 
 ## Install
 
-Pick your agent. Both get the same skill, the same routines and the same remote MCP server, signed in with OAuth.
+Pick your agent. Both get the same skill, the same routines and the same remote MCP server. Claude Code signs in from the chat; Codex signs in with OAuth.
 
 ### Claude Code
 
@@ -19,7 +19,7 @@ claude plugin install shipfound@shipfound
 
 Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
 
-The first Shipfound tool call opens your browser to sign in (OAuth). If it does not, run `/mcp`, pick the Shipfound server and choose Authenticate.
+You sign in from the chat. The first Shipfound command gives you a link and a code: your browser opens the link, you check the code, pick your site and choose Allow, and the command carries on by itself. Nothing to restart. To sign in on its own, run `/shipfound:login`. Each new session signs in again the same way, with one click if you are still signed in on shipfound.co.
 
 ### Codex
 
@@ -46,7 +46,7 @@ Then copy [AGENTS.md](AGENTS.md) into your repo. Full steps: [docs/codex.md](doc
 
 For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). Each key carries a daily credit cap.
 
-- **Claude Code:** add the server with the key as a fixed header, and use it in place of the plugin's server (turn that one off in `/mcp`; the skill and routines keep working):
+- **Claude Code:** add the server with the key as a fixed header, and use it in place of the plugin's server (turn that one off in `/mcp`; the skill and routines keep working). This also suits anyone who would rather not sign in each session:
 
   ```
   claude mcp add --transport http shipfound-key https://api.shipfound.co/mcp --header "Authorization: Bearer $SHIPFOUND_API_KEY"
@@ -56,7 +56,7 @@ For CI or a machine without a browser, make a key in the Shipfound app (Settings
 
 ### Point at another server
 
-- **Claude Code:** the MCP server defaults to `https://api.shipfound.co/mcp`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp`.
+- **Claude Code:** the MCP server defaults to `https://api.shipfound.co/mcp/plugin`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp/plugin`.
 - **Codex:** the plugin's server URL is fixed (Codex does not expand variables in plugin config). For staging or local work, add your server by hand (`codex mcp add shipfound-dev --url http://localhost:4000/mcp`) and turn the plugin's server off in `~/.codex/config.toml`:
 
   ```toml
@@ -70,6 +70,7 @@ Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a
 
 | Claude Code | Codex: ask | Does |
 |---|---|---|
+| `/shipfound:login` | "Sign in to Shipfound" | Signs this session in: a link and a code to approve in your browser. Other commands do it for you when needed |
 | `/shipfound:audit` | "Run the Shipfound audit" | Access audit of 12 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, review sites, GitHub, tracking, assets, marketplace fit) and the first baseline visibility run |
 | `/shipfound:plan` | "What should I do next?" | The ranked queue for this week, built only from what the audit found open |
 | `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
@@ -113,7 +114,7 @@ Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound cre
 .claude-plugin/marketplace.json   the "shipfound" marketplace for Claude Code
 .codex-plugin/plugin.json         Codex plugin manifest (skills, MCP server, listing)
 .agents/plugins/marketplace.json  the "shipfound" marketplace for Codex
-.mcp.json                         the remote MCP server for Claude Code (HTTP, OAuth)
+.mcp.json                         the remote MCP server for Claude Code (HTTP, sign-in from the chat)
 skills/shipfound/SKILL.md         the growth engineer skill, shared by both hosts
 skills/shipfound/routines/        one procedure per routine (audit, fix, write, ...)
 skills/shipfound/references/      audit, fixes, content, tracking, verification, PR playbooks

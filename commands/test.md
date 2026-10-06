@@ -1,7 +1,7 @@
 ---
 description: A/B test proposals from your analytics, with the traffic gate. Experiments are not built yet; see the note for what works today.
 argument-hint: "[page or goal]"
-allowed-tools: Read, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__goals, mcp__plugin_shipfound_shipfound__tracking_check
+allowed-tools: Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__goals, mcp__plugin_shipfound_shipfound__tracking_check
 ---
 
 # /shipfound:test

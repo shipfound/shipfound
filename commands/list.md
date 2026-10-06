@@ -1,7 +1,7 @@
 ---
 description: Listings on review sites, launch sites and marketplaces, filled in your Chrome for you to submit. Partly built; see the note.
 argument-hint: "[site]"
-allowed-tools: Read, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
+allowed-tools: Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
 ---
 
 # /shipfound:list

@@ -1,7 +1,7 @@
 ---
 description: Credits, what shipped, what is verified and what is still claimed, tracking state, and the results app link.
 argument-hint: "[module]"
-allowed-tools: Read, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__tracking_check
+allowed-tools: Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__tracking_check
 ---
 
 # /shipfound:status

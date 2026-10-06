@@ -17,7 +17,7 @@ The same skill, routines and MCP server run in Claude Code and in Codex. Only th
 |---|---|---|
 | Start a routine | `/shipfound:<routine> [input]` | The founder asks in words ("run the Shipfound audit"), or names the skill: `$shipfound:shipfound` when installed as a plugin, `$shipfound` when the skill was copied by hand |
 | Shipfound tools | `mcp__plugin_shipfound_shipfound__<name>` (plugin) or `mcp__shipfound__<name>` (added by hand) | The `shipfound` MCP server's tools, same names |
-| Sign in | First tool call opens the browser; else `/mcp`, pick `plugin:shipfound:shipfound`, Authenticate | `codex mcp login shipfound` |
+| Sign in | From the chat: the login routine (`sign_in`), a link and a code the founder approves. With an API key: the plugin README, "Sign in with an API key instead" | `codex mcp login shipfound`, or the API key steps in the plugin README |
 | Browser | Claude in Chrome (`mcp__claude-in-chrome__*`), in the founder's own Chrome | The Browser plugin with its Chrome extension, in the founder's own Chrome. The in-app browser is not signed in to their accounts, so use it only for public pages and local previews |
 | Gmail | The Gmail connector, if connected | A Gmail connector or plugin, if one is installed and can create drafts |
 | `record_access` client | `"claude-code"` | `"codex"` |
@@ -30,6 +30,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 
 | Routine | Claude Code | Codex: the founder says | Does |
 |---|---|---|---|
+| [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign this session in: a link and a code to approve. Other routines do it for you when needed |
 | [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 12 areas plus the first baseline visibility run. Start here |
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
 | [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
@@ -42,7 +43,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page or goal]` | "What should we A/B test?" | Test proposals from the funnel. Partly built |
 
-If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go.
+If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when any Shipfound tool answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
 
 ## The loop
 
@@ -94,6 +95,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 
 | Tool | Input | Use it to |
 |---|---|---|
+| `sign_in` | `{ client? }` | Sign this session in from the chat (login routine): returns a link and a code, then waits for the founder's Allow. Signed in, says which site the session works on |
 | `workspace` | none | Product, credits, plan, access summary, tracking state, results app links. Call first in every routine |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |
