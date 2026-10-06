@@ -2,7 +2,7 @@
 
 The first command, free, about 3 minutes. You check what the founder actually has, store it with `record_access`, and the server builds the plan only from what is open. A founder with no X account never gets X plays.
 
-Work through the twelve areas in this order (local first, then the browser, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
+Work through the eleven areas in this order (local first, then the browser, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
 
 For each area decide:
 
@@ -86,20 +86,14 @@ In the browser, open https://x.com/home. If logged in, read the profile: joined 
 
 Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ accountAgeDays, followers, daysSinceLastPost }`.
 
-## 8. Review and launch profiles (`profiles`)
-
-For each of Product Hunt, G2, Capterra, AlternativeTo, SaaSHub, BetaList and Crunchbase: search for the product name or domain on the site (the browser, or a web search restricted to that site). For each profile found, note whether it is claimed (an owner badge or edit controls when logged in) and complete (logo, description, screenshots, pricing).
-
-Green: all 7 exist, claimed and complete. Amber: some. Red: none. Facts: `{ present: ["producthunt", "alternativeto"], claimed: ["producthunt"], missing: ["g2", "capterra", "saashub", "betalist", "crunchbase"] }`.
-
-## 9. GitHub (`github`)
+## 8. GitHub (`github`)
 
 - `gh auth status`.
 - Relevant awesome lists: `gh search repos "awesome <category>" --sort stars --limit 10`. For the top 3, check whether the product is already listed: `gh api repos/{owner}/{repo}/readme --jq .content | base64 -d | grep -i <domain>`.
 
 Green: authed and at least one relevant list where the product is not yet listed. Amber: authed, no fitting list. Red: `gh` missing or not authed. Facts: `{ authed: true, lists: ["owner/awesome-x"] }`.
 
-## 10. Tracking (`tracking`)
+## 9. Tracking (`tracking`)
 
 - Repo: `t.shipfound.co/t.js`, `data-site="sf_`, `@shipfound/next`, `/t/crawler`, `x-shipfound-secret`.
 - Live: `curl -s https://<domain>/ | grep -o 'data-site="sf_[^"]*"'`.
@@ -108,13 +102,13 @@ Green: authed and at least one relevant list where the product is not yet listed
 
 Green: script live, crawler beacon installed, and `tracking_check` has seen a real event, a crawler hit and a goal. Amber: partly installed. Red: nothing installed; the fix is "Run the Shipfound fix; tracking is the first PR". Facts: `{ script: false, beacon: false, otherAnalytics: ["ga4"] }`.
 
-## 11. Product assets (`assets`)
+## 10. Product assets (`assets`)
 
 Check the repo and the live site for: a logo (SVG or 512 px PNG), at least 2 screenshots, a description of 160 characters or fewer (the home page meta description is a start), a pricing page (`/pricing` returns 200), an OG image (`og:image` present and returns 200), and a privacy page (`/privacy` returns 200).
 
 Green: all six. Amber: three to five. Red: fewer than three. Facts: `{ logo: true, screenshots: 0, description160: true, pricing: true, ogImage: false, privacy: true }`.
 
-## 12. Marketplace fit (`marketplace`)
+## 11. Marketplace fit (`marketplace`)
 
 Repo scan for: a public API (`openapi.*`, documented `/api/` routes), an MCP server (`@modelcontextprotocol/sdk` or an `/mcp` route), integrations (Slack, Zapier or HubSpot app manifests), a Chrome extension (`manifest.json` with `manifest_version`), a VS Code extension (`engines.vscode` in a package.json).
 
@@ -122,7 +116,7 @@ Green: at least one fits; list which. Amber: none fit; the fix is "Nothing to do
 
 ## Calling record_access
 
-One call with all twelve areas you checked:
+One call with all eleven areas you checked:
 
 ```json
 {
@@ -135,8 +129,8 @@ One call with all twelve areas you checked:
 }
 ```
 
-Area ids: repo, hosting, gsc, bing, gmail, reddit, x, profiles, github, tracking, assets, marketplace. Use `"client": "codex"` when running in Codex.
+Area ids: repo, hosting, gsc, bing, gmail, reddit, x, github, tracking, assets, marketplace. Use `"client": "codex"` when running in Codex.
 
 ## The Access Card in the terminal
 
-After `record_access`, print a short card: the headline ("7 of 12 open, 3 amber, 2 red"), one line per area as `[green] Repo: Next.js, can push`, and under each amber or red line its fix. Then the results app link.
+After `record_access`, print a short card: the headline ("7 of 11 open, 3 amber, 2 red"), one line per area as `[green] Repo: Next.js, can push`, and under each amber or red line its fix. Then the results app link.

@@ -31,7 +31,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | Routine | Claude Code | Codex: the founder says | Does |
 |---|---|---|---|
 | [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign this session in: a link and a code to approve. Other routines do it for you when needed |
-| [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 12 areas plus the first baseline visibility run. Start here |
+| [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 11 areas plus the first baseline visibility run. Start here |
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
 | [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
 | [write](routines/write.md) | `/shipfound:write <type> [topic]` | "Write a glossary page about X" | One content page, gated, as a PR |
@@ -51,7 +51,7 @@ If a request does not match one routine, use the closest one or answer from the 
 audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 ```
 
-1. **Audit** (audit routine): check the twelve access areas, store them with `record_access`, start the baseline with `visibility_run`. See [references/access-audit.md](references/access-audit.md).
+1. **Audit** (audit routine): check the eleven access areas, store them with `record_access`, start the baseline with `visibility_run`. See [references/access-audit.md](references/access-audit.md).
 2. **Install tracking** (first thing in the fix routine): `tracking_install`, a PR, then `tracking_check` after the founder deploys. See [references/tracking.md](references/tracking.md).
 3. **Plan** (plan routine): `plan` returns a ranked queue built only from what the audit opened. Do not add moves for channels the audit marked red.
 4. **Ship**: site fixes ([references/site-fixes.md](references/site-fixes.md)), content ([references/content.md](references/content.md)), indexing (index routine). Code goes out as pull requests ([references/pr-conventions.md](references/pr-conventions.md)).
@@ -153,7 +153,7 @@ Close with three to six lines: what you did, what is claimed and what is verifie
 
 Read the one you need when you need it:
 
-- [references/access-audit.md](references/access-audit.md): how to check each of the twelve areas and fill `record_access`.
+- [references/access-audit.md](references/access-audit.md): how to check each of the eleven areas and fill `record_access`.
 - [references/site-fixes.md](references/site-fixes.md): applying fix specs per framework, themed PRs, preview links.
 - [references/content.md](references/content.md): `content_brief`, writing in the founder's stack and voice, `check_content`.
 - [references/tracking.md](references/tracking.md): the script tag, the crawler beacon per stack, the /sf/* proxy, identity modes and consent, `tracking_check`.

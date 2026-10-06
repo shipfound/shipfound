@@ -13,7 +13,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
 3. If a tracking PR is recorded, or `workspace` shows tracking installed but not confirmed, call `tracking_check` and report what it has and has not seen (events, crawler hits, goals).
 4. Print:
    - Plan and credits: "Builder, 212 credits left."
-   - Access: "8 of 12 open."
+   - Access: "8 of 11 open."
    - Shipped: "11 verified, 4 claimed, 1 failed", then the claimed and failed items, one line each with title and age.
    - Tracking: one line from `tracking_check`.
    - The results app link from `workspace` (else https://www.shipfound.co).

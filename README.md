@@ -71,7 +71,7 @@ Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a
 | Claude Code | Codex: ask | Does |
 |---|---|---|
 | `/shipfound:login` | "Sign in to Shipfound" | Signs this session in: a link and a code to approve in your browser. Other commands do it for you when needed |
-| `/shipfound:audit` | "Run the Shipfound audit" | Access audit of 12 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, review sites, GitHub, tracking, assets, marketplace fit) and the first baseline visibility run |
+| `/shipfound:audit` | "Run the Shipfound audit" | Access audit of 11 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, GitHub, tracking, assets, marketplace fit) and the first baseline visibility run |
 | `/shipfound:plan` | "What should I do next?" | The ranked queue for this week, built only from what the audit found open |
 | `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
 | `/shipfound:write <type>` | "Write a glossary page about X" | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |

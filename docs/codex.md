@@ -107,4 +107,4 @@ Then "fix the site", "write a glossary page about <term>", "get us indexed", "st
 
 ## Browser and Gmail
 
-Search Console, Bing, Reddit, X, the review sites and listings run in your own Chrome through Codex's Browser plugin and its Chrome extension. The in-app browser is not signed in to your accounts, so the audit marks those areas "Not checked" if only it is available. Inbox drafts need a Gmail connector that can create drafts; without one, Codex gives you the text to paste. Codex fills forms and reply boxes; you press submit, post or send.
+Search Console, Bing, Reddit, X and listings run in your own Chrome through Codex's Browser plugin and its Chrome extension. The in-app browser is not signed in to your accounts, so the audit marks those areas "Not checked" if only it is available. Inbox drafts need a Gmail connector that can create drafts; without one, Codex gives you the text to paste. Codex fills forms and reply boxes; you press submit, post or send.
