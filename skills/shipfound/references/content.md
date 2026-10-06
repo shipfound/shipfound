@@ -17,7 +17,7 @@ Use these values for `type` in `content_brief` and `check_content`:
 
 ## Steps
 
-1. **Pick the topic.** From `plan`, from the founder's request, or from `keyword_research` (`{ topic }`, 4 credits; say the price). Do not research more than one topic per `/shipfound:write` run.
+1. **Pick the topic.** From `plan`, from the founder's request, or from `keyword_research` (`{ topic }`, 4 credits; say the price). Do not research more than one topic per write run.
 2. **Brief.** `content_brief` with `{ type, topic, keyword? }` (5 credits; say the price). It returns a research pack (facts, each with a source), an outline and rules. Read all of it before writing.
 3. **Read the site.** Find where this kind of page lives (the `contentDir` from the audit, existing posts, the glossary route), the file format (MDX, Markdown with frontmatter, a `.astro` or `.svelte` page, a Hugo content file), the frontmatter fields existing pages use, and two existing pages for tone. Match them exactly.
 4. **Write.** Follow the outline. Lead with the answer. Use the founder's own product facts from their site and docs, and only the external facts in the research pack, cited where the brief says to.

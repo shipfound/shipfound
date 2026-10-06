@@ -55,7 +55,7 @@ Shipfound site audit, fixes fx_12, fx_13: no structured data on / or /pricing, s
 
 ## Notes
 - No new dependencies.
-- Opened by Shipfound from Claude Code. Review and merge it yourself; Shipfound never merges.
+- Opened by Shipfound from Claude Code (or Codex, whichever opened it). Review and merge it yourself; Shipfound never merges.
 ```
 
 Keep it short and factual. No marketing language, no em dashes, no claims about results ("this will rank"). If you added a dependency, say which and why under Notes.

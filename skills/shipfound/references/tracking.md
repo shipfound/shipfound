@@ -1,6 +1,6 @@
 # Tracking
 
-Two pieces, installed together as one of the first PRs of `/shipfound:fix`:
+Two pieces, installed together as one of the first PRs of the fix routine:
 
 - **tracking.js** for people: one script tag, under 3 KB, cookieless by default.
 - **The crawler beacon** for AI bots: a few lines of server or edge code that post each hit from GPTBot, PerplexityBot, ClaudeBot and the rest of the list to the tracker. Without it, the founder never sees AI engines reading their pages.
@@ -40,7 +40,7 @@ The site key is public; it is fine in the repo.
 
 ## 3. The crawler beacon
 
-Use the snippet `tracking_install` returned. If it returned none for this stack, use the matching file from `${CLAUDE_PLUGIN_ROOT}/snippets/` (same wire format). Every beacon posts fire-and-forget to `POST ${TRACKER}/t/crawler` with the header `x-shipfound-secret` and the body `{ k, ua, path, status?, ms?, ip? }`, gives up after 800 ms, and never breaks the page.
+Use the snippet `tracking_install` returned. If it returned none for this stack, use the matching file from the plugin's [snippets/](../../../snippets/) folder (same wire format; if the skill was copied on its own, fetch it from https://github.com/shipfound/shipfound/tree/main/snippets). Every beacon posts fire-and-forget to `POST ${TRACKER}/t/crawler` with the header `x-shipfound-secret` and the body `{ k, ua, path, status?, ms?, ip? }`, gives up after 800 ms, and never breaks the page.
 
 | Stack | Beacon |
 |---|---|
@@ -54,7 +54,7 @@ Use the snippet `tracking_install` returned. If it returned none for this stack,
 | Own server with nginx or Caddy | `snippets/log-shipper.mjs`, run beside the server; set the log format it documents |
 | GitHub Pages or a host with no edge code | No beacon possible. Install the script only, and say crawler data needs Cloudflare in front or a host with edge functions |
 
-Adding `@shipfound/next` is the one dependency this flow adds without a separate ask, because installing it is what the founder ran `/shipfound:fix` for. Say so in the PR body.
+Adding `@shipfound/next` is the one dependency this flow adds without a separate ask, because installing it is what the founder asked for when they ran the fix routine. Say so in the PR body.
 
 ## 4. The first-party proxy (optional)
 
@@ -105,5 +105,5 @@ Put goal wiring in the same tracking PR when it is small, else a second PR title
   curl -s -o /dev/null -A "Mozilla/5.0 (compatible; GPTBot/1.2; +https://openai.com/gptbot)" https://<domain>/
   ```
 
-  and open the site once in Chrome so a real pageview arrives. Call `tracking_check` again.
+  and open the site once in the browser so a real pageview arrives. Call `tracking_check` again.
 - Tracking is green on the Access Card only after a real event, a crawler hit and the first goal arrive. Report exactly what `tracking_check` says is missing.

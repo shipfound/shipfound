@@ -1,0 +1,13 @@
+interface:
+  display_name: "Shipfound"
+  short_description: "Site fixes, content PRs, indexing, AI crawler tracking"
+  brand_color: "#0D0E0C"
+  default_prompt: "Use $shipfound:shipfound to run the Shipfound audit on this repo."
+
+dependencies:
+  tools:
+    - type: "mcp"
+      value: "shipfound"
+      description: "Shipfound MCP server (OAuth sign-in)"
+      transport: "streamable_http"
+      url: "https://api.shipfound.co/mcp"

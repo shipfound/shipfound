@@ -2,11 +2,15 @@
 
 Your coding agent ships features. Shipfound makes it ship customers.
 
-Shipfound turns Claude Code (or Codex) into your growth engineer. It checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when GPTBot, PerplexityBot and ClaudeBot read your pages and when ChatGPT sends you a visitor. The Shipfound server checks every result itself, and labels each one Verified or Claimed.
+Shipfound turns Claude Code or Codex into your growth engineer. It checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when GPTBot, PerplexityBot and ClaudeBot read your pages and when ChatGPT sends you a visitor. The Shipfound server checks every result itself, and labels each one Verified or Claimed.
 
-This repo is the plugin: one skill, the `/shipfound:*` commands, the MCP server config, Codex guidance, and crawler beacon snippets. The data, verification and results app live at https://shipfound.co.
+This repo is the plugin for both hosts: one skill with its routines, the `/shipfound:*` commands for Claude Code, the Codex plugin manifest, the MCP server config, and crawler beacon snippets. The data, verification and results app live at https://shipfound.co.
 
-## Install in Claude Code
+## Install
+
+Pick your agent. Both get the same skill, the same routines and the same remote MCP server, signed in with OAuth.
+
+### Claude Code
 
 ```
 /plugin marketplace add shipfound/shipfound
@@ -16,44 +20,62 @@ This repo is the plugin: one skill, the `/shipfound:*` commands, the MCP server 
 
 The first Shipfound tool call opens your browser to sign in (OAuth). If it does not, run `/mcp`, pick the Shipfound server and choose Authenticate.
 
-### Sign in with an API key instead
-
-For CI or a machine without a browser: make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`) and export it before starting Claude Code:
+### Codex
 
 ```bash
-export SHIPFOUND_API_KEY=wl_...
+codex plugin marketplace add shipfound/shipfound
+codex plugin add shipfound@shipfound
+codex mcp login shipfound
 ```
 
-The plugin's header helper (`scripts/mcp-headers.sh`) sends it as `Authorization: Bearer wl_...`. With the variable unset it sends nothing and OAuth is used. Each key carries a daily credit cap.
+`codex mcp login` opens your browser to sign in (OAuth). Then start a new Codex thread in your site's repo and ask: "Run the Shipfound audit." In the ChatGPT desktop app you can also install it from Plugins once the marketplace is added; it shows up under Shipfound.
 
-### Point at another server
+Codex has no plugin slash commands, so you ask in words ("fix the site", "get us indexed", "status") and the skill runs the matching routine. To call the skill by name, type `$shipfound:shipfound`.
 
-The MCP server defaults to `https://api.shipfound.co/mcp`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp`.
-
-## Install in Codex
+**MCP server only (no plugin).** If you would rather not install the plugin:
 
 ```bash
 codex mcp add shipfound --url https://api.shipfound.co/mcp
 codex mcp login shipfound
 ```
 
-Then copy [AGENTS.md](AGENTS.md) into your repo. Full steps, including the API key option: [docs/codex.md](docs/codex.md).
+Then copy [AGENTS.md](AGENTS.md) into your repo. Full steps: [docs/codex.md](docs/codex.md).
 
-## Commands
+### Sign in with an API key instead
 
-| Command | Does |
-|---|---|
-| `/shipfound:audit` | Access audit of 12 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, review sites, GitHub, tracking, assets, marketplace fit) and the free baseline visibility run |
-| `/shipfound:plan` | The ranked queue for this week, built only from what the audit found open |
-| `/shipfound:fix` | Tracking first, then site fixes as one pull request per theme |
-| `/shipfound:write <type>` | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |
-| `/shipfound:index` | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your Chrome |
-| `/shipfound:status` | Credits, what shipped, what is verified and what is still claimed |
-| `/shipfound:analytics <question>` | Answers an analytics question in plain words with numbers |
-| `/shipfound:week` | The Monday routine. The server-side weekly re-check is not built yet; the command does it by hand |
-| `/shipfound:list` | Review and launch profiles filled in your Chrome. The directory database batches come later |
-| `/shipfound:reach` | Community replies and Gmail drafts. Thread discovery comes later |
-| `/shipfound:test` | A/B test proposals from your funnel. Running experiments comes later |
+For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). Each key carries a daily credit cap.
+
+- **Claude Code:** `export SHIPFOUND_API_KEY=wl_...` before starting Claude Code. The plugin's header helper (`scripts/mcp-headers.sh`) sends it as `Authorization: Bearer wl_...`. With the variable unset it sends nothing and OAuth is used.
+- **Codex plugin:** `export SHIPFOUND_AUTHORIZATION="Bearer wl_..."` before starting Codex. The plugin sends it as the `Authorization` header; unset, OAuth is used.
+- **Codex, MCP server only:** `codex mcp add shipfound --url https://api.shipfound.co/mcp --bearer-token-env-var SHIPFOUND_API_KEY`, with `SHIPFOUND_API_KEY` exported.
+
+### Point at another server
+
+- **Claude Code:** the MCP server defaults to `https://api.shipfound.co/mcp`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp`.
+- **Codex:** the plugin's server URL is fixed (Codex does not expand variables in plugin config). For staging or local work, add your server by hand (`codex mcp add shipfound-dev --url http://localhost:4000/mcp`) and turn the plugin's server off in `~/.codex/config.toml`:
+
+  ```toml
+  [plugins."shipfound@shipfound".mcp_servers.shipfound]
+  enabled = false
+  ```
+
+## Routines
+
+Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a command; in Codex you ask for it.
+
+| Claude Code | Codex: ask | Does |
+|---|---|---|
+| `/shipfound:audit` | "Run the Shipfound audit" | Access audit of 12 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, review sites, GitHub, tracking, assets, marketplace fit) and the first baseline visibility run |
+| `/shipfound:plan` | "What should I do next?" | The ranked queue for this week, built only from what the audit found open |
+| `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
+| `/shipfound:write <type>` | "Write a glossary page about X" | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |
+| `/shipfound:index` | "Get us indexed" | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your browser |
+| `/shipfound:status` | "Shipfound status" | Credits, what shipped, what is verified and what is still claimed |
+| `/shipfound:analytics <question>` | Any analytics question | Answers it in plain words with numbers |
+| `/shipfound:week` | "Run the Shipfound week" | The Monday routine. The server-side weekly re-check is not built yet; the routine does it by hand |
+| `/shipfound:list` | "List us on Product Hunt" | Review and launch profiles filled in your browser. The directory database batches come later |
+| `/shipfound:reach` | "Draft a reply to this thread" | Community replies and Gmail drafts. Thread discovery comes later |
+| `/shipfound:test` | "What should we A/B test?" | A/B test proposals from your funnel. Running experiments comes later |
 
 Supported stacks for pull requests: Next.js, Astro, Nuxt, SvelteKit, Hugo and plain HTML. Other stacks get the audit, indexing and analytics, and no code changes.
 
@@ -75,22 +97,27 @@ Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound cre
 ## Privacy
 
 - The agent works on your machine. Your code is not uploaded to Shipfound; only what the agent records through the MCP tools is sent (the audit result, URLs of PRs, pages and listings, and drafts you check with `check_content`).
-- Browser and Gmail work happens in your own Chrome and through your own Gmail connector. Shipfound never sees your passwords or cookies.
+- Browser and Gmail work happens in your own Chrome (Claude in Chrome, or the Codex Browser plugin with its Chrome extension) and through your own Gmail connector. Shipfound never sees your passwords or cookies.
 - tracking.js is cookieless by default: it stores nothing in the browser and the tracker drops the IP after deriving a daily visitor id. Attribution mode keeps a first-party id for 13 months and needs consent where the law requires it. Whether you need a banner depends on where you and your visitors are.
 - The crawler beacon sends only requests whose user agent is on the crawler list in [snippets/crawlers.json](snippets/crawlers.json). Requests from people are never sent by the beacon.
 
 ## Repo layout
 
 ```
-.claude-plugin/plugin.json        plugin manifest
-.claude-plugin/marketplace.json   the "shipfound" marketplace with one plugin
-.mcp.json                         the remote MCP server (HTTP, OAuth)
-scripts/mcp-headers.sh            optional API key header
-skills/shipfound/SKILL.md         the growth engineer skill
+.claude-plugin/plugin.json        Claude Code plugin manifest
+.claude-plugin/marketplace.json   the "shipfound" marketplace for Claude Code
+.codex-plugin/plugin.json         Codex plugin manifest (skills, MCP server, listing)
+.agents/plugins/marketplace.json  the "shipfound" marketplace for Codex
+.mcp.json                         the remote MCP server for Claude Code (HTTP, OAuth)
+scripts/mcp-headers.sh            optional API key header (Claude Code)
+skills/shipfound/SKILL.md         the growth engineer skill, shared by both hosts
+skills/shipfound/routines/        one procedure per routine (audit, fix, write, ...)
 skills/shipfound/references/      audit, fixes, content, tracking, verification, PR playbooks
-commands/                         the /shipfound:* commands
+skills/shipfound/agents/          Codex skill metadata
+commands/                         the /shipfound:* commands (Claude Code), each starts a routine
 snippets/                         crawler beacons for Astro, Nuxt, SvelteKit, Vercel, Netlify, Cloudflare, nginx and Caddy
-AGENTS.md, docs/codex.md          Codex
+assets/icon.svg                   plugin icon
+AGENTS.md, docs/codex.md          Codex with the MCP server only
 scripts/validate.mjs              checks this repo (node scripts/validate.mjs)
 ```
 

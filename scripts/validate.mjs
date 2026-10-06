@@ -5,7 +5,16 @@
 //
 // - plugin.json, marketplace.json, .mcp.json and snippets/crawlers.json parse
 //   and agree with each other
-// - every command and skill file has valid frontmatter
+// - the Codex side (.codex-plugin/plugin.json, .agents/plugins/marketplace.json,
+//   skills/shipfound/agents/openai.yaml) follows the Codex plugin contract
+//   (mirrors plugin-creator's validate_plugin.py) and agrees with the Claude
+//   Code side: same name, version, metadata, marketplace and MCP endpoint
+// - every command and skill file has valid frontmatter; the skill's
+//   frontmatter uses only keys both hosts accept
+// - every command is a thin wrapper around its routine in
+//   skills/shipfound/routines/, and routines, references and SKILL.md stay
+//   host neutral (no Claude Code only paths or placeholders)
+// - the hard lines in AGENTS.md match the ones in SKILL.md
 // - every MCP tool named in the skill, the commands and the docs is in the
 //   Shipfound tool table (and, inside the monorepo, that table still matches
 //   docs/shipfound/BUILD.md)
@@ -13,7 +22,8 @@
 // - every crawler snippet carries the same crawler list (and, inside the
 //   monorepo, that list matches packages/shared and @shipfound/next)
 // - relative links in Markdown resolve
-// - no em dashes and none of the banned words in anything a founder reads
+// - no em dashes and none of the banned words in anything a founder reads,
+//   and no offer of a "free scan"
 import { existsSync, readFileSync, readdirSync, statSync } from "node:fs";
 import { dirname, join, relative, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
@@ -73,11 +83,15 @@ const NOT_TOOLS = new Set([
   "mcp_servers",
   "is_suspended",
   "manifest_version",
+  "env_http_headers",
 ]);
 const COMMANDS = ["audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
+const API_MCP_URL = "https://api.shipfound.co/mcp";
+// Phrases nobody should see in this repo.
+const BANNED_PHRASES = ["free scan"];
 
 // ─── helpers ────────────────────────────────────────────────────────────────
 function walk(dir, out = []) {
@@ -164,6 +178,122 @@ if (mcp) {
   }
 }
 
+// ─── Codex manifests ────────────────────────────────────────────────────────
+// Codex reads .codex-plugin/plugin.json before .claude-plugin/plugin.json and
+// .agents/plugins/marketplace.json before .claude-plugin/marketplace.json, so
+// these files decide what Codex installs. The rules below mirror
+// ~/.codex/skills/.system/plugin-creator/scripts/validate_plugin.py.
+const codexFile = join(ROOT, ".codex-plugin/plugin.json");
+const codexMarketFile = join(ROOT, ".agents/plugins/marketplace.json");
+const codex = existsSync(codexFile) ? readJson(codexFile) : (fail(codexFile, "missing (Codex would fall back to the Claude manifest and .mcp.json)"), null);
+const codexMarket = existsSync(codexMarketFile) ? readJson(codexMarketFile) : (fail(codexMarketFile, "missing"), null);
+const SEMVER = /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)(?:-[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?(?:\+[0-9A-Za-z-]+(?:\.[0-9A-Za-z-]+)*)?$/;
+const isHttps = (v) => typeof v === "string" && /^https:\/\/[^/\s]+/.test(v);
+const nonEmpty = (v) => typeof v === "string" && v.trim().length > 0;
+
+function checkAsset(file, field, value) {
+  if (!nonEmpty(value)) return fail(file, `${field} must be a non-empty relative path`);
+  if (!value.startsWith("./") || value.split("/").some((part, i) => (i > 0 && (part === "" || part === "." || part === "..")))) return fail(file, `${field} must start with ./ and stay inside the plugin`);
+  if (!existsSync(join(ROOT, value))) fail(file, `${field} points to a missing file: ${value}`);
+}
+
+if (codex) {
+  const allowed = new Set(["id", "name", "version", "description", "skills", "apps", "mcpServers", "interface", "author", "homepage", "repository", "license", "keywords"]);
+  for (const k of Object.keys(codex)) if (!allowed.has(k)) fail(codexFile, `field ${k} is not accepted by Codex plugin validation`);
+  if (codex.name !== "shipfound") fail(codexFile, `name must be "shipfound", got ${codex.name}`);
+  if (!SEMVER.test(codex.version ?? "")) fail(codexFile, "version must be strict semver");
+  if (!nonEmpty(codex.description)) fail(codexFile, "description is required");
+  if (!codex.author || typeof codex.author !== "object") fail(codexFile, "author must be an object");
+  else {
+    for (const k of Object.keys(codex.author)) if (!["name", "email", "url"].includes(k)) fail(codexFile, `author.${k} is not accepted`);
+    if (!nonEmpty(codex.author.name)) fail(codexFile, "author.name is required");
+    if (codex.author.url !== undefined && !isHttps(codex.author.url)) fail(codexFile, "author.url must be an https URL");
+  }
+  if ((codex.skills ?? "").replace(/^\.\//, "").replace(/\/+$/, "") !== "skills") fail(codexFile, 'skills must be "./skills/"');
+  if (codex.apps !== undefined) fail(codexFile, "apps needs a .app.json; Shipfound has none");
+  // An object here makes Codex skip .mcp.json, whose ${SHIPFOUND_API_URL:-...} URL and
+  // headersHelper are Claude Code features Codex does not expand.
+  const server = codex.mcpServers?.shipfound;
+  if (typeof codex.mcpServers !== "object" || codex.mcpServers === null || Array.isArray(codex.mcpServers)) fail(codexFile, "mcpServers must be an inline object, so Codex ignores the Claude Code .mcp.json");
+  else if (!server) fail(codexFile, "mcpServers.shipfound is missing");
+  else {
+    for (const k of Object.keys(codex.mcpServers)) if (k !== "shipfound") fail(codexFile, `unexpected MCP server ${k}`);
+    if (!["http", "streamable_http", "streamable-http"].includes(server.type)) fail(codexFile, `mcpServers.shipfound.type must be an HTTP transport, got ${server.type}`);
+    if (server.url !== API_MCP_URL) fail(codexFile, `mcpServers.shipfound.url must be ${API_MCP_URL}, got ${server.url}`);
+    if (/\$\{/.test(JSON.stringify(server))) fail(codexFile, "Codex does not expand ${...} in plugin MCP config");
+    if (server.bearer_token_env_var) fail(codexFile, "bearer_token_env_var fails startup when the variable is unset, which breaks the OAuth default; use env_http_headers");
+    if (server.http_headers?.Authorization || server.http_headers?.authorization) fail(codexFile, "a static Authorization header breaks the OAuth default");
+    for (const k of ["command", "args", "headersHelper", "http_headers_helper"]) if (server[k] !== undefined) fail(codexFile, `mcpServers.shipfound.${k} is not used; the server is remote and the helper cannot see SHIPFOUND_API_KEY`);
+  }
+  const ui = codex.interface;
+  if (!ui || typeof ui !== "object") fail(codexFile, "interface must be an object");
+  else {
+    const uiAllowed = new Set(["displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "websiteURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor", "composerIcon", "logo", "logoDark", "screenshots", "defaultPrompt", "default_prompt"]);
+    for (const k of Object.keys(ui)) if (!uiAllowed.has(k)) fail(codexFile, `interface.${k} is not accepted`);
+    for (const k of ["displayName", "shortDescription", "longDescription", "developerName", "category"]) if (!nonEmpty(ui[k])) fail(codexFile, `interface.${k} is required`);
+    if (!Array.isArray(ui.capabilities) || !ui.capabilities.every(nonEmpty)) fail(codexFile, "interface.capabilities must be an array of strings");
+    const prompts = ui.defaultPrompt ?? ui.default_prompt;
+    if (!Array.isArray(prompts) || prompts.length === 0) fail(codexFile, "interface.defaultPrompt is required");
+    else {
+      if (prompts.length > 3) fail(codexFile, "interface.defaultPrompt: Codex shows only the first 3");
+      for (const p of prompts) if (!nonEmpty(p) || p.length > 128) fail(codexFile, `interface.defaultPrompt entry must be 1 to 128 characters: ${p}`);
+    }
+    for (const k of ["websiteURL", "privacyPolicyURL", "termsOfServiceURL"]) if (ui[k] !== undefined && !isHttps(ui[k])) fail(codexFile, `interface.${k} must be an https URL`);
+    if (ui.brandColor !== undefined && !/^#[0-9A-F]{6}$/i.test(ui.brandColor)) fail(codexFile, "interface.brandColor must be #RRGGBB");
+    for (const k of ["composerIcon", "logo", "logoDark"]) if (ui[k] !== undefined) checkAsset(codexFile, `interface.${k}`, ui[k]);
+    for (const [i, s] of (ui.screenshots ?? []).entries()) checkAsset(codexFile, `interface.screenshots[${i}]`, s);
+  }
+  // One plugin, two manifests: the shared fields must agree.
+  if (plugin) {
+    for (const k of ["name", "version", "description", "homepage", "repository", "license"]) {
+      if (plugin[k] !== codex[k]) fail(codexFile, `${k} differs from .claude-plugin/plugin.json`);
+    }
+    if (plugin.author?.name !== codex.author?.name || plugin.author?.url !== codex.author?.url) fail(codexFile, "author differs from .claude-plugin/plugin.json");
+    if (JSON.stringify(plugin.keywords ?? []) !== JSON.stringify(codex.keywords ?? [])) fail(codexFile, "keywords differ from .claude-plugin/plugin.json");
+  }
+}
+if (mcp?.mcpServers?.shipfound?.url) {
+  const fallback = /:-([^}]+)\}(\/mcp)$/.exec(mcp.mcpServers.shipfound.url);
+  if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}, the same as the Codex manifest`);
+}
+if (codexMarket) {
+  if (codexMarket.name !== (market?.name ?? "shipfound")) fail(codexMarketFile, `marketplace name must match .claude-plugin/marketplace.json (${market?.name})`);
+  if (!/^[A-Za-z0-9_-]+$/.test(codexMarket.name ?? "")) fail(codexMarketFile, "marketplace name may only use letters, digits, _ and -");
+  if (!nonEmpty(codexMarket.interface?.displayName)) fail(codexMarketFile, "interface.displayName is required");
+  const entries = Array.isArray(codexMarket.plugins) ? codexMarket.plugins : (fail(codexMarketFile, "plugins must be an array"), []);
+  const entry = entries.find((p) => p.name === "shipfound");
+  if (!entry) fail(codexMarketFile, 'no plugin entry named "shipfound"');
+  else {
+    const path = typeof entry.source === "string" ? entry.source : entry.source?.source === "local" ? entry.source.path : null;
+    if (path === null) fail(codexMarketFile, "source must be a local path (the plugin is this repo)");
+    else if (!(path === "." || path === "./")) fail(codexMarketFile, `source path must be "./" (the repo root is the plugin), got ${path}`);
+    else if (!existsSync(join(ROOT, ".codex-plugin/plugin.json"))) fail(codexMarketFile, "source has no .codex-plugin/plugin.json");
+    if (!["NOT_AVAILABLE", "AVAILABLE", "INSTALLED_BY_DEFAULT"].includes(entry.policy?.installation)) fail(codexMarketFile, "policy.installation must be NOT_AVAILABLE, AVAILABLE or INSTALLED_BY_DEFAULT");
+    if (!["ON_INSTALL", "ON_USE"].includes(entry.policy?.authentication)) fail(codexMarketFile, "policy.authentication must be ON_INSTALL or ON_USE");
+    if (entry.policy?.installation === "NOT_AVAILABLE") fail(codexMarketFile, "policy.installation NOT_AVAILABLE hides the plugin");
+    if (!nonEmpty(entry.category)) fail(codexMarketFile, "category is required");
+    if (entry.version) fail(codexMarketFile, "leave version to .codex-plugin/plugin.json");
+  }
+}
+
+// Codex skill metadata (agents/openai.yaml). No YAML parser here: check the lines we rely on.
+const openaiYaml = join(ROOT, "skills/shipfound/agents/openai.yaml");
+if (!existsSync(openaiYaml)) fail(openaiYaml, "missing");
+else {
+  const y = readFileSync(openaiYaml, "utf8");
+  const val = (key) => new RegExp(`^\\s+${key}:\\s*"([^"]*)"\\s*$`, "m").exec(y)?.[1];
+  for (const top of y.split("\n").filter((l) => /^[a-z_]+:/.test(l)).map((l) => l.split(":")[0])) {
+    if (!["interface", "policy", "dependencies"].includes(top)) fail(openaiYaml, `top-level key ${top} is not accepted`);
+  }
+  if (!nonEmpty(val("display_name"))) fail(openaiYaml, 'interface.display_name is required (quoted)');
+  const short = val("short_description") ?? "";
+  if (short.length < 25 || short.length > 64) fail(openaiYaml, `interface.short_description must be 25 to 64 characters, got ${short.length}`);
+  if (!/\$shipfound(:shipfound)?\b/.test(val("default_prompt") ?? "")) fail(openaiYaml, "interface.default_prompt must name the skill ($shipfound:shipfound)");
+  if (val("url") !== API_MCP_URL) fail(openaiYaml, `dependencies.tools url must be ${API_MCP_URL}`);
+  if (val("transport") !== "streamable_http") fail(openaiYaml, 'dependencies.tools transport must be "streamable_http"');
+  if (/allow_implicit_invocation:\s*false/.test(y)) fail(openaiYaml, "the skill must stay implicitly invocable; Codex users start routines by asking in words");
+}
+
 // ─── commands and skills ────────────────────────────────────────────────────
 const cmdDir = join(ROOT, "commands");
 const cmdFiles = existsSync(cmdDir) ? readdirSync(cmdDir).filter((f) => f.endsWith(".md")) : [];
@@ -178,6 +308,15 @@ for (const f of cmdFiles) {
   if (fm.data.description && fm.data.description.length > 250) fail(file, "description over 250 characters");
   if (/\$ARGUMENTS/.test(fm.body) && !fm.data["argument-hint"]) fail(file, "uses $ARGUMENTS but has no argument-hint");
   if (!/shipfound skill/.test(fm.body)) fail(file, "does not point at the shipfound skill");
+  // One source of truth: the procedure lives in the routine, which Codex reads too.
+  const routine = f.replace(/\.md$/, "");
+  const routineRef = `\${CLAUDE_PLUGIN_ROOT}/skills/shipfound/routines/${routine}.md`;
+  if (!fm.body.includes(routineRef)) fail(file, `does not start its routine (${routineRef})`);
+  else if (!existsSync(join(ROOT, "skills/shipfound/routines", `${routine}.md`))) fail(file, `routine file skills/shipfound/routines/${routine}.md is missing`);
+  if (/^## /m.test(fm.body) || fm.body.split("\n").length > 12) fail(file, "keep the command a thin wrapper; the procedure belongs in its routine");
+  // Codex copies argument-free plugin commands into stray "source-command-*" skills;
+  // commands that take $ARGUMENTS are skipped, so every command takes input.
+  if (!/\$ARGUMENTS/.test(fm.body)) fail(file, "must pass $ARGUMENTS to its routine (also keeps Codex from copying it into a stray skill)");
   for (const t of (fm.data["allowed-tools"] ?? "").split(/,\s*/).filter(Boolean)) {
     if (!t.startsWith("mcp__")) continue;
     if (!t.startsWith(MCP_PREFIX)) {
@@ -202,6 +341,8 @@ for (const d of skillDirs) {
   const fm = frontmatter(file);
   if (!fm) continue;
   if (fm.data.name !== d) fail(file, `name must match its folder (${d}), got ${fm.data.name}`);
+  // Keys both hosts accept (Codex's quick_validate.py allows only these).
+  for (const k of Object.keys(fm.data)) if (!["name", "description", "license", "allowed-tools", "metadata"].includes(k)) fail(file, `frontmatter key ${k} is not accepted by Codex`);
   if (!/^[a-z0-9]+(-[a-z0-9]+)*$/.test(fm.data.name ?? "") || (fm.data.name ?? "").length > 64) fail(file, "name must be kebab-case, at most 64 characters");
   if (!fm.data.description) fail(file, "description is required");
   else if (fm.data.description.length > 1024) fail(file, `description is ${fm.data.description.length} characters; keep it under 1024`);
@@ -210,8 +351,42 @@ for (const d of skillDirs) {
   for (const t of Object.keys(TOOLS)) if (!fm.body.includes(`\`${t}\``)) fail(file, `does not describe the tool ${t}`);
 }
 
+// ─── routines and host neutrality ───────────────────────────────────────────
+const skillRoot = join(ROOT, "skills/shipfound");
+const routineDir = join(skillRoot, "routines");
+const routineFiles = existsSync(routineDir) ? readdirSync(routineDir).filter((f) => f.endsWith(".md")) : [];
+for (const c of COMMANDS) if (!routineFiles.includes(`${c}.md`)) fail(routineDir, `missing routine ${c}.md`);
+for (const f of routineFiles) if (!COMMANDS.includes(f.replace(/\.md$/, ""))) fail(join(routineDir, f), "routine without a command; add it to COMMANDS and commands/");
+const skillMdFile = join(skillRoot, "SKILL.md");
+const skillMd = existsSync(skillMdFile) ? readFileSync(skillMdFile, "utf8") : "";
+for (const c of COMMANDS) {
+  if (!skillMd.includes(`](routines/${c}.md)`)) fail(skillMdFile, `routines table does not link routines/${c}.md`);
+  if (!skillMd.includes(`\`/shipfound:${c}`)) fail(skillMdFile, `routines table does not give the Claude Code command for ${c}`);
+}
+// Everything under skills/ is read by both hosts.
+for (const file of walk(skillRoot).filter((f) => f.endsWith(".md"))) {
+  const text = readFileSync(file, "utf8");
+  if (text.includes("${CLAUDE_PLUGIN_ROOT}")) fail(file, "${CLAUDE_PLUGIN_ROOT} is Claude Code only; use a relative link");
+  if (text.includes("$ARGUMENTS")) fail(file, "$ARGUMENTS is Claude Code only; say \"the founder's input\"");
+  if (file.startsWith(routineDir)) {
+    if (/\/shipfound:/.test(text)) fail(file, "routines name other routines (\"the fix routine\"); commands are host specific");
+    if (/\bin Chrome\b|\bmcp__/.test(text)) fail(file, "routines say \"the browser\"; SKILL.md maps it per host");
+  }
+}
+// The hard lines in AGENTS.md (for MCP-only setups) must say what SKILL.md says.
+const agentsFile = join(ROOT, "AGENTS.md");
+if (existsSync(agentsFile) && skillMd) {
+  const agents = readFileSync(agentsFile, "utf8");
+  const section = (text) => text.split("## Hard lines")[1]?.split("\n## ")[0] ?? "";
+  const leads = [...section(skillMd).matchAll(/^\d+\. \*\*(.+?)\*\*/gm)].map((m) => m[1].replace(/[.]$/, "").replace(/`/g, ""));
+  const theirs = section(agents).replace(/`/g, "");
+  if (leads.length !== 8) fail(skillMdFile, `expected 8 hard lines, found ${leads.length}`);
+  if ((theirs.match(/^\d+\. /gm) ?? []).length !== leads.length) fail(agentsFile, "hard lines count differs from SKILL.md");
+  for (const lead of leads) if (!theirs.includes(lead)) fail(agentsFile, `hard line missing or reworded: "${lead}"`);
+}
+
 // ─── text checks across the repo ────────────────────────────────────────────
-const TEXT = /\.(md|json|ts|js|mjs|sh|toml|txt)$/;
+const TEXT = /\.(md|json|ts|js|mjs|sh|toml|txt|yaml|yml)$/;
 const files = walk(ROOT).filter((f) => TEXT.test(f) || f.endsWith("LICENSE"));
 const DOCS = files.filter((f) => f.endsWith(".md"));
 
@@ -223,6 +398,7 @@ for (const file of files) {
     const hits = BANNED.filter((w) => lower.includes(w));
     // The one line that lists all four, to ban them, is allowed.
     if (hits.length > 0 && hits.length < BANNED.length) fail(file, `line ${i + 1}: banned word "${hits.join('", "')}"`);
+    for (const phrase of BANNED_PHRASES) if (lower.includes(phrase) && !file.endsWith("validate.mjs")) fail(file, `line ${i + 1}: "${phrase}"`);
   });
 }
 

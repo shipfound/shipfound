@@ -2,7 +2,7 @@
 
 The first command, free, about 3 minutes. You check what the founder actually has, store it with `record_access`, and the server builds the plan only from what is open. A founder with no X account never gets X plays.
 
-Work through the twelve areas in this order (local first, then Chrome, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
+Work through the twelve areas in this order (local first, then the browser, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
 
 For each area decide:
 
@@ -47,7 +47,7 @@ Green: previews appear on PRs. Amber: a host is configured but no preview seen. 
 
 ## 3. Google Search Console (`gsc`)
 
-In Chrome, open https://search.google.com/search-console. Read only.
+In the browser, open https://search.google.com/search-console. Read only.
 
 - Is there a property for the domain (Domain property or the https URL prefix), and is it verified?
 - Sitemaps page: submitted, and the last read status.
@@ -57,7 +57,7 @@ Green: verified, sitemap read with Success. Amber: verified, no sitemap or error
 
 ## 4. Bing Webmaster Tools (`bing`)
 
-In Chrome, open https://www.bing.com/webmasters. Read only.
+In the browser, open https://www.bing.com/webmasters. Read only.
 
 - Site added and verified, sitemap submitted.
 - IndexNow: look for a key file in the repo (a 32-character hex `.txt` at the public root whose content is its own name) and confirm it is live.
@@ -66,13 +66,13 @@ Green: verified, sitemap and IndexNow key live. Amber: verified, one missing. Re
 
 ## 5. Gmail (`gmail`)
 
-Only if the Gmail connector is connected. Find the founder's sending address (for example from one recent sent message). Read nothing else.
+Only if a Gmail connector is connected (SKILL.md, "Hosts"). Find the founder's sending address (for example from one recent sent message). Read nothing else.
 
-Green: connected on a custom domain. Amber: connected on @gmail.com (many directories reject it). Red: not connected; the fix is "Connect Gmail in your Claude connectors".
+Green: connected on a custom domain. Amber: connected on @gmail.com (many directories reject it). Red: not connected; the fix is "Connect Gmail: a Gmail connector in Claude, or a Gmail plugin in Codex".
 
 ## 6. Reddit (`reddit`)
 
-- In Chrome, open https://www.reddit.com/user/me. If it redirects to a profile, the founder is logged in; note the username, account age (cake day) and karma.
+- In the browser, open https://www.reddit.com/user/me. If it redirects to a profile, the founder is logged in; note the username, account age (cake day) and karma.
 - Shadowban check, logged out: `curl -s -A "shipfound-audit" https://www.reddit.com/user/<name>/about.json`. A 404 or `is_suspended` means the profile is not visible publicly.
 - Pick 3 to 5 subs where the founder's buyers ask questions (from the product category). For each, read the rules (`/r/<sub>/about/rules`) and the sidebar for account age, karma and self-promotion limits.
 
@@ -82,13 +82,13 @@ Never upvote, comment or post during the audit.
 
 ## 7. X (`x`)
 
-In Chrome, open https://x.com/home. If logged in, read the profile: joined date, followers, date of the last post.
+In the browser, open https://x.com/home. If logged in, read the profile: joined date, followers, date of the last post.
 
 Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ accountAgeDays, followers, daysSinceLastPost }`.
 
 ## 8. Review and launch profiles (`profiles`)
 
-For each of Product Hunt, G2, Capterra, AlternativeTo, SaaSHub, BetaList and Crunchbase: search for the product name or domain on the site (Chrome, or a web search restricted to that site). For each profile found, note whether it is claimed (an owner badge or edit controls when logged in) and complete (logo, description, screenshots, pricing).
+For each of Product Hunt, G2, Capterra, AlternativeTo, SaaSHub, BetaList and Crunchbase: search for the product name or domain on the site (the browser, or a web search restricted to that site). For each profile found, note whether it is claimed (an owner badge or edit controls when logged in) and complete (logo, description, screenshots, pricing).
 
 Green: all 7 exist, claimed and complete. Amber: some. Red: none. Facts: `{ present: ["producthunt", "alternativeto"], claimed: ["producthunt"], missing: ["g2", "capterra", "saashub", "betalist", "crunchbase"] }`.
 
@@ -106,7 +106,7 @@ Green: authed and at least one relevant list where the product is not yet listed
 - If `workspace` shows a site, call `tracking_check` (free) for events and crawler hits seen.
 - Other analytics found under Repo.
 
-Green: script live, crawler beacon installed, and `tracking_check` has seen a real event, a crawler hit and a goal. Amber: partly installed. Red: nothing installed; the fix is "Run /shipfound:fix; tracking is the first PR". Facts: `{ script: false, beacon: false, otherAnalytics: ["ga4"] }`.
+Green: script live, crawler beacon installed, and `tracking_check` has seen a real event, a crawler hit and a goal. Amber: partly installed. Red: nothing installed; the fix is "Run the Shipfound fix; tracking is the first PR". Facts: `{ script: false, beacon: false, otherAnalytics: ["ga4"] }`.
 
 ## 11. Product assets (`assets`)
 
@@ -128,7 +128,7 @@ One call with all twelve areas you checked:
 {
   "areas": [
     { "id": "repo", "status": "green", "detail": "Next.js 15 app router. Posts in content/blog. Sitemap and robots live; no structured data, no llms.txt. You can push; main is protected.", "fix": "", "facts": { "framework": "nextjs" } },
-    { "id": "gsc", "status": "amber", "detail": "Domain property verified. No sitemap submitted; 14 pages not indexed, mostly 'Discovered, currently not indexed'.", "fix": "Submit https://example.com/sitemap.xml in Search Console (/shipfound:index does it).", "facts": { "verified": true, "sitemapSubmitted": false, "notIndexed": 14 } }
+    { "id": "gsc", "status": "amber", "detail": "Domain property verified. No sitemap submitted; 14 pages not indexed, mostly 'Discovered, currently not indexed'.", "fix": "Submit https://example.com/sitemap.xml in Search Console (the Shipfound index routine does it).", "facts": { "verified": true, "sitemapSubmitted": false, "notIndexed": 14 } }
   ],
   "repo": { "framework": "nextjs", "contentDir": "content/blog", "hasSitemap": true, "hasRobots": true, "hasStructuredData": false, "hasLlmsTxt": false, "canPush": true, "branchProtected": true, "otherAnalytics": [] },
   "client": "claude-code"

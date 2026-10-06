@@ -42,7 +42,7 @@ States: CLAIMED (recorded, not yet seen), VERIFIED (the server saw it), FAILED (
 ## Saying it right
 
 - VERIFIED: "Verified: llms.txt is live at acme.com/llms.txt."
-- CLAIMED: "PR #14 opened. Claimed, not verified yet: run /shipfound:status after you merge and deploy."
+- CLAIMED: "PR #14 opened. Claimed, not verified yet: run /shipfound:status after you merge and deploy." In Codex, say "ask for Shipfound status" instead of the command.
 - FAILED: quote the server's note, then the one next step. Never re-record the same action to get a different answer.
 
 Never write "done", "shipped" or "live" for something that is not VERIFIED. Use `shipped` (`{ module?, state? }`) to list what is still claimed.

@@ -22,7 +22,7 @@ Fixes already shipped are left out by the server, so never re-apply one from an 
 
 ## One PR per theme
 
-Group the specs by `theme`. One branch and one PR per theme, never one giant PR and never one PR per page. Keep each PR under about 15 files; split a theme into "part 1" and "part 2" if it is larger. Ship one or two themes per `/shipfound:fix` run and stop to report; the founder reviews before you go on. Branch names and PR bodies: [pr-conventions.md](pr-conventions.md).
+Group the specs by `theme`. One branch and one PR per theme, never one giant PR and never one PR per page. Keep each PR under about 15 files; split a theme into "part 1" and "part 2" if it is larger. Ship one or two themes per fix run and stop to report; the founder reviews before you go on. Branch names and PR bodies: [pr-conventions.md](pr-conventions.md).
 
 Before you open a PR:
 

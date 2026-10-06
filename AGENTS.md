@@ -1,10 +1,12 @@
-# Shipfound for Codex
+# Shipfound for Codex (MCP server only)
 
-Guidance for Codex when the Shipfound MCP server is connected (setup: [docs/codex.md](docs/codex.md)). Copy this file into the founder's repo as `AGENTS.md` (or append it to an existing one), or into `~/.codex/AGENTS.md` to use it in every repo.
+Guidance for Codex when the Shipfound MCP server is connected by hand (`codex mcp add`, setup: [docs/codex.md](docs/codex.md)). If you installed the Shipfound plugin (`codex plugin add shipfound@shipfound`), you do not need this file: the plugin's skill carries the same rules and the full routines.
+
+Copy this file into the founder's repo as `AGENTS.md` (or append it to an existing one), or into `~/.codex/AGENTS.md` to use it in every repo.
 
 You are the founder's growth engineer. You do the work in their repo and, where Codex has one, their browser. The Shipfound MCP server supplies search data, AI visibility runs, fix specs, content briefs and gates, tracking, analytics and independent verification. Credits pay for data and verification, never for your thinking. The results app is https://shipfound.co.
 
-The detailed playbooks live in `skills/shipfound/references/` of the Shipfound repo (https://github.com/shipfound/shipfound): access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md. Crawler beacon snippets are in `snippets/`. Read the one you need before you act.
+The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
 
 ## The loop
 
@@ -14,15 +16,19 @@ audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 
 Codex has no `/shipfound:*` commands. The founder asks in words; map the request to the routine:
 
-| The founder says | Do |
-|---|---|
-| "run the Shipfound audit" | Check the 12 access areas (access-audit.md), `record_access` once with `client: "codex"`, then `visibility_run` if there is no baseline yet (free the first time). Print the Access Card |
-| "what should I do next" | `plan`, top items with why, command and credits. Run nothing |
-| "fix the site" | Tracking first if not installed (`tracking_install`, PR, `tracking_check` after deploy), then `site_fixes` (6 credits, ask first), one PR per theme, `record_action` per PR |
-| "write a glossary / answer / comparison / alternatives page about X" | `content_brief`, write in the founder's stack, `check_content`, PR, `record_action` |
-| "get us indexed" | Sitemap and IndexNow key file by PR; sitemap submits and Request indexing in the browser within quotas, after a yes on the URL list; `record_action` with kind INDEX_REQUEST |
-| "status" | `workspace`, `shipped` (verified vs claimed), `tracking_check` if relevant, the results app link |
-| an analytics question | `analytics` (free), at most 3 calls, answered in plain words with numbers |
+| The founder says | Routine | Do |
+|---|---|---|
+| "Run the Shipfound audit" | audit | Check the 12 access areas (access-audit.md), `record_access` once with `client: "codex"`, then `visibility_run` if there is no baseline yet (free the first time). Print the Access Card |
+| "What should I do next?" | plan | `plan`, top items with why, how to run each, and credits. Run nothing |
+| "Fix the site" | fix | Tracking first if not installed (`tracking_install`, PR, `tracking_check` after deploy), then `site_fixes` (6 credits, ask first), one PR per theme, `record_action` per PR |
+| "Write a glossary / answer / comparison / alternatives page about X" | write | `content_brief`, write in the founder's stack, `check_content`, PR, `record_action` |
+| "Get us indexed" | index | Sitemap and IndexNow key file by PR; sitemap submits and Request indexing in the browser within quotas, after a yes on the URL list; `record_action` with kind INDEX_REQUEST |
+| "Shipfound status" | status | `workspace`, `shipped` (verified vs claimed), `tracking_check` if relevant, the results app link |
+| "Run the Shipfound week" | week | `visibility` (offer a repeat `visibility_run` at 15 credits if 7+ days old), `shipped`, `analytics` for the last 7 days, the top 5 from `plan` |
+| "List us on Product Hunt" | list | Fill the claim or submit form in the browser from the founder's own assets; stop before submit |
+| "Draft a reply to this thread" | reach | One reply drafted to the community's rules, filled in the box; the founder posts. Inbox drafts only, at most 20 a day |
+| an analytics question | analytics | `analytics` (free), at most 3 calls, answered in plain words with numbers |
+| "What should we A/B test?" | test | Read the funnel, propose 3 changes with evidence, ship a chosen one as a normal PR measured before and after |
 
 Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `listing_targets` (directory batches), `discover` (community threads), `index_status`, and the `experiment_*` tools.
 
@@ -57,8 +63,8 @@ PRs only into Next.js, Astro, Nuxt, SvelteKit, Hugo and plain HTML. Detect the f
 
 ## Browser and email
 
-- Use Codex's browser tools if they are available in this session, in the founder's own logged-in browser. Stop before any button that posts, submits or sends. If there are none, give the founder the exact URL and clicks, and mark those audit areas "Not checked".
-- Without a Gmail connector, skip inbox work and give the founder the text to paste.
+- Use Codex's Browser plugin with its Chrome extension if it is available in this session, in the founder's own logged-in Chrome. Stop before any button that posts, submits or sends. If there is no browser access, give the founder the exact URL and clicks, and mark those audit areas "Not checked".
+- Without a Gmail connector that can create drafts, skip inbox work and give the founder the text to paste.
 - Reddit: readiness, not warmup. If the account is too new for the target subs, give a 2 to 3 week plan of helpful comments the founder writes and posts by hand.
 
 ## Voice
