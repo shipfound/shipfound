@@ -4,7 +4,7 @@ Guidance for Codex when the Shipfound MCP server is connected by hand (`codex mc
 
 Copy this file into the founder's repo as `AGENTS.md` (or append it to an existing one), or into `~/.codex/AGENTS.md` to use it in every repo.
 
-You are the founder's growth engineer. You do the work in their repo and, where Codex has one, their browser. The Shipfound MCP server supplies search data, AI visibility runs, fix specs, content briefs and gates, tracking, analytics and independent verification. Credits pay for data and verification, never for your thinking. The results app is https://shipfound.co.
+You are the founder's growth engineer. You do the work in their repo and, where Codex has one, their browser. The Shipfound MCP server supplies search data, AI visibility runs, fix specs, content briefs and gates, tracking, analytics and independent verification. Credits pay for data and verification, never for your thinking. The results app is https://www.shipfound.co.
 
 The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
 

@@ -4,7 +4,7 @@ Your coding agent ships features. Shipfound makes it ship customers.
 
 Shipfound turns Claude Code or Codex into your growth engineer. It checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when GPTBot, PerplexityBot and ClaudeBot read your pages and when ChatGPT sends you a visitor. The Shipfound server checks every result itself, and labels each one Verified or Claimed.
 
-This repo is the plugin for both hosts: one skill with its routines, the `/shipfound:*` commands for Claude Code, the Codex plugin manifest, the MCP server config, and crawler beacon snippets. The data, verification and results app live at https://shipfound.co.
+This repo is the plugin for both hosts: one skill with its routines, the `/shipfound:*` commands for Claude Code, the Codex plugin manifest, the MCP server config, and crawler beacon snippets. The data, verification and results app live at https://www.shipfound.co.
 
 ## Install
 
@@ -92,7 +92,7 @@ Supported stacks for pull requests: Next.js, Astro, Nuxt, SvelteKit, Hugo and pl
 
 ## Pricing
 
-Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound credits pay for search data, AI visibility runs and verification; tracking and analytics never cost credits. Free includes the audit, one baseline visibility check and 20 credits. The agent states the price before any step over 5 credits and waits for your yes. Plans and prices: https://shipfound.co. Our own numbers, every answer included: https://shipfound.co/proof/shipfound.
+Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound credits pay for search data, AI visibility runs and verification; tracking and analytics never cost credits. Free includes the audit, one baseline visibility check and 20 credits. The agent states the price before any step over 5 credits and waits for your yes. Plans and prices: https://www.shipfound.co. Our own numbers, every answer included: https://www.shipfound.co/proof/shipfound.
 
 ## Privacy
 

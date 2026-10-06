@@ -16,7 +16,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
    - Access: "8 of 12 open."
    - Shipped: "11 verified, 4 claimed, 1 failed", then the claimed and failed items, one line each with title and age.
    - Tracking: one line from `tracking_check`.
-   - The results app link from `workspace` (else https://shipfound.co).
+   - The results app link from `workspace` (else https://www.shipfound.co).
 5. Offer to verify the claimed items the founder says are merged or live: "`verify` costs 1 credit each; 4 items is 4 credits." Only on a yes, and only those items; if the total is over 5 credits, wait for an explicit yes with the number in it.
 
 Never call something done that is not VERIFIED.
