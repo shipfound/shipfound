@@ -45,7 +45,11 @@ Then copy [AGENTS.md](AGENTS.md) into your repo. Full steps: [docs/codex.md](doc
 
 For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). Each key carries a daily credit cap.
 
-- **Claude Code:** `export SHIPFOUND_API_KEY=wl_...` before starting Claude Code. The plugin's header helper (`scripts/mcp-headers.sh`) sends it as `Authorization: Bearer wl_...`. With the variable unset it sends nothing and OAuth is used.
+- **Claude Code:** add the server with the key as a fixed header, and use it in place of the plugin's server (turn that one off in `/mcp`; the skill and routines keep working):
+
+  ```
+  claude mcp add --transport http shipfound-key https://api.shipfound.co/mcp --header "Authorization: Bearer $SHIPFOUND_API_KEY"
+  ```
 - **Codex plugin:** `export SHIPFOUND_AUTHORIZATION="Bearer wl_..."` before starting Codex. The plugin sends it as the `Authorization` header; unset, OAuth is used.
 - **Codex, MCP server only:** `codex mcp add shipfound --url https://api.shipfound.co/mcp --bearer-token-env-var SHIPFOUND_API_KEY`, with `SHIPFOUND_API_KEY` exported.
 
@@ -109,7 +113,6 @@ Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound cre
 .codex-plugin/plugin.json         Codex plugin manifest (skills, MCP server, listing)
 .agents/plugins/marketplace.json  the "shipfound" marketplace for Codex
 .mcp.json                         the remote MCP server for Claude Code (HTTP, OAuth)
-scripts/mcp-headers.sh            optional API key header (Claude Code)
 skills/shipfound/SKILL.md         the growth engineer skill, shared by both hosts
 skills/shipfound/routines/        one procedure per routine (audit, fix, write, ...)
 skills/shipfound/references/      audit, fixes, content, tracking, verification, PR playbooks

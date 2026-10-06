@@ -2,8 +2,7 @@
   "mcpServers": {
     "shipfound": {
       "type": "http",
-      "url": "${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp",
-      "headersHelper": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/mcp-headers.sh\""
+      "url": "${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp"
     }
   }
 }

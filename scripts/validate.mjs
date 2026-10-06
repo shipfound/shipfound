@@ -170,7 +170,7 @@ if (mcp) {
   else {
     if (s.type !== "http") fail(mcpFile, `shipfound.type must be "http", got ${s.type}`);
     if (!/^\$\{SHIPFOUND_API_URL:-https:\/\/api\.shipfound\.co\}\/mcp$/.test(s.url ?? "")) fail(mcpFile, `url must be \${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp, got ${s.url}`);
-    if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; use the headersHelper");
+    if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; API-key users add their own server (README)");
     if (s.headersHelper) {
       const m = /\$\{CLAUDE_PLUGIN_ROOT\}\/([^"\s]+)/.exec(s.headersHelper);
       if (!m || !existsSync(join(ROOT, m[1]))) fail(mcpFile, `headersHelper script not found: ${s.headersHelper}`);
