@@ -1,0 +1,17 @@
+{
+  "name": "shipfound",
+  "description": "Shipfound: your coding agent ships features, Shipfound makes it ship customers.",
+  "owner": {
+    "name": "Shipfound",
+    "url": "https://shipfound.co"
+  },
+  "plugins": [
+    {
+      "name": "shipfound",
+      "source": "./",
+      "description": "Access audit, site fixes, content PRs, indexing and AI crawler tracking, run by your agent and verified by the Shipfound server.",
+      "category": "marketing",
+      "tags": ["seo", "aeo", "ai-search", "growth", "analytics"]
+    }
+  ]
+}

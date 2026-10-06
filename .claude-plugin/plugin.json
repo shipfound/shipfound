@@ -1,0 +1,14 @@
+{
+  "name": "shipfound",
+  "displayName": "Shipfound",
+  "version": "0.1.0",
+  "description": "Turns Claude Code into your growth engineer: checks what you have access to, fixes your site for Google and AI search, ships content as pull requests, gets you indexed, and tracks AI crawlers and AI traffic. Every result is checked by the Shipfound server.",
+  "author": {
+    "name": "Shipfound",
+    "url": "https://shipfound.co"
+  },
+  "homepage": "https://shipfound.co",
+  "repository": "https://github.com/shipfound/shipfound",
+  "license": "MIT",
+  "keywords": ["seo", "aeo", "ai-search", "growth", "indexing", "analytics", "ai-crawlers", "content"]
+}

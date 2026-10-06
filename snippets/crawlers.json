@@ -1,0 +1,22 @@
+{
+  "note": "Copy of CRAWLERS from Shipfound's shared contracts. Case-insensitive substring match on the user agent, first match wins, so keep the order. The tracker matches the user agent again on ingest; a snippet only decides whether to send the hit.",
+  "crawlers": [
+    { "bot": "OAI-SearchBot", "match": "oai-searchbot", "family": "openai" },
+    { "bot": "ChatGPT-User", "match": "chatgpt-user", "family": "openai" },
+    { "bot": "GPTBot", "match": "gptbot", "family": "openai" },
+    { "bot": "Perplexity-User", "match": "perplexity-user", "family": "perplexity" },
+    { "bot": "PerplexityBot", "match": "perplexitybot", "family": "perplexity" },
+    { "bot": "Claude-User", "match": "claude-user", "family": "anthropic" },
+    { "bot": "Claude-SearchBot", "match": "claude-searchbot", "family": "anthropic" },
+    { "bot": "ClaudeBot", "match": "claudebot", "family": "anthropic" },
+    { "bot": "Google-InspectionTool", "match": "google-inspectiontool", "family": "google" },
+    { "bot": "Googlebot", "match": "googlebot", "family": "google" },
+    { "bot": "Bingbot", "match": "bingbot", "family": "microsoft" },
+    { "bot": "Applebot", "match": "applebot", "family": "apple" },
+    { "bot": "DuckAssistBot", "match": "duckassistbot", "family": "duckduckgo" },
+    { "bot": "Meta-ExternalAgent", "match": "meta-externalagent", "family": "meta" },
+    { "bot": "Bytespider", "match": "bytespider", "family": "bytedance" },
+    { "bot": "CCBot", "match": "ccbot", "family": "commoncrawl" },
+    { "bot": "Amazonbot", "match": "amazonbot", "family": "amazon" }
+  ]
+}
