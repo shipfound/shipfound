@@ -76,7 +76,7 @@ Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a
 | `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
 | `/shipfound:write <type>` | "Write a glossary page about X" | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |
 | `/shipfound:index` | "Get us indexed" | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your browser |
-| `/shipfound:status` | "Shipfound status" | Credits, what shipped, what is verified and what is still claimed |
+| `/shipfound:status` | "Shipfound status" | Credits, what shipped, what is verified and what is still claimed, then what you can do next |
 | `/shipfound:analytics <question>` | Any analytics question | Answers it in plain words with numbers |
 | `/shipfound:week` | "Run the Shipfound week" | The Monday routine. The server-side weekly re-check is not built yet; the routine does it by hand |
 | `/shipfound:list` | "List us on Product Hunt" | Review and launch profiles filled in your browser. The directory database batches come later |

@@ -36,7 +36,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
 | [write](routines/write.md) | `/shipfound:write <type> [topic]` | "Write a glossary page about X" | One content page, gated, as a PR |
 | [index](routines/index.md) | `/shipfound:index [urls]` | "Get us indexed" | Sitemap and IndexNow by PR, then submits in the browser |
-| [status](routines/status.md) | `/shipfound:status [module]` | "Shipfound status" | Credits, verified vs claimed, tracking |
+| [status](routines/status.md) | `/shipfound:status [module]` | "Shipfound status" | Credits, verified vs claimed, tracking, then the next moves to start |
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
 | [list](routines/list.md) | `/shipfound:list [site]` | "List us on Product Hunt" | Review and launch profiles filled in the browser. Partly built |
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
