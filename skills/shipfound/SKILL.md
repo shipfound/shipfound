@@ -42,7 +42,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
-| [aso](routines/aso.md) | `/shipfound:aso [App Store link, reviews or country]` | "Fix our App Store listing" | iOS apps: listing audit (free), metadata fixes and new locales as a PR, review to-do, verified once Apple releases it |
+| [aso](routines/aso.md) | `/shipfound:aso [App Store link, country, or reviews, site, connect, test, cpp, ads]` | "Fix our App Store listing" | iOS apps: listing audit (free), fixes as a PR or staged in the next version, review to-do, the app's own site, screenshot A/B tests, custom product pages, Apple Ads proposals; verified once live |
 
 If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when any Shipfound tool answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
 
@@ -132,8 +132,17 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_audit` | `{ appId?, storefront?, locales? }` | ASO findings for the metadata passed (from fastlane/metadata), else the public listing |
 | `app_reviews` | `{ appId?, country?, pages? }` | Latest App Store reviews: stars, by version, the 1 and 2 star ones to group into a to-do list |
 | `listing_targets` | `{ count?, include? }` | The next directories to list on: free, open to this product, not yet listed, ranked by AI citations, with submit URLs |
+| `app_site` | `{ appId?, slug?, content? }` | Read or write the app's site on shipfound.site: a home page and a page per search; the founder publishes it |
+| `app_metadata` | `{ appId? }` | Every locale's metadata from App Store Connect (keyword field included): the version being prepared and the live one |
+| `app_metadata_stage` | `{ appId?, changes }` | Write listing changes into the version the founder will submit (Builder); never the live listing |
+| `app_screenshots` | `{ screenshots, size? }` | New screenshots: a caption over each raw screen, at App Store size; links to show or download |
+| `app_cpp` | `{ appId?, action, name?, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | List custom product pages, or make one as a draft with its keywords and screenshots (Growth); the founder submits it |
+| `app_experiment` | `{ appId?, action, name?, trafficProportion?, locale?, treatments? }` | List App Store A/B tests, or set one up with new screenshots as a draft (Growth); the founder starts it |
+| `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect |
+| `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
+| `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |
 
-`record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT; `url` is https.
+`record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https.
 
 If a tool you need is not on this list, do not invent one. Say what is missing and do the part you can.
 

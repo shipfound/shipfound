@@ -61,6 +61,15 @@ const TOOLS = {
   app_audit: 0,
   app_reviews: 0,
   listing_targets: 4,
+  app_site: 0,
+  app_metadata: 0,
+  app_metadata_stage: 0,
+  app_screenshots: 0,
+  app_cpp: 0,
+  app_experiment: 0,
+  app_downloads: 0,
+  ads_review: 0,
+  ads_propose: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".
