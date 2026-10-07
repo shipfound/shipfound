@@ -18,6 +18,6 @@ Input: an optional theme or URL.
 4. **Site fixes.** Say "site_fixes costs 6 credits; you have N. Run it?" and wait for a yes. Then call `site_fixes` once, with `{ url }` if the founder gave a URL, else `{}`.
 5. Group the specs by theme. Show the themes with counts in the order from site-fixes.md, for example "structured-data (3), metadata (7), llms-txt (1)". If the founder named a theme, use it; else take the first one or two.
 6. For each chosen theme: reproduce the evidence, apply the fixes in the framework's idiom, build, branch `shipfound/fix-<theme>`, open one PR with the preview link (pr-conventions.md), and call `record_action` with `module` FIXES, `kind` PR, `liveUrl` the main page, `meta.theme` and `meta.fixIds`.
-7. Stop after at most 3 PRs in this run. Summarise: PRs opened (all claimed, none verified until merged, deployed and checked), credits spent, the remaining themes, and the next step: review and merge, then the status routine.
+7. Stop after at most 3 PRs in this run. Summarise: PRs opened (all claimed, none verified until merged, deployed and checked), credits spent, the remaining themes, and the next step: review and merge, then the status routine. Then the hand-over (SKILL.md): offer the next move.
 
 Never merge, never push to the default branch, never add a dependency other than `@shipfound/next` without asking.

@@ -22,7 +22,7 @@ Input: none needed.
    - **WAITING**: call it again. Keep going for up to 10 minutes in all, which is how long the code lives. Say nothing between calls unless the founder asks.
    - **OPEN_LINK** (the code expired): go back to step 2 once. If that one expires too, stop and say to run the login routine again when they are ready.
    - An error saying the founder chose Deny: say nothing was signed in, and stop.
-4. Call `workspace` and say, in one line, which site this session works on, the plan and credits, and whether there is an audit yet. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again.
+4. Call `workspace` and say, in one line, which site this session works on, the plan and credits, and whether there is an audit yet. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
 
 If the founder has no Shipfound account yet, the approval page asks them to register first and lets them add their site there. There is nothing to do here for that.
 

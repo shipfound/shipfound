@@ -17,6 +17,6 @@ Input: the page type, then an optional topic. The Content page of the results ap
 7. Call `check_content` with `{ type, markdown, facts }` (2 credits). Fix every failure and run it once more. If it still fails, show the failures and stop without a PR.
 8. Add internal links from one or two related pages, update a hand-written sitemap, build the site.
 9. Branch `shipfound/content-<type>-<slug>`, open the PR with the preview link, and call `record_action` with `module` CONTENT, `kind` PR, `liveUrl` the page's final URL, `meta: { type, topic, keyword, key }`, where `type` is `listicle` for a listicle and `key` is the idea's key from the Content page when the page came from there.
-10. Summarise: the page, its URL once live, the PR (claimed), the gate result, credits spent (brief 5, checks 2 each), and the next step.
+10. Summarise: the page, its URL once live, the PR (claimed), the gate result, credits spent (brief 5, checks 2 each), and the next step. Then the hand-over (SKILL.md): offer the next move.
 
 Never invent statistics, quotes, customers or competitor claims. One page per run (a batch of up to 5 glossary terms may share one brief each and one PR).

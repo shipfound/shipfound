@@ -15,6 +15,6 @@ Input: the question.
    - Goals: call `goals` with `{ action: "list" }` when the question names a conversion.
 4. Answer in two to six lines: the direct answer first, with numbers, the period, and the change against the previous period when you have it. For example "ChatGPT sent 31 visits last week (up from 12), 6 signed up (19%). Perplexity sent 9, none signed up."
 5. Say what the numbers cannot show, in one line, when it matters: cookieless mode cannot follow a visitor across days, so multi-day attribution needs Attribution mode; revenue needs a payment webhook; Search Console and Bing data run 2 to 3 days behind.
-6. If the reports are empty, call `tracking_check` and report what is missing instead of guessing.
+6. If the reports are empty, call `tracking_check` and report what is missing instead of guessing. Then the hand-over (SKILL.md): offer the next move.
 
 Never round small numbers into percentages without the count ("2 of 3", not "67%"), and never present a trend from fewer than 20 sessions as a finding.

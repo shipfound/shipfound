@@ -60,12 +60,12 @@ const TOOLS = {
   app_add: 0,
   app_audit: 0,
   app_reviews: 0,
+  listing_targets: 4,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".
 const NOT_YET = [
   "index_status",
-  "listing_targets",
   "visibility_rerun",
   "experiment_plan",
   "experiment_hypotheses",

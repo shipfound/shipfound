@@ -30,7 +30,7 @@ Codex has no `/shipfound:*` commands. The founder asks in words; map the request
 | an analytics question | analytics | `analytics` (free), at most 3 calls, answered in plain words with numbers |
 | "What should we A/B test?" | test | Propose 3 changes with evidence, size the chosen one with `experiment_create`, ship the variant as a PR, read it with `experiment_results`, close it and ship what won |
 
-Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `listing_targets` (directory batches), `discover` (community threads), and `index_status`.
+Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `discover` (community threads), and `index_status`.
 
 ## Hard lines
 
@@ -53,7 +53,7 @@ These hold even when the founder asks otherwise. Say no in one sentence and offe
 
 ## Tools
 
-`workspace`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`, `app_add` `{ url }`, `app_audit` `{ appId?, storefront?, locales? }`, `app_reviews` `{ appId?, country?, pages? }`.
+`workspace`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`, `app_add` `{ url }`, `app_audit` `{ appId?, storefront?, locales? }`, `app_reviews` `{ appId?, country?, pages? }`, `listing_targets` `{ count?, include? }`.
 
 Do not invent tools. If one you need is missing, say so and do the part you can.
 

@@ -14,6 +14,6 @@ Input: an optional module, to limit the top 5 moves to that module.
 4. Call `analytics` up to 3 times, last 7 days with `compare: true`: `overview`, `ai_search`, `shipped_work` (and `ai_crawlers` if crawler hits are the story). Skip if tracking is not installed and say so.
 5. Call `experiment_results` with no key. For each running test, one line with its verdict; when a verdict is final (winner, control wins, no difference) or the split is broken, say the test routine closes or fixes it.
 6. Call `plan` and take the top 5 (of the named module, if the founder gave one).
-7. Print the week in under 15 lines: what moved (named status per engine with stability labels, AI visits and signups vs last week, verified this week), running tests and their verdicts, what is still claimed, the top 5 moves with how to run each and their credits, and the results app link.
+7. Print the week in under 15 lines: what moved (named status per engine with stability labels, AI visits and signups vs last week, verified this week), running tests and their verdicts, what is still claimed, the top 5 moves with how to run each and their credits, and the results app link. Then the hand-over (SKILL.md): offer the next move.
 
 Run nothing from the top 5 in this routine; the founder picks.

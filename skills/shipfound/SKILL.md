@@ -38,7 +38,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | [index](routines/index.md) | `/shipfound:index [urls]` | "Get us indexed" | Sitemap and IndexNow by PR, then submits in the browser |
 | [status](routines/status.md) | `/shipfound:status [module]` | "Shipfound status" | Credits, verified vs claimed, tracking, then the next moves to start |
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
-| [list](routines/list.md) | `/shipfound:list [site]` | "List us on Product Hunt" | Review and launch profiles filled in the browser. Partly built |
+| [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; launch and review sites on request |
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
@@ -59,6 +59,17 @@ audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 5. **Verify**: `record_action` for every shipped thing, then `verify`. See [references/verification.md](references/verification.md).
 6. **Track**: `analytics` and `tracking_check` show crawls, visits and signups per shipped item.
 7. **Weekly** (week routine): re-read `visibility`, `shipped` and `analytics`, then the top 5 moves from `plan`.
+
+## The hand-over
+
+No routine ends in silence. When a routine finishes (and after you answer a Shipfound question), offer the next move:
+
+1. Take it from `record_action`'s `next` when you just recorded work, else call `plan` (free) and take the top item you have not just done.
+2. Offer it in one line: what it gets the founder, why now, its price, and how to start it ("Next: list on SaaSHub and AlternativeTo, the directories AI answers cite most. 4 credits. Start?").
+3. On a yes, start that routine at its first step. On a no, offer the one after it. Stop when the founder says they are done for now, and then say how to pick up later (the status routine).
+4. Inside a batch (listings, glossary terms, review replies), finish the item, then go straight to the next one in the batch before offering a different move.
+
+Never offer more than one move at a time, never start one without a yes, and still state the price before anything over 5 credits.
 
 ## Hard lines
 
@@ -120,6 +131,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_add` | `{ url }` | Add the founder's iOS app from its App Store link; the public listing |
 | `app_audit` | `{ appId?, storefront?, locales? }` | ASO findings for the metadata passed (from fastlane/metadata), else the public listing |
 | `app_reviews` | `{ appId?, country?, pages? }` | Latest App Store reviews: stars, by version, the 1 and 2 star ones to group into a to-do list |
+| `listing_targets` | `{ count?, include? }` | The next directories to list on: free, open to this product, not yet listed, ranked by AI citations, with submit URLs |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT; `url` is https.
 

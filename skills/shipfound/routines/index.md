@@ -18,7 +18,7 @@ Input: optional URLs the founder wants indexed.
 5. **Bing Webmaster Tools, in the browser.** Sitemaps: submit the sitemap if it is not there. URL Submission: submit the same URLs within the quota Bing shows.
 6. **IndexNow**, only once the key file is live and the founder said yes in step 3: POST the URLs to `https://api.indexnow.org/indexnow` with `{ host, key, keyLocation, urlList }`. One request, not one per URL.
 7. **Record.** For each sitemap submit and each URL requested, call `record_action` with `module` INDEX, `kind` INDEX_REQUEST, `url` the page (or sitemap) URL, `meta: { engine: "google" | "bing" | "indexnow", method: "sitemap" | "request-indexing" | "url-submission" }`.
-8. Summarise: what was submitted where, how many requests are left in today's quota if shown, and that all of it is claimed until the server confirms the index state.
+8. Summarise: what was submitted where, how many requests are left in today's quota if shown, and that all of it is claimed until the server confirms the index state. Then the hand-over (SKILL.md): offer the next move.
 
 Not built yet: the `index_status` tool (index state per URL from the GSC and Bing APIs). Until it ships, `verify` on an INDEX_REQUEST is the check, a day or more later, and the results app's Index screen fills in as the APIs connect.
 
