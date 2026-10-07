@@ -8,12 +8,13 @@ Use these values for `type` in `content_brief` and `check_content`:
 
 | type | What | Typical length |
 |---|---|---|
-| `glossary` | One term, defined plainly, with how it applies to the product's category | 300 to 700 words |
-| `answer` | One question buyers ask AI engines, answered in the first two sentences, then the detail | 600 to 1,200 words |
-| `comparison` | "<Product> vs <Competitor>": a fair table and when to pick each | 900 to 1,600 words |
-| `alternatives` | "<Competitor> alternatives": a short, honest list including the product | 900 to 1,600 words |
-| `post` | Long-form post on a topic the brief picks | 1,200 to 2,500 words |
-| `report` | A data report, only when the product has data worth publishing and the founder supplies it | varies |
+| `glossary_term` | One term, defined plainly, with how it applies to the product's category | 600 to 900 words |
+| `answer_page` | One question buyers ask AI engines, answered in the first two sentences, then the detail and an FAQ | 300 to 600 words |
+| `comparison` | "<Product> vs <Competitor>": a fair table and when to pick each | 900 to 1,400 words |
+| `alternatives` | "<Competitor> alternatives": a short, honest list including the product | 900 to 1,400 words |
+| `article` | A blog post on a topic the brief picks | 1,500 to 2,200 words |
+
+The lengths are what `check_content` gates on. A **listicle** ("Best <category> tools", "Best <category> tools for <segment>") is an `article`: a ranked list of real products with what each is best for, a comparison table, and the product in it on its merits, never at the top by default. Every claim about another product comes from its own public pages. Record it with `meta.type` `listicle`.
 
 ## Steps
 
@@ -25,7 +26,7 @@ Use these values for `type` in `content_brief` and `check_content`:
 6. **Wire it in.** Add the page to the sitemap if the sitemap is hand-written, link to it from one or two related existing pages (internal links), and add Article or FAQ structured data only where it is true.
 7. **Build** the site locally. A page that breaks the build is not opened.
 8. **PR.** One PR per page (a batch of up to 5 glossary terms may share one PR). See [pr-conventions.md](pr-conventions.md).
-9. **Record.** `record_action` with `module` CONTENT, `kind` PR, `url` the PR, `liveUrl` the page's final URL, `meta: { type, topic, keyword }`.
+9. **Record.** `record_action` with `module` CONTENT, `kind` PR, `url` the PR, `liveUrl` the page's final URL, `meta: { type, topic, keyword, key }` (`key` from the Content page idea, when there is one). The Content page shows the page as written, and whether engines cite it.
 
 ## Never fabricate
 

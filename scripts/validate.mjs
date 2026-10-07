@@ -69,6 +69,9 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // content types (content_brief, check_content)
+  "answer_page",
+  "glossary_term",
   // experiment_results verdicts
   "keep_running",
   "control_wins",
