@@ -139,7 +139,7 @@ Anything else (Remix, Gatsby, Webflow, Framer, WordPress, Rails views, a mobile 
 
 ## Reddit: you post it
 
-Claude cannot open Reddit, in the browser or by fetch, so you never read or check Reddit yourself. You write the post or reply; the founder posts it.
+Claude cannot open Reddit, in the browser or by fetch, so you never read or check Reddit yourself. Finding threads happens on Shipfound's server: Assisted posts in the results app finds them and writes the replies (8 credits a run), and the founder posts from there. For a thread or a post they bring to you, you write it and the founder posts it.
 
 - A post: one link with the title and text filled in, `https://www.reddit.com/r/<sub>/submit?type=TEXT&title=<title>&text=<body>`, URL-encoded. If the body is over about 900 characters, give the link with the title only and the body to copy.
 - A reply: the text to copy and the thread link. The founder opens it, pastes and presses Comment.
