@@ -63,9 +63,9 @@ PRs only into Next.js, Astro, Nuxt, SvelteKit, Hugo and plain HTML. Detect the f
 
 ## Browser and email
 
-- Use Codex's Browser plugin with its Chrome extension if it is available in this session, in the founder's own logged-in Chrome. Stop before any button that posts, submits or sends. If there is no browser access, give the founder the exact URL and clicks, and mark those audit areas "Not checked".
+- Use Codex's Browser plugin with its Chrome extension if it is available in this session, in the founder's own logged-in Chrome. Stop before any button that posts, submits or sends. If there is no browser access, say so first and how to connect it (install the Browser plugin and its Chrome extension, keep Chrome open), then give the exact URL and clicks, and mark those audit areas "Not checked". Never offer a plain fetch or a username lookup instead: X blocks them.
 - Without a Gmail connector that can create drafts, skip inbox work and give the founder the text to paste.
-- Reddit: readiness, not warmup. If the account is too new for the target subs, give a 2 to 3 week plan of helpful comments the founder writes and posts by hand.
+- Reddit: you write, the founder posts. Never open or fetch Reddit; the audit only asks whether they have an account to post from. A post is one link with the title and text filled in; a reply is copy, open the thread, paste. When it comes up, say why: Reddit bans accounts that post through automation, and Shipfound never posts for the founder. If their account does not meet a sub's minimums yet, suggest a few weeks of helpful comments they write and post themselves.
 
 ## Voice
 

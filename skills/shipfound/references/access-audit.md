@@ -7,12 +7,12 @@ Work through the eleven areas in this order (local first, then the browser, then
 For each area decide:
 
 - **green**: usable now.
-- **amber**: usable with a caveat (a new Reddit account, a verified GSC property with no sitemap, Gmail on @gmail.com).
+- **amber**: usable with a caveat (a verified GSC property with no sitemap, Gmail on @gmail.com).
 - **red**: blocked or absent.
 
 Write `detail` as one or two plain sentences of what you saw (max 600 characters), and `fix` as the one action that turns it green (max 300 characters, empty when green). Put numbers and flags in `facts` (strings, numbers, booleans, null, or arrays of strings).
 
-If you could not check an area (no browser tools, the founder skipped a sign-in), mark it amber, say "Not checked: <reason>" in `detail`, and make the fix the step that lets you check it.
+If you could not check an area (no browser tools, the founder skipped a sign-in), mark it amber, say "Not checked: <reason>" in `detail`, and make the fix the step that lets you check it. For the three browser areas (gsc, bing, x) without browser tools, the reason is "your browser is not connected" and the fix is connecting it (SKILL.md, "Hosts", the Browser row).
 
 ## 1. Repo (`repo`)
 
@@ -72,11 +72,11 @@ Green: connected on a custom domain. Amber: connected on @gmail.com (many direct
 
 ## 6. Reddit (`reddit`)
 
-- In the browser, open https://www.reddit.com/user/me. If it redirects to a profile, the founder is logged in; note the username, account age (cake day) and karma.
-- Shadowban check, logged out: `curl -s -A "shipfound-audit" https://www.reddit.com/user/<name>/about.json`. A 404 or `is_suspended` means the profile is not visible publicly.
-- Pick 3 to 5 subs where the founder's buyers ask questions (from the product category). For each, read the rules (`/r/<sub>/about/rules`) and the sidebar for account age, karma and self-promotion limits.
+One question to the founder, nothing else. Do not open Reddit, do not fetch it and do not ask for a username: Claude cannot open Reddit, in the browser or by fetch.
 
-Green: logged in, visible, meets every target sub's minimums. Amber: meets some, or the account is new: the fix is a 2 to 3 week readiness plan the founder carries out by hand. Red: no account, or not publicly visible. Facts: `{ accountAgeDays: 40, karma: 12, shadowbanned: false, subs: ["r/SaaS: ok", "r/startups: needs 100 karma"] }`.
+Ask: "Do you have a Reddit account you would post from? Yes or no." Then say in one line why it is a question and not a check: Shipfound writes the Reddit posts and replies, and the founder posts them by hand (SKILL.md, "Reddit: you post it").
+
+Green: yes. Red: no; the fix is "Make a Reddit account if your buyers are there. Nothing else in the plan needs one." Facts: `{ hasAccount: true }`.
 
 Never upvote, comment or post during the audit.
 

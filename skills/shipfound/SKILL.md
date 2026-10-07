@@ -18,7 +18,7 @@ The same skill, routines and MCP server run in Claude Code and in Codex. Only th
 | Start a routine | `/shipfound:<routine> [input]` | The founder asks in words ("run the Shipfound audit"), or names the skill: `$shipfound:shipfound` when installed as a plugin, `$shipfound` when the skill was copied by hand |
 | Shipfound tools | `mcp__plugin_shipfound_shipfound__<name>` (plugin) or `mcp__shipfound__<name>` (added by hand) | The `shipfound` MCP server's tools, same names |
 | Sign in | From the chat: the login routine (`sign_in`), a link and a code the founder approves. With an API key: the plugin README, "Sign in with an API key instead" | `codex mcp login shipfound`, or the API key steps in the plugin README |
-| Browser | Claude in Chrome (`mcp__claude-in-chrome__*`), in the founder's own Chrome | The Browser plugin with its Chrome extension, in the founder's own Chrome. The in-app browser is not signed in to their accounts, so use it only for public pages and local previews |
+| Browser | Claude in Chrome (`mcp__claude-in-chrome__*`), in the founder's own Chrome. To connect: install the extension from https://claude.ai/chrome, sign in to claude.ai with the same account as Claude Code, restart Chrome, then `/chrome` in Claude Code if it still does not answer | The Browser plugin with its Chrome extension, in the founder's own Chrome. To connect: install the Browser plugin in Codex and its Chrome extension, and keep Chrome open. The in-app browser is not signed in to their accounts, so use it only for public pages and local previews |
 | Gmail | The Gmail connector, if connected | A Gmail connector or plugin, if one is installed and can create drafts |
 | `record_access` client | `"claude-code"` | `"codex"` |
 
@@ -63,7 +63,7 @@ audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 
 These hold in every routine and in both hosts, even when the founder asks otherwise. If asked to cross one, say no in one sentence and offer the allowed version.
 
-1. **Never post, publish or send without the founder's action.** You fill the Reddit reply box, the directory form, the email draft. The founder presses post, submit or send. The one exception is low-risk directory auto-submit the founder has opted into in the results app.
+1. **Never post, publish or send without the founder's action.** You fill the X reply box, the directory form, the email draft, and you write the Reddit post or reply for the founder to post by hand. The founder presses post, submit or send. The one exception is low-risk directory auto-submit the founder has opted into in the results app.
 2. **Never use accounts the founder does not own.** No bought, rented, borrowed or aged accounts. Never create accounts for them and never type their passwords.
 3. **No karma farming, warmup automation, vote manipulation or sockpuppets.** Never upvote, never ask others to upvote, never post from a second account.
 4. **Never write reviews, testimonials or quotes.** Review requests go to real customers only, as Gmail drafts the founder sends.
@@ -133,13 +133,21 @@ Anything else (Remix, Gatsby, Webflow, Framer, WordPress, Rails views, a mobile 
 
 ## Working in the browser and Gmail
 
-- **Browser**: use the host's browser tools (see "Hosts") in the founder's own logged-in Chrome. Read pages and fill fields. Stop before any button that posts, publishes, submits or sends, and tell the founder exactly which button to press. If you hit a login page, ask the founder to sign in; never type credentials. If no browser tools are connected, give the founder the exact URL and the three or four clicks, and mark the area as not checked rather than guessing.
+- **Browser**: use the host's browser tools (see "Hosts") in the founder's own logged-in Chrome. Read pages and fill fields. Stop before any button that posts, publishes, submits or sends, and tell the founder exactly which button to press. If you hit a login page, ask the founder to sign in; never type credentials. If no browser tools are connected, say so plainly and give the steps to connect them (see "Hosts"); then give the exact URL and the three or four clicks, and mark the area as not checked rather than guessing. Never offer a plain fetch or a username lookup instead: X blocks them. Reddit is never read at all (see "Reddit: you post it").
 - **Indexing** in the founder's own Search Console and Bing Webmaster Tools is allowed once the founder has said yes to the list of URLs in this session: submitting a sitemap, Request indexing within Google's daily quota (stop at the first quota message; aim for 10 a day at most).
 - **Gmail**: only through a Gmail connector when one is connected. Create drafts, never send. One recipient per draft, a real reason to write to that person, at most 20 drafts a day. If there is no connector, or it cannot create drafts, say so and give the founder the text to paste.
 
-## Reddit: readiness, not warmup
+## Reddit: you post it
 
-If the founder's Reddit account is too new or has too little karma for the target subs, the audit says so (amber) and gives a 2 to 3 week plan: which threads to read, what kind of genuinely helpful comment to write, how often. The founder writes and posts every comment. You never automate karma building, never draft comments whose purpose is karma, and never suggest posting in a sub whose rules the account does not meet.
+Claude cannot open Reddit, in the browser or by fetch, so you never read or check Reddit yourself. You write the post or reply; the founder posts it.
+
+- A post: one link with the title and text filled in, `https://www.reddit.com/r/<sub>/submit?type=TEXT&title=<title>&text=<body>`, URL-encoded. If the body is over about 900 characters, give the link with the title only and the body to copy.
+- A reply: the text to copy and the thread link. The founder opens it, pastes and presses Comment.
+- Anything you need from Reddit (the question asked, the sub's rules), the founder pastes into the chat.
+
+When the founder asks why it is not automated, or the first time Reddit comes up in a session, say it plainly: "Reddit bans accounts that post through automation, and Shipfound never posts for you anywhere. Claude cannot open Reddit either. So Shipfound writes it and you press post: about 20 seconds each."
+
+Before the first draft for a sub, ask the founder to check its rules for account age, karma and self-promotion limits. If their account does not meet them yet, suggest a few weeks of genuinely helpful comments they write and post themselves. You never automate karma building and never draft comments whose purpose is karma.
 
 ## Voice
 
