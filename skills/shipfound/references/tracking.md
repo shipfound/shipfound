@@ -86,7 +86,20 @@ The proxy must pass the visitor's IP in `X-Forwarded-For`; cookieless mode deriv
 
 ## 6. Goals and events
 
-`tracking_install` creates the default goals. Check them with `goals` `{ action: "list" }`. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals` `{ action: "create", ... }`.
+`tracking_install` creates the default goals. Check them with `goals` `{ action: "list" }`.
+
+Goals are **hard** or **soft**:
+
+- Every goal you create is soft. Only the founder makes one hard, in the results app (Analytics, Conversions, "Convert to Hard Conversion"). Never say a goal is hard until `goals` lists it as `HARD`.
+- The headline conversions count hard goals once there is one; until then they count the soft ones and say so.
+- Changing a hard goal's type or match puts it back to soft. Do not redefine a hard goal without the founder.
+- Say why you added a goal in `note`, with the evidence.
+
+Payments need no code. When goals are listed, Shipfound proposes a soft `payment` goal from the site's own data: a payment-like event the site already sends, or a `CHECKOUT` goal (a visit back from a hosted checkout such as Stripe, Dodo, Paddle, Lemon Squeezy or Polar, which also counts past payments). Point the founder at it to convert it to hard. Do not add payment events to the site for this.
+
+Prefer goals that read data the site already sends (a `PAGEVIEW` on a path, `CHECKOUT`) over new code. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals` `{ action: "create", ... }` only if nothing already sent shows it.
+
+The founder's own visits are excluded by the server while they are signed in to the results app; never add code to the site to filter them.
 
 In the code, only where the founder agrees:
 

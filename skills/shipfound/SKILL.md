@@ -112,7 +112,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `tracking_install` | `{ domain, framework, identityMode? }` | Site key, secret (first time only), script tag, crawler snippet for the stack |
 | `tracking_check` | `{ siteId? }` | Events and crawler hits seen, goals fired, what is missing |
 | `analytics` | `{ report, from?, to?, compare?, filters? }` | Any report: overview, realtime, channels, ai_search, sources, landing_pages, pages, shipped_work, ai_crawlers, conversions, timeseries |
-| `goals` | `{ action: "list" }` or `{ action: "create", ... }` | Goals and funnels |
+| `goals` | `{ action: "list" }` or `{ action: "create", ... }` | Goals and funnels. Yours are soft; only the founder converts one to hard (references/tracking.md, section 6) |
 | `experiment_create` | `{ key, name, hypothesis, path, goal, variants?, mde?, site? }` | Size and start an A/B test; returns the sizing and the page code, or a refusal with the numbers |
 | `experiment_results` | `{ key?, site? }` | Every test, or one test's table and verdict |
 | `experiment_close` | `{ key, keep, note?, site? }` | Stop a test and record the variant kept |
