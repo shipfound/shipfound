@@ -54,6 +54,9 @@ const TOOLS = {
   tracking_check: 0,
   analytics: 0,
   goals: 0,
+  experiment_create: 0,
+  experiment_results: 0,
+  experiment_close: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".
@@ -63,12 +66,13 @@ const NOT_YET = [
   "visibility_rerun",
   "experiment_plan",
   "experiment_hypotheses",
-  "experiment_create",
-  "experiment_results",
-  "experiment_close",
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // experiment_results verdicts
+  "keep_running",
+  "control_wins",
+  "no_difference",
   "ai_search",
   "landing_pages",
   "shipped_work",

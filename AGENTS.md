@@ -28,9 +28,9 @@ Codex has no `/shipfound:*` commands. The founder asks in words; map the request
 | "List us on Product Hunt" | list | Fill the claim or submit form in the browser from the founder's own assets; stop before submit |
 | "Draft a reply to this thread" | reach | One reply drafted to the community's rules, filled in the box; the founder posts. Inbox drafts only, at most 20 a day |
 | an analytics question | analytics | `analytics` (free), at most 3 calls, answered in plain words with numbers |
-| "What should we A/B test?" | test | Read the funnel, propose 3 changes with evidence, ship a chosen one as a normal PR measured before and after |
+| "What should we A/B test?" | test | Propose 3 changes with evidence, size the chosen one with `experiment_create`, ship the variant as a PR, read it with `experiment_results`, close it and ship what won |
 
-Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `listing_targets` (directory batches), `discover` (community threads), `index_status`, and the `experiment_*` tools.
+Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `listing_targets` (directory batches), `discover` (community threads), and `index_status`.
 
 ## Hard lines
 
