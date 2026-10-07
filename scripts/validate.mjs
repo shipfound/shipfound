@@ -178,7 +178,9 @@ if (mcp) {
   else {
     if (s.type !== "http") fail(mcpFile, `shipfound.type must be "http", got ${s.type}`);
     // /mcp/plugin, not /mcp: it never answers 401, so Claude Code loads the tools signed out and sign_in works from the chat.
-    if (!/^\$\{SHIPFOUND_API_URL:-https:\/\/api\.shipfound\.co\}\/mcp\/plugin$/.test(s.url ?? "")) fail(mcpFile, `url must be \${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin, got ${s.url}`);
+    // ?v= is the plugin's version, so the server can tell the founder when a newer one is out.
+    const want = `\${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin?v=${plugin?.version}`;
+    if (s.url !== want) fail(mcpFile, `url must be ${want}, got ${s.url}`);
     if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; API-key users add their own server (README)");
     if (s.headersHelper) {
       const m = /\$\{CLAUDE_PLUGIN_ROOT\}\/([^"\s]+)/.exec(s.headersHelper);
@@ -228,7 +230,8 @@ if (codex) {
   else {
     for (const k of Object.keys(codex.mcpServers)) if (k !== "shipfound") fail(codexFile, `unexpected MCP server ${k}`);
     if (!["http", "streamable_http", "streamable-http"].includes(server.type)) fail(codexFile, `mcpServers.shipfound.type must be an HTTP transport, got ${server.type}`);
-    if (server.url !== API_MCP_URL) fail(codexFile, `mcpServers.shipfound.url must be ${API_MCP_URL}, got ${server.url}`);
+    // ?v= is the plugin's version, so the server can tell the founder when a newer one is out.
+    if (server.url !== `${API_MCP_URL}?v=${codex.version}`) fail(codexFile, `mcpServers.shipfound.url must be ${API_MCP_URL}?v=${codex.version}, got ${server.url}`);
     if (/\$\{/.test(JSON.stringify(server))) fail(codexFile, "Codex does not expand ${...} in plugin MCP config");
     if (server.bearer_token_env_var) fail(codexFile, "bearer_token_env_var fails startup when the variable is unset, which breaks the OAuth default; use env_http_headers");
     if (server.http_headers?.Authorization || server.http_headers?.authorization) fail(codexFile, "a static Authorization header breaks the OAuth default");
@@ -263,7 +266,7 @@ if (codex) {
 }
 if (mcp?.mcpServers?.shipfound?.url) {
   // Same API as the Codex manifest; Codex stays on /mcp, where `codex mcp login` finds OAuth through the 401.
-  const fallback = /:-([^}]+)\}(\/mcp)\/plugin$/.exec(mcp.mcpServers.shipfound.url);
+  const fallback = /:-([^}]+)\}(\/mcp)\/plugin(\?v=[0-9.]+)?$/.exec(mcp.mcpServers.shipfound.url);
   if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}/plugin, on the same API as the Codex manifest`);
 }
 if (codexMarket) {

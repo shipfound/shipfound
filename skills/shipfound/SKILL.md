@@ -96,7 +96,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | Tool | Input | Use it to |
 |---|---|---|
 | `sign_in` | `{ client? }` | Sign this session in from the chat (login routine): returns a link and a code, then waits for the founder's Allow. Signed in, says which site the session works on |
-| `workspace` | none | Product, credits, plan, access summary, tracking state, results app links. Call first in every routine |
+| `workspace` | none | Product, credits, plan, access summary, tracking state, results app links, and `pluginUpdate` when a newer plugin is out. Call first in every routine; if `pluginUpdate` is there, pass its line to the founder once, then carry on |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |
 | `visibility_run` | none | Start a visibility run (10 questions x 4 engines x 4 runs). Runs in the background |
