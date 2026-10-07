@@ -82,6 +82,7 @@ Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a
 | `/shipfound:list` | "List us on Product Hunt" | Review and launch profiles filled in your browser. The directory database batches come later |
 | `/shipfound:reach` | "Draft a reply to this thread" | Community replies and Gmail drafts. Thread discovery comes later |
 | `/shipfound:test` | "What should we A/B test?" | A/B tests: a change proposed from your analytics, sized from your traffic, shipped as a variant, read honestly, winner shipped |
+| `/shipfound:aso` | "Fix our App Store listing" | Your iOS app: a free listing audit, then metadata fixes and new languages as a PR, a to-do list from your reviews, and each change verified once Apple releases it |
 
 Supported stacks for pull requests: Next.js, Astro, Nuxt, SvelteKit, Hugo and plain HTML. Other stacks get the audit, indexing and analytics, and no code changes.
 

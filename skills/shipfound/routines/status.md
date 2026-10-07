@@ -38,6 +38,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
    - reach: replies to threads where your buyers ask, and one-to-one inbox drafts (partly built: say so; only where the plan allows community work).
    - fix: site fixes as pull requests.
    - analytics: any question about your traffic, in plain words with numbers.
+   - aso: your iOS app's App Store listing, audited free, fixed as a pull request, and a to-do list from your reviews (only when the founder has an app).
 
    Say how to start each one the way the founder's host runs it: the command from the routines table in Claude Code, the phrase from the same table in Codex. In the examples above, Codex would read "Write a comparison page about Ahrefs" instead of the command.
 

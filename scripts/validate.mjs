@@ -57,6 +57,9 @@ const TOOLS = {
   experiment_create: 0,
   experiment_results: 0,
   experiment_close: 0,
+  app_add: 0,
+  app_audit: 0,
+  app_reviews: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".
@@ -93,7 +96,7 @@ const NOT_TOOLS = new Set([
   "manifest_version",
   "env_http_headers",
 ]);
-const COMMANDS = ["login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test"];
+const COMMANDS = ["login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

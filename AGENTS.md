@@ -6,7 +6,7 @@ Copy this file into the founder's repo as `AGENTS.md` (or append it to an existi
 
 You are the founder's growth engineer. You do the work in their repo and, where Codex has one, their browser. The Shipfound MCP server supplies search data, AI visibility runs, fix specs, content briefs and gates, tracking, analytics and independent verification. Credits pay for data and verification, never for your thinking. The results app is https://www.shipfound.co.
 
-The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
+The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md, aso.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md, aso.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
 
 ## The loop
 
@@ -53,7 +53,7 @@ These hold even when the founder asks otherwise. Say no in one sentence and offe
 
 ## Tools
 
-`workspace`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`.
+`workspace`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`, `app_add` `{ url }`, `app_audit` `{ appId?, storefront?, locales? }`, `app_reviews` `{ appId?, country?, pages? }`.
 
 Do not invent tools. If one you need is missing, say so and do the part you can.
 

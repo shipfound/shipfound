@@ -42,6 +42,7 @@ Each routine is one file in `routines/`. Read it before you act, follow it step 
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
+| [aso](routines/aso.md) | `/shipfound:aso [App Store link, reviews or country]` | "Fix our App Store listing" | iOS apps: listing audit (free), metadata fixes and new locales as a PR, review to-do, verified once Apple releases it |
 
 If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when any Shipfound tool answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
 
@@ -116,6 +117,9 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `experiment_create` | `{ key, name, hypothesis, path, goal, variants?, mde?, site? }` | Size and start an A/B test; returns the sizing and the page code, or a refusal with the numbers |
 | `experiment_results` | `{ key?, site? }` | Every test, or one test's table and verdict |
 | `experiment_close` | `{ key, keep, note?, site? }` | Stop a test and record the variant kept |
+| `app_add` | `{ url }` | Add the founder's iOS app from its App Store link; the public listing |
+| `app_audit` | `{ appId?, storefront?, locales? }` | ASO findings for the metadata passed (from fastlane/metadata), else the public listing |
+| `app_reviews` | `{ appId?, country?, pages? }` | Latest App Store reviews: stars, by version, the 1 and 2 star ones to group into a to-do list |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT; `url` is https.
 
