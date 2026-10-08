@@ -67,17 +67,38 @@ Day to day, the founder does not walk this loop by hand: grow (`today`) reads wh
 
 ## The hand-over
 
-No routine ends in silence. When a routine finishes (and after you answer a Shipfound question), offer the next move:
+No routine ends in silence. When a routine finishes (and after you answer a Shipfound question), offer the next move.
+
+**Only once the current job is finished.** Never ask about the next move at the start of a job or in the middle of one. When a job ends with something the founder does right now (post the X replies, press submit on a directory, paste a Reddit reply, send the drafts), say exactly what to do and where, end with "Tell me when it's done", and stop. Ask about the next move after they say it is done or that they are skipping it. Do not wait on a PR merge or a deploy: those are checked later, when grow offers to check them.
 
 1. Take it from `record_action`'s `next` when you just recorded work, else call `today` (free) and take its `offer`. Both carry a `key`, and the moves lined up after it (`after`), each with its own `key`.
 2. Ask, the way the founder's host asks:
-   - **Claude Code: a question with choices** (the AskUserQuestion tool). One question, header "Next move". The first option is the move, its label ending in "(Recommended)" ("Fix the site (Recommended)"), its description what it gets the founder, why now and its price ("Two checks still fail on the live site: robots blocks GPTBot. 5 credits."). Then one option for each move in `after`, the same way without "(Recommended)". The last option is "Done for now". Labels are the move in a few words, never a command name alone.
+   - **Claude Code: a question with choices** (the AskUserQuestion tool). One question, header "Next move". The first option is the move, its label ending in "(Recommended)" ("Fix the site (Recommended)"), its description what it gets the founder, why now and its price, in plain words ("Your site tells ChatGPT's bot to stay out, so ChatGPT cannot read or name you. One small code change. 6 credits."). Then one option for each move in `after`, the same way without "(Recommended)". The last option is "Done for now". Labels are the move in a few everyday words, never a command name or a term from "Asking the founder" below.
    - **Codex, or no question tool:** one line with what it gets the founder, why now, its price and how to start it ("Next: list on SaaSHub and AlternativeTo, the directories AI answers cite most. 4 credits. Start?").
 3. Record the answer with `grow_answer` before anything else: the move picked gets `yes` with its own key. "Done for now" records nothing, so nothing is rested. A typed answer that turns a move down gets `no` on that move's key.
 4. Start the move picked at its routine's first step. Picking an option whose description named the price is the yes the price rule asks for. On "Done for now", stop and say how to pick up later: grow, the way their host runs it.
 5. Inside a batch (listings, glossary terms, review replies), finish the item, then go straight to the next one in the batch before asking about a different move.
 
 Start one move at a time, never start one without the founder's pick, and state the price of anything over 5 credits in the option itself.
+
+## Asking the founder
+
+The founder is usually not a marketer. Every question you ask them (AskUserQuestion in Claude Code, a line in Codex) follows these rules, in every routine:
+
+- **Always a recommendation.** Exactly one option is the one you would pick, listed first, its label ending in "(Recommended)". In a multi-select question the first option is the pick you recommend ("Check all 3 (Recommended)"). Never a question where every option looks equal.
+- **Plain words.** Say what it does for the founder and what they will see, not the marketing or technical term. A label is a few everyday words; a description is one or two short sentences: what happens, why it matters, the price.
+- **Translate the jargon.** Never put these in a label or a description as they are: structured data or schema ("the hidden labels that tell Google and ChatGPT what your site is"), WebSite node, Organization, sameAs ("links from your site to your X and LinkedIn"), meta description ("the line under your link in Google results"), title tag ("the headline of your link in Google"), tracking script or beacon ("the code that counts visitors and AI bots"), verify ("check it is live"), index or indexing ("get Google to add the page"), sitemap ("the list of your pages for Google"), robots.txt ("the file that tells bots what they may read"), crawler ("AI bot"), AEO or AI visibility ("showing up in ChatGPT and other AI answers"), SERP ("Google results"), keyword ("what people type into Google"), gate ("a check for made-up facts").
+- **Name things by what they are, not their ids.** "The home page text in Google", not "home description"; "Your launch post on Hacker News", not "COMMUNITIES:POST".
+
+Example, three shipped items to check:
+
+| Instead of | Say |
+|---|---|
+| Verify structured data. 1 credit: checks the WebSite node and Organization sameAs are live. | Check Google can read what your site is. 1 credit: confirms the hidden labels that tell Google and ChatGPT your site's name and your social links are live. |
+| Verify home description. 1 credit: checks the home page meta description is under 155 characters. | Check your Google snippet. 1 credit: confirms the line under your link in Google results is the new, shorter one. |
+| Verify tracking install. 1 credit: checks the Shipfound script and the AI crawler beacon are live. | Check visitor counting works. 1 credit: confirms the code that counts visitors and AI bots is live on your site. |
+
+With "Check all 3 (Recommended)" first: "3 credits. Shipfound checks each one on your live site; until then it counts as claimed, not done."
 
 ## Hard lines
 
