@@ -69,12 +69,15 @@ Day to day, the founder does not walk this loop by hand: grow (`today`) reads wh
 
 No routine ends in silence. When a routine finishes (and after you answer a Shipfound question), offer the next move:
 
-1. Take it from `record_action`'s `next` when you just recorded work, else call `today` (free) and take its `offer`. Both carry a `key`: pass the founder's yes or no to `grow_answer`, so a declined move is not offered again tomorrow.
-2. Offer it in one line: what it gets the founder, why now, its price, and how to start it ("Next: list on SaaSHub and AlternativeTo, the directories AI answers cite most. 4 credits. Start?").
-3. On a yes, start that routine at its first step. On a no, offer the one after it. Stop when the founder says they are done for now, and then say how to pick up later: grow, the way their host runs it.
-4. Inside a batch (listings, glossary terms, review replies), finish the item, then go straight to the next one in the batch before offering a different move.
+1. Take it from `record_action`'s `next` when you just recorded work, else call `today` (free) and take its `offer`. Both carry a `key`, and the moves lined up after it (`after`), each with its own `key`.
+2. Ask, the way the founder's host asks:
+   - **Claude Code: a question with choices** (the AskUserQuestion tool). One question, header "Next move". The first option is the move, its label ending in "(Recommended)" ("Fix the site (Recommended)"), its description what it gets the founder, why now and its price ("Two checks still fail on the live site: robots blocks GPTBot. 5 credits."). Then one option for each move in `after`, the same way without "(Recommended)". The last option is "Done for now". Labels are the move in a few words, never a command name alone.
+   - **Codex, or no question tool:** one line with what it gets the founder, why now, its price and how to start it ("Next: list on SaaSHub and AlternativeTo, the directories AI answers cite most. 4 credits. Start?").
+3. Record the answer with `grow_answer` before anything else: the move picked gets `yes` with its own key. "Done for now" records nothing, so nothing is rested. A typed answer that turns a move down gets `no` on that move's key.
+4. Start the move picked at its routine's first step. Picking an option whose description named the price is the yes the price rule asks for. On "Done for now", stop and say how to pick up later: grow, the way their host runs it.
+5. Inside a batch (listings, glossary terms, review replies), finish the item, then go straight to the next one in the batch before asking about a different move.
 
-Never offer more than one move at a time, never start one without a yes, and still state the price before anything over 5 credits.
+Start one move at a time, never start one without the founder's pick, and state the price of anything over 5 credits in the option itself.
 
 ## Hard lines
 

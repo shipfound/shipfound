@@ -1,7 +1,7 @@
 ---
 description: Sign this session in to Shipfound. Gives you a link and a code to approve in your browser; nothing to restart.
 argument-hint: "[nothing needed]"
-allowed-tools: Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
+allowed-tools: AskUserQuestion, Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
 ---
 
 # /shipfound:login

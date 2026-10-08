@@ -1,7 +1,7 @@
 ---
 description: The Monday routine. Re-check what moved, verify what is due, then the top 5 moves. Partly built; see the note.
 argument-hint: "[module]"
-allowed-tools: Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__visibility, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__plan, mcp__plugin_shipfound_shipfound__experiment_results
+allowed-tools: AskUserQuestion, Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__visibility, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__plan, mcp__plugin_shipfound_shipfound__experiment_results
 ---
 
 # /shipfound:week
