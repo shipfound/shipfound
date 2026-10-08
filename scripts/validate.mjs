@@ -43,6 +43,8 @@ const TOOLS = {
   visibility_run: 15, // 0 for the first baseline
   visibility: 0,
   plan: 0,
+  today: 0,
+  grow_answer: 0,
   site_fixes: 6,
   keyword_research: 4,
   content_brief: 5,
@@ -105,7 +107,7 @@ const NOT_TOOLS = new Set([
   "manifest_version",
   "env_http_headers",
 ]);
-const COMMANDS = ["login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

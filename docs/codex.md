@@ -103,7 +103,13 @@ In Codex, in your site's repo:
 Run the Shipfound audit.
 ```
 
-Then "fix the site", "write a glossary page about <term>", "get us indexed", "status", or any analytics question. The full list is in the README's Routines table. Codex tells you the price before anything over 5 credits and waits for your yes.
+From then on, start each day with:
+
+```
+What should I do today?
+```
+
+It checks what changed since your last session and what is still failing, then offers one move with its price. For something specific, ask for it: "fix the site", "write a glossary page about <term>", "get us indexed", "status", or any analytics question. The full list is in the README's Routines table. Codex tells you the price before anything over 5 credits and waits for your yes.
 
 ## Browser and Gmail
 

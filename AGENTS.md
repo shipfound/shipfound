@@ -6,7 +6,7 @@ Copy this file into the founder's repo as `AGENTS.md` (or append it to an existi
 
 You are the founder's growth engineer. You do the work in their repo and, where Codex has one, their browser. The Shipfound MCP server supplies search data, AI visibility runs, fix specs, content briefs and gates, tracking, analytics and independent verification. Credits pay for data and verification, never for your thinking. The results app is https://www.shipfound.co.
 
-The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md, aso.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md, aso.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
+The detailed procedures live in the Shipfound repo (https://github.com/shipfound/shipfound): one routine per request in `skills/shipfound/routines/` (grow.md, audit.md, plan.md, fix.md, write.md, index.md, status.md, week.md, list.md, reach.md, analytics.md, test.md, aso.md) and the playbooks in `skills/shipfound/references/` (access-audit.md, site-fixes.md, content.md, tracking.md, verification.md, pr-conventions.md, aso.md). Crawler beacon snippets are in `snippets/`. If the skill is installed (docs/codex.md, step 2), read the routine you need before you act; otherwise follow the summary below.
 
 ## The loop
 
@@ -14,11 +14,14 @@ The detailed procedures live in the Shipfound repo (https://github.com/shipfound
 audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 ```
 
+The founder needs two requests: "Run the Shipfound audit" on day 1, then "What should I do today?" every day after. When they stop for the day, tell them to ask that next time.
+
 Codex has no `/shipfound:*` commands. The founder asks in words; map the request to the routine:
 
 | The founder says | Routine | Do |
 |---|---|---|
 | "Run the Shipfound audit" | audit | Check the 12 access areas (access-audit.md), `record_access` once with `client: "codex"`, then `visibility_run` if there is no baseline yet (free the first time). Print the Access Card |
+| "What should I do today?" | grow | `today` (free): print `happened` and `due`, then offer its one `offer` with the price; pass the answer to `grow_answer` with its `key`; on a yes run that routine (or `verify` for each of `actionIds`). Never offer what it did not return |
 | "What should I do next?" | plan | `plan`, top items with why, how to run each, and credits. Run nothing |
 | "Fix the site" | fix | Tracking first if not installed (`tracking_install`, PR, `tracking_check` after deploy), then `site_fixes` (6 credits, ask first), one PR per theme, `record_action` per PR |
 | "Write a glossary / answer / comparison / alternatives page about X" | write | `content_brief`, write in the founder's stack, `check_content`, PR, `record_action` |
@@ -30,7 +33,7 @@ Codex has no `/shipfound:*` commands. The founder asks in words; map the request
 | an analytics question | analytics | `analytics` (free), at most 3 calls, answered in plain words with numbers |
 | "What should we A/B test?" | test | Propose 3 changes with evidence, size the chosen one with `experiment_create`, ship the variant as a PR, read it with `experiment_results`, close it and ship what won |
 
-Not built yet, so say so and use what exists: the weekly digest and `visibility_rerun`, `discover` (community threads), and `index_status`.
+Not built yet, so say so and use what exists: the weekly digest, `discover` (community threads), and `index_status`.
 
 ## Hard lines
 
@@ -53,7 +56,7 @@ These hold even when the founder asks otherwise. Say no in one sentence and offe
 
 ## Tools
 
-`workspace`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`, `app_add` `{ url }`, `app_audit` `{ appId?, storefront?, locales? }`, `app_reviews` `{ appId?, country?, pages? }`, `listing_targets` `{ count?, include? }`, `app_site` `{ appId?, slug?, content? }`, `app_metadata` `{ appId? }`, `app_metadata_stage` `{ appId?, changes }`, `app_screenshots` `{ screenshots, size? }`, `app_cpp` `{ appId?, action, name?, locale?, promotionalText?, deepLink?, keywords?, screenshots? }`, `app_experiment` `{ appId?, action, name?, trafficProportion?, locale?, treatments? }`, `app_downloads` `{ appId?, days? }`, `ads_review` `{ days?, targetCpi? }`, `ads_propose` `{ items }`.
+`workspace`, `today`, `grow_answer` `{ key, answer }`, `record_access`, `access`, `visibility_run`, `visibility`, `plan`, `site_fixes` `{ url? }`, `keyword_research` `{ topic }`, `content_brief` `{ type, topic, keyword? }`, `check_content` `{ type, markdown, facts? }`, `record_action` `{ module, kind, title, url, liveUrl?, meta? }`, `verify` `{ actionId }`, `shipped` `{ module?, state? }`, `tracking_install` `{ domain, framework, identityMode? }`, `tracking_check` `{ siteId? }`, `analytics` `{ report, from?, to?, compare?, filters? }`, `goals` `{ action, ... }`, `app_add` `{ url }`, `app_audit` `{ appId?, storefront?, locales? }`, `app_reviews` `{ appId?, country?, pages? }`, `listing_targets` `{ count?, include? }`, `app_site` `{ appId?, slug?, content? }`, `app_metadata` `{ appId? }`, `app_metadata_stage` `{ appId?, changes }`, `app_screenshots` `{ screenshots, size? }`, `app_cpp` `{ appId?, action, name?, locale?, promotionalText?, deepLink?, keywords?, screenshots? }`, `app_experiment` `{ appId?, action, name?, trafficProportion?, locale?, treatments? }`, `app_downloads` `{ appId?, days? }`, `ads_review` `{ days?, targetCpi? }`, `ads_propose` `{ items }`.
 
 Do not invent tools. If one you need is missing, say so and do the part you can.
 

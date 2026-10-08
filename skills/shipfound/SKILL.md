@@ -26,10 +26,13 @@ When you tell the founder what to run next, say it the way their host runs it: t
 
 ## Routines
 
-Each routine is one file in `routines/`. Read it before you act, follow it step by step, and stop to report at its end. The founder's input is the command arguments in Claude Code, or whatever they said with the request in Codex.
+Each routine is one file in `routines/`. Read it before you act, follow it step by step, and stop to report at its end.
+
+The founder needs two of them: **audit on day 1, then grow every day after.** Grow looks at what changed and what is still failing, offers one move, and starts the right routine on a yes. The others are there for when the founder asks for something specific. When you tell the founder how to pick up later, it is always grow. The founder's input is the command arguments in Claude Code, or whatever they said with the request in Codex.
 
 | Routine | Claude Code | Codex: the founder says | Does |
 |---|---|---|---|
+| [grow](routines/grow.md) | `/shipfound:grow [module]` | "What should I do today?" | Every day: what changed since the last session, what is due, what is still failing, then one move. Start here after the audit |
 | [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign this session in: a link and a code to approve. Other routines do it for you when needed |
 | [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 11 areas plus the first baseline visibility run. Start here |
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
@@ -52,21 +55,23 @@ If a request does not match one routine, use the closest one or answer from the 
 audit -> install tracking -> plan -> ship -> verify -> track -> weekly
 ```
 
+Day to day, the founder does not walk this loop by hand: grow (`today`) reads where they are in it and offers the next step.
+
 1. **Audit** (audit routine): check the eleven access areas, store them with `record_access`, start the baseline with `visibility_run`. See [references/access-audit.md](references/access-audit.md).
 2. **Install tracking** (first thing in the fix routine): `tracking_install`, a PR, then `tracking_check` after the founder deploys. See [references/tracking.md](references/tracking.md).
 3. **Plan** (plan routine): `plan` returns a ranked queue built only from what the audit opened. Do not add moves for channels the audit marked red.
 4. **Ship**: site fixes ([references/site-fixes.md](references/site-fixes.md)), content ([references/content.md](references/content.md)), indexing (index routine). Code goes out as pull requests ([references/pr-conventions.md](references/pr-conventions.md)).
 5. **Verify**: `record_action` for every shipped thing, then `verify`. See [references/verification.md](references/verification.md).
 6. **Track**: `analytics` and `tracking_check` show crawls, visits and signups per shipped item.
-7. **Weekly** (week routine): re-read `visibility`, `shipped` and `analytics`, then the top 5 moves from `plan`.
+7. **Weekly** (week routine): re-read `visibility`, `shipped` and `analytics`, then the top 5 moves from `plan`. Grow also offers the visibility re-run once the last run is a week old.
 
 ## The hand-over
 
 No routine ends in silence. When a routine finishes (and after you answer a Shipfound question), offer the next move:
 
-1. Take it from `record_action`'s `next` when you just recorded work, else call `plan` (free) and take the top item you have not just done.
+1. Take it from `record_action`'s `next` when you just recorded work, else call `today` (free) and take its `offer`. Both carry a `key`: pass the founder's yes or no to `grow_answer`, so a declined move is not offered again tomorrow.
 2. Offer it in one line: what it gets the founder, why now, its price, and how to start it ("Next: list on SaaSHub and AlternativeTo, the directories AI answers cite most. 4 credits. Start?").
-3. On a yes, start that routine at its first step. On a no, offer the one after it. Stop when the founder says they are done for now, and then say how to pick up later (the status routine).
+3. On a yes, start that routine at its first step. On a no, offer the one after it. Stop when the founder says they are done for now, and then say how to pick up later: grow, the way their host runs it.
 4. Inside a batch (listings, glossary terms, review replies), finish the item, then go straight to the next one in the batch before offering a different move.
 
 Never offer more than one move at a time, never start one without a yes, and still state the price before anything over 5 credits.
@@ -113,7 +118,9 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `access` | none | Read the latest audit |
 | `visibility_run` | none | Start a visibility run (10 questions x 4 engines x 4 runs). Runs in the background |
 | `visibility` | none | Latest full run: pairs with stability labels ("named in 3 of 4 runs"), competitors |
-| `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]` |
+| `today` | none | What grow shows: `happened` since the last session, `due` (tests with a verdict, work to verify), the one `offer` with its `key`, `after` and `resting`. Logs the offer |
+| `grow_answer` | `{ key, answer: "yes" \| "no" }` | The founder's answer to a move. A no rests it for 7 days |
+| `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]`: the full menu, where grow picks one |
 | `site_fixes` | `{ url? }` | Fix specs `{ id, theme, page, issue, evidence, fix }[]`, minus fixes already shipped |
 | `keyword_research` | `{ topic }` | Keywords, difficulty, SERP and AI-cited pages for one topic |
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
@@ -183,7 +190,7 @@ Every word the founder or their readers see (terminal summaries, PR bodies, page
 
 ## Ending every routine
 
-Close with three to six lines: what you did, what is claimed and what is verified (with counts), credits spent this routine, the one next step, and the results app link.
+Close with three to six lines: what you did, what is claimed and what is verified (with counts), credits spent this routine, the one next step, and the results app link. When the founder is done for the day, the next step is grow.
 
 ## References
 

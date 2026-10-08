@@ -17,7 +17,7 @@ claude plugin marketplace add shipfound/shipfound
 claude plugin install shipfound@shipfound
 ```
 
-Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
+Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. From then on, start each day with `/shipfound:grow`: it checks what changed and what is still failing, then offers one move. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
 
 You sign in from the chat. The first Shipfound command gives you a link and a code: your browser opens the link, you check the code, pick your site and choose Allow, and the command carries on by itself. Nothing to restart. To sign in on its own, run `/shipfound:login`. Each new session signs in again the same way, with one click if you are still signed in on shipfound.co.
 
@@ -29,7 +29,7 @@ codex plugin add shipfound@shipfound
 codex mcp login shipfound
 ```
 
-`codex mcp login` opens your browser to sign in (OAuth). Then start a new Codex thread in your site's repo and ask: "Run the Shipfound audit." In the ChatGPT desktop app you can also install it from Plugins once the marketplace is added; it shows up under Shipfound.
+`codex mcp login` opens your browser to sign in (OAuth). Then start a new Codex thread in your site's repo and ask: "Run the Shipfound audit." From then on, start each day by asking: "What should I do today?" In the ChatGPT desktop app you can also install it from Plugins once the marketplace is added; it shows up under Shipfound.
 
 Codex has no plugin slash commands, so you ask in words ("fix the site", "get us indexed", "status") and the skill runs the matching routine. To call the skill by name, type `$shipfound:shipfound`.
 
@@ -68,8 +68,11 @@ For CI or a machine without a browser, make a key in the Shipfound app (Settings
 
 Each routine is a file in `skills/shipfound/routines/`. Claude Code runs it as a command; in Codex you ask for it.
 
+You need two: `/shipfound:audit` on day 1, then `/shipfound:grow` every day after. Grow reads what happened since your last session, what is due to verify and what is still failing on your live site, then offers the one move worth making, with its price. It does not offer the same move two days running, and a move you decline waits a week. The rest are there when you want something specific.
+
 | Claude Code | Codex: ask | Does |
 |---|---|---|
+| `/shipfound:grow` | "What should I do today?" | Every day: what changed, what is due, what is still failing, then one move to make. Start here after the audit |
 | `/shipfound:login` | "Sign in to Shipfound" | Signs this session in: a link and a code to approve in your browser. Other commands do it for you when needed |
 | `/shipfound:audit` | "Run the Shipfound audit" | Access audit of 11 areas (repo, hosting, Search Console, Bing, Gmail, Reddit, X, GitHub, tracking, assets, marketplace fit) and the first baseline visibility run |
 | `/shipfound:plan` | "What should I do next?" | The ranked queue for this week, built only from what the audit found open |
