@@ -21,6 +21,7 @@ Input: optional. A module ("content", "listings", "fixes") means the founder wan
    - `happened`, one line each, as given. Nothing happened: say "Quiet since <date>."
    - `due`, one line each, with its own short ask and price: "PR #14 merged 2 days ago. Verify it? 1 credit." "Test pricing-headline: B wins. Close it and keep B?"
    - Today: the `offer` title, the reason from `why` with its number, and its price. Say how to start it the way the founder's host runs it.
+   - `credits.ask`, if it is there: one line, as given (what they can buy and the billing link). The founder buys; you never do.
 5. End with the offer and one question, with its price: "Start it? 6 credits." The founder can answer the due asks in the same reply ("verify it, and yes"): do the due items first (a verify on a yes; a closed test through the test routine), then the offer. Pass the answer on the offer to `grow_answer` with its `key`, before anything else.
    - Yes: start it.
      - A routine (`command` is a routine's command, with its arguments): read that routine and run it from its first step, with those arguments. The price rule applies as usual (over 5 credits: the price and the balance, then wait for a yes; this yes counts when it named the price).

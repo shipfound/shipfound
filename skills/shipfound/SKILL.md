@@ -93,7 +93,7 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 
 | Tool | Credits |
 |---|---|
-| `site_fixes` | 6 |
+| `site_fixes` | 6 (nothing when it finds nothing to fix) |
 | `keyword_research` | 4 |
 | `content_brief` | 5 |
 | `check_content` | 2 |
@@ -105,6 +105,7 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 - **1 to 5 credits**: say the price in the same line as what you are about to do. No need to wait.
 - **Never loop over tools.** One call per decision. Do not call a paid tool once per page, per keyword or per URL in a loop; do not retry a failed paid call more than once; do not run every play in the plan in one go. Batch work into one call where the input allows it, and stop to report after each routine.
 - If a tool says the daily credit cap or the balance is reached, stop and tell the founder. Do not work around it.
+- **Running low.** When a call fails for credits, or `workspace` or `today` carries `credits.ask` (or `record_action`'s `next` carries `credits_ask`), pass it on once in one line: what the founder can buy and the billing link. Then carry on with free moves. Never buy credits or change the plan for the founder, and never repeat the ask in the same session.
 
 ## Tools
 
