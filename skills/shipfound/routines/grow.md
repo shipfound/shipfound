@@ -21,6 +21,7 @@ Input: optional. A module ("content", "listings", "fixes") means the founder wan
    - `happened`, one line each, as given. Nothing happened: say "Quiet since <date>."
    - `due`, one line each, with its own short ask and price: "PR #14 merged 2 days ago. Verify it? 1 credit." "Test pricing-headline: B wins. Close it and keep B?"
    - Today: the `offer` title, the reason from `why` with its number, and its price. Say how to start it the way the founder's host runs it.
+   - Next, when `after` has moves: one line saying today's move comes first and naming what is lined up after it, by title, so the founder knows the rest of the menu is coming: "This one first, because it stops engines reading the site. After it: listing on BetaList and SaaSHub, then writing "What is AEO"." This line names the moves without offering them, so there is no price and no question.
    - `credits.ask`, if it is there: one line, as given (what they can buy and the billing link). The founder buys; you never do.
 5. End with the offer and one question, with its price: "Start it? 6 credits." The founder can answer the due asks in the same reply ("verify it, and yes"): do the due items first (a verify on a yes; a closed test through the test routine), then the offer. Pass the answer on the offer to `grow_answer` with its `key`, before anything else.
    - Yes: start it.
@@ -32,4 +33,4 @@ Input: optional. A module ("content", "listings", "fixes") means the founder wan
 
 `offer` is null: say what happened, that there is nothing new to do today, and name what is resting. Do not invent work and do not fall back to the plan's generic items.
 
-Never offer more than one move at a time, and never start one without a yes.
+Never offer more than one move at a time, and never start one without a yes. Naming what is lined up after it is not an offer.
