@@ -1,0 +1,21 @@
+{
+  "name": "shipfound-product-video",
+  "private": true,
+  "description": "A 15 second product video for a boost, cut from real screenshots of the product. Runs on the founder's machine; see skills/shipfound/routines/video.md.",
+  "type": "module",
+  "scripts": {
+    "capture": "node capture.mjs",
+    "sheet": "remotion still Sheet out/sheet.png",
+    "render:square": "remotion render Square out/video-1x1.mp4 --codec=h264 --crf=18 --muted",
+    "render:wide": "remotion render Wide out/video-16x9.mp4 --codec=h264 --crf=18 --muted",
+    "render": "npm run render:square && npm run render:wide"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.520",
+    "@remotion/google-fonts": "4.0.520",
+    "playwright": "1.63.0",
+    "react": "19.3.0",
+    "react-dom": "19.3.0",
+    "remotion": "4.0.520"
+  }
+}

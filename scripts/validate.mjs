@@ -118,7 +118,7 @@ const NOT_TOOLS = new Set([
   "manifest_version",
   "env_http_headers",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

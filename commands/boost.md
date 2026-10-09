@@ -1,7 +1,7 @@
 ---
-description: A small paid test of your own X posts. Planned for you, filled in X Ads Manager for you to launch, read on clicks and traced to signups.
+description: A small paid test of your own X posts, each with a video of your product. Planned for you, filled in X Ads Manager for you to launch, read on clicks and traced to signups.
 argument-hint: "[post link | read | stop]"
-allowed-tools: AskUserQuestion, Read, Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__boost_candidates, mcp__plugin_shipfound_shipfound__boost_plan, mcp__plugin_shipfound_shipfound__boost_record, mcp__plugin_shipfound_shipfound__boost_results, mcp__plugin_shipfound_shipfound__grow_answer
+allowed-tools: AskUserQuestion, Read, Bash(npm install), Bash(npx playwright install chromium), Bash(node capture.mjs*), Bash(npm run sheet), Bash(npm run render), Bash(npx remotion still *), Bash(npx remotion ffprobe *), Bash(npx remotion ffmpeg *), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__boost_candidates, mcp__plugin_shipfound_shipfound__boost_plan, mcp__plugin_shipfound_shipfound__boost_record, mcp__plugin_shipfound_shipfound__boost_results, mcp__plugin_shipfound_shipfound__grow_answer
 ---
 
 # /shipfound:boost
