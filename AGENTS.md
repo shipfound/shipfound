@@ -32,7 +32,7 @@ Codex has no `/shipfound:*` commands. The founder asks in words; map the request
 | "Draft a reply to this thread" | reach | One reply drafted to the community's rules, filled in the box; the founder posts. Inbox drafts only, at most 20 a day |
 | an analytics question | analytics | `analytics` (free), at most 3 calls, answered in plain words with numbers |
 | "Boost this post on X" or "Which post should I boost?" | boost | The product video first (video routine) if there is none. A post they name goes straight to `boost_plan` (no data read); asked which, `boost_candidates` first; a message that is not a post yet is posted first, theirs plus one new angle from their site, with the video. Get a yes on the money, fill X Ads Manager in the browser, stop before Launch; `boost_record` once launched; read with `boost_results` |
-| "Make a video of my product" | video | 15 seconds of the real product, in their site's logo, fonts and colors, no sound: the plugin's `video/` kit captures screens with Playwright and cuts them with Remotion on their machine. Check every frame before showing it. Free |
+| "Make a video of my product" | video | The product's screens recreated in HTML from its source and animated with Remotion (the plugin's `video/` kit), in their site's logo, fonts and colors, no sound, 30 seconds at most, on their machine. Never a screen recording. Check every scene against the real screen before showing it. Free |
 | "What should we A/B test?" | test | Propose 3 changes with evidence, size the chosen one with `experiment_create`, ship the variant as a PR, read it with `experiment_results`, close it and ship what won |
 
 Not built yet, so say so and use what exists: the weekly digest, `discover` (community threads), and `index_status`.

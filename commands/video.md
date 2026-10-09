@@ -1,7 +1,7 @@
 ---
-description: A 15 second video of your real product for a boost on X. Cut on your machine from screenshots of your own product, checked frame by frame before you see it. Free.
+description: A short video of your product for a boost on X. Your agent recreates its screens and animates them, in your branding, no sound, 30 seconds at most. No screen recording. Free.
 argument-hint: "[redo]"
-allowed-tools: AskUserQuestion, Read, Bash(npm install), Bash(npx playwright install chromium), Bash(node capture.mjs*), Bash(npm run sheet), Bash(npm run render), Bash(npx remotion still *), Bash(npx remotion ffprobe *), Bash(npx remotion ffmpeg *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
+allowed-tools: AskUserQuestion, Read, Bash(npm install), Bash(npx playwright install chromium), Bash(node capture.mjs*), Bash(npm run sheet), Bash(npm run render), Bash(npx remotion still *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
 ---
 
 # /shipfound:video

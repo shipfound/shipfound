@@ -1,7 +1,7 @@
 {
   "name": "shipfound-product-video",
   "private": true,
-  "description": "A 15 second product video for a boost, cut from real screenshots of the product. Runs on the founder's machine; see skills/shipfound/routines/video.md.",
+  "description": "A product video for a boost: the product's screens recreated in HTML and animated, in its own branding, silent, 30 seconds at most. Runs on the founder's machine; see skills/shipfound/routines/video.md.",
   "type": "module",
   "scripts": {
     "capture": "node capture.mjs",

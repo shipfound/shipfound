@@ -1,12 +1,10 @@
 {
-  "base": "https://app.example.com",
-  "viewport": { "width": 1160, "height": 900 },
+  "base": "https://app.acme.example",
+  "brand": { "url": "https://acme.example" },
   "login": { "url": "/login", "until": "text=Projects" },
   "hide": ["#cookie-banner", "[data-intercom-frame]"],
   "shots": [
-    { "name": "1", "steps": [{ "goto": "/projects/new" }], "focus": "form" },
-    { "name": "2", "steps": [{ "fill": ["input[name=url]", "https://demo-shop.example"] }, { "click": "text=Run check" }, { "waitFor": "text=Results" }], "focus": ".results-summary", "blur": [".account-email"] },
-    { "name": "3", "steps": [{ "click": "text=Fixes" }, { "waitFor": ".fix-list" }], "focus": ".fix-list li >> nth=0" },
-    { "name": "4", "steps": [{ "goto": "/projects/demo-shop/report" }, { "waitFor": ".chart" }] }
+    { "name": "check", "steps": [{ "goto": "/check" }] },
+    { "name": "results", "steps": [{ "goto": "/projects/demo-shop/results" }, { "waitFor": ".results" }] }
   ]
 }

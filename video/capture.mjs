@@ -1,50 +1,47 @@
 #!/usr/bin/env node
-// Screenshots of the real product for the video, taken by Playwright.
+// What the agent recreates the video from, read by Playwright: the brand from
+// the landing page, and reference shots of the real product. The video never
+// shows these shots: each scene is the screen rebuilt in HTML and animated
+// (src/scenes/). The shots and their text are what the rebuild copies.
 //
 //   node capture.mjs [shots.json]
 //
-// shots.json lists the screens in order, each reached by a few steps in one
+// shots.json lists the screens to copy, each reached by a few steps in one
 // browser session (so a login in the first shot holds for the rest):
 //
 //   {
 //     "base": "https://app.example.com",
-//     "viewport": { "width": 1160, "height": 900 },
-//     "hide": ["#cookie-banner"],
-//     "shots": [
-//       { "name": "1", "steps": [{ "goto": "/login" }, { "fill": ["#email", "$DEMO_EMAIL"] },
-//         { "fill": ["#password", "$DEMO_PASSWORD"] }, { "click": "button[type=submit]" },
-//         { "waitFor": "text=Projects" }], "focus": "#new-project", "blur": [".account-email"] }
-//     ]
+//     "brand": { "url": "https://example.com" },
+//     "login": { "url": "/login", "until": "text=Projects" },
+//     "shots": [{ "name": "1", "steps": [{ "goto": "/projects/new" }] }]
 //   }
 //
-// To sign in to the live app, add "login": { "url": "/login", "until": "text=Projects" }:
-// a browser window opens on that page, the founder signs in by hand (up to
-// 5 minutes), and the shots run once `until` is on screen. Their password
-// never passes through the agent or a file.
+// `login`: a browser window opens on that page, the founder signs in by hand
+// (up to 5 minutes), and the shots run once `until` is on screen. Their
+// password never passes through the agent or a file. A local app with seed
+// data can use fill steps instead, a value starting with $ read from the
+// environment.
 //
 // Steps: goto, click, fill [selector, value], press [selector, key], hover,
-// scroll (a selector to bring to the middle of the screen), waitFor (a selector), wait (ms).
-// A value starting with $ is read from the environment, so a password is
-// never written to a file. `focus` is the element the video zooms to;
-// `blur` hides anything private (emails, keys, customer names); `hide`
-// removes banners from every shot.
+// scroll (a selector to bring to the middle of the screen), waitFor (a
+// selector), wait (ms). `hide` removes banners from every shot.
 //
-// The brand comes from the landing page ("brand": { "url": "https://example.com" },
-// default the site root of `base`): the logo as the site header shows it
-// (a transparent PNG; "logo": "<selector>" when it picks the wrong element),
-// the font files its headings and body text use, and its background, text,
-// muted and accent colors.
+// The brand comes from the landing page (`brand.url`, default the site root
+// of `base`): the logo as the site header shows it (a transparent PNG;
+// "logo": "<selector>" when it picks the wrong element), the font files its
+// headings and body text use, and its background, text, muted and accent
+// colors.
 //
-// Writes public/shots/<name>.png at 2x, public/shots/capture.json with each
-// shot's size and focus box, and public/brand/ (brand.json, logo.png and the
-// fonts), which the video reads.
+// Writes public/brand/ (brand.json, logo.png and the fonts), which the video
+// uses, and ref/<name>.png and ref/<name>.txt (the screen's text), which the
+// agent reads. With no shots (a CLI, an agent in a terminal), only the brand.
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { chromium } from "playwright";
 
 const file = process.argv[2] ?? "shots.json";
 const spec = JSON.parse(readFileSync(file, "utf8"));
 const viewport = spec.viewport ?? { width: 1160, height: 900 };
-const OUT = "public/shots";
+const OUT = "ref";
 const BRAND = "public/brand";
 mkdirSync(OUT, { recursive: true });
 mkdirSync(BRAND, { recursive: true });
@@ -166,7 +163,6 @@ async function readBrand() {
 
 const context = await browser.newContext({ viewport, deviceScaleFactor: 2, colorScheme: spec.colorScheme ?? "light", reducedMotion: "reduce" });
 const page = await context.newPage();
-const out = { viewport, shots: {} };
 
 try {
   await readBrand();
@@ -175,7 +171,7 @@ try {
     console.log("Sign in in the browser window that just opened. The shots start once you are in.");
     await page.locator(spec.login.until).first().waitFor({ timeout: 300_000 });
   }
-  for (const shot of spec.shots) {
+  for (const shot of spec.shots ?? []) {
     for (const step of shot.steps ?? []) {
       if (step.goto) await page.goto(url(step.goto), { waitUntil: "networkidle", timeout: 45_000 });
       else if (step.click) await page.locator(step.click).first().click();
@@ -189,27 +185,13 @@ try {
     await page.waitForLoadState("networkidle").catch(() => {});
     await page.evaluate(() => document.fonts.ready);
     await page.waitForTimeout(600);
-
-    const css = [
-      ...(spec.hide ?? []).map((s) => `${s} { display: none !important; }`),
-      ...(shot.blur ?? []).map((s) => `${s} { filter: blur(9px) !important; }`),
-      "*, *::before, *::after { caret-color: transparent !important; }",
-    ].join("\n");
-    const image = `${OUT}/${shot.name}.png`;
-    await page.screenshot({ path: image, style: css, animations: "disabled" });
-
-    let focus = null;
-    if (shot.focus) {
-      const box = await page.locator(shot.focus).first().boundingBox();
-      if (!box) throw new Error(`shot ${shot.name}: focus ${shot.focus} is not on screen`);
-      focus = { x: Math.max(0, box.x), y: Math.max(0, box.y), w: Math.min(box.width, viewport.width), h: Math.min(box.height, viewport.height) };
-    }
-    out.shots[shot.name] = { image: `shots/${shot.name}.png`, width: viewport.width, height: viewport.height, focus };
-    console.log(`shot ${shot.name}: ${page.url()}${focus ? `, focus ${Math.round(focus.w)}x${Math.round(focus.h)} at ${Math.round(focus.x)},${Math.round(focus.y)}` : ""}`);
+    const css = (spec.hide ?? []).map((sel) => `${sel} { display: none !important; }`).join("\n");
+    await page.screenshot({ path: `${OUT}/${shot.name}.png`, style: css, animations: "disabled" });
+    writeFileSync(`${OUT}/${shot.name}.txt`, await page.evaluate(() => document.body.innerText));
+    console.log(`ref ${shot.name}: ${page.url()}`);
   }
 } finally {
   await browser.close();
 }
 
-writeFileSync(`${OUT}/capture.json`, JSON.stringify(out, null, 2));
-console.log(`${Object.keys(out.shots).length} shots in ${OUT}`);
+console.log(`${(spec.shots ?? []).length} reference shots in ${OUT}/`);

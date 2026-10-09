@@ -1,12 +1,9 @@
 {
   "product": "Acme",
-  "colors": { "bg": "#0e0f12", "fg": "#ffffff", "accent": "#4f7cff", "muted": "#a1a1aa" },
   "hook": "The landing page headline, or the post's first line",
-  "steps": [
-    { "shot": "1", "caption": "Paste your store's link" },
-    { "shot": "2", "caption": "It checks every page in a minute" },
-    { "shot": "3", "caption": "Each fix comes with the exact change" }
+  "scenes": [
+    { "id": "browser-example", "seconds": 5, "caption": "Paste your store's link" },
+    { "id": "terminal-example", "seconds": 5, "caption": "Each fix lands as a pull request" }
   ],
-  "result": { "shot": "4", "caption": "Watch the score climb" },
   "end": { "line": "The landing page subhead, short", "cta": "acme.com" }
 }
