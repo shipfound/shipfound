@@ -76,6 +76,8 @@ const TOOLS = {
   boost_plan: 0,
   boost_record: 0,
   boost_results: 0,
+  reach_find: 8,
+  reach_drafts: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".

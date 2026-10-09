@@ -179,6 +179,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source?, targeting? }` | Plan a boost of 1 to 3 posts for the audience the founder chose: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
 | `boost_record` | `{ id, status?, posts? }` | Store what X Ads Manager shows: launched, stopped, and per post the spend, impressions and clicks |
 | `boost_results` | `{ id? }` | The boost's read-out and verdict |
+| `reach_find` | `{ platform }` | Start a Reddit or X run on Assisted posts (8 credits, only when it finds drafts): threads or live conversations and a reply for each, in the background, about two minutes. Returns the link to the drafts |
+| `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https.
 
@@ -205,7 +207,7 @@ Anything else (Remix, Gatsby, Webflow, Framer, WordPress, Rails views, a mobile 
 
 ## Reddit: you post it
 
-Claude cannot open Reddit, in the browser or by fetch, so you never read or check Reddit yourself. Finding threads happens on Shipfound's server: Assisted posts in the results app finds them and writes the replies (8 credits a run), and the founder posts from there. For a thread or a post they bring to you, you write it and the founder posts it.
+Claude cannot open Reddit, in the browser or by fetch, so you never read or check Reddit yourself. Finding threads happens on Shipfound's server: `reach_find` with platform reddit starts the run (8 credits, after the founder's yes), the drafts land on Assisted posts in the results app, and the founder posts from there, through the link it returns. For a thread or a post they bring to you, you write it and the founder posts it.
 
 - A post: one link with the title and text filled in, `https://www.reddit.com/r/<sub>/submit?type=TEXT&title=<title>&text=<body>`, URL-encoded. Keep the body in the link unless the URL-encoded body passes about 6,000 characters; only then give the link with the title only and the body to copy.
 - A reply: the text to copy and the thread link. The founder opens it, pastes and presses Comment.
@@ -215,7 +217,7 @@ When the founder asks why it is not automated, or the first time Reddit comes up
 
 ## X: join conversations, never post for the founder
 
-On X, Shipfound replies to conversations already happening: Assisted posts in the results app finds live posts where the founder's buyers talk about the problem or ask what to use, and writes one reply each (8 credits a run), each opening X's reply box filled in. Never write the founder's own X posts, and never turn a session's results into one ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's own work tells their followers nothing they can use. The one exception is a boost (routines/boost.md): the one message picked for it, their landing page's headline and subhead (or a line they named) or one new angle written only from what their site says, is filled into X's compose box with the product video, for them to edit and post.
+On X, Shipfound replies to conversations already happening: `reach_find` with platform x finds live posts where the founder's buyers talk about the problem or ask what to use and writes one reply each (8 credits a run, after the founder's yes); they land on Assisted posts in the results app, each opening X's reply box filled in. Never write the founder's own X posts, and never turn a session's results into one ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's own work tells their followers nothing they can use. The one exception is a boost (routines/boost.md): the one message picked for it, their landing page's headline and subhead (or a line they named) or one new angle written only from what their site says, is filled into X's compose box with the product video, for them to edit and post.
 
 Before the first draft for a sub, ask the founder to check its rules for account age, karma and self-promotion limits. If their account does not meet them yet, suggest a few weeks of genuinely helpful comments they write and post themselves. You never automate karma building and never draft comments whose purpose is karma.
 
