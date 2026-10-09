@@ -10,7 +10,12 @@ Input: none needed.
    - It answers with a site: the founder is signed in. Go to step 4.
    - It says you are not signed in and a `sign_in` tool is there: this is an older plugin that signs in from the chat. Go to step 3.
    - There is no `workspace` tool, or it fails with an auth error: go to step 2.
-2. Only the founder can start the host's sign-in; you cannot press it for them. Tell them, in one short block, for their host:
+2. Start the host's sign-in yourself when the host lets you. In Claude Code, a server that is not signed in has an `authenticate` tool in place of its real tools (SKILL.md, "Hosts"); load it first if it is only listed by name.
+   - Call it. It opens the sign-in page in the founder's browser and returns its link. Print the link as well, and tell the founder in one line: pick the site and choose Allow; they only do this once on this machine. Never press Allow for them.
+   - When the founder says it is done, the Shipfound tools are there: call `workspace` and go to step 4. If the browser showed a connection error after Allow, ask for the full address from the address bar and pass it to `complete_authentication` as `callback_url`, then call `workspace`.
+   - It fails, or says to sign in from `/mcp`: fall through to the steps below.
+
+   With no such tool, only the founder can start the sign-in. Tell them, in one short block, for their host:
    - **Claude Code**: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then in the browser pick the site and choose Allow. Say they only do this once on this machine. When they say it is done, call `workspace` again and go to step 4.
    - **Codex**: run `codex mcp login shipfound` in a terminal, approve in the browser, then start a new thread.
    - If they would rather use an API key (CI, a machine without a browser): the plugin README, "Sign in with an API key instead".

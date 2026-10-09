@@ -19,7 +19,7 @@ claude plugin install shipfound@shipfound
 
 Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. From then on, start each day with `/shipfound:grow`: it checks what changed and what is still failing, then offers one move. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
 
-Sign in once: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then pick your site and choose Allow in the browser. Claude Code keeps the sign-in and renews it, so new sessions start signed in. Claude Code also reminds you at startup while the server still needs it, and the first Shipfound command tells you if you skipped it. To sign out, choose **Clear authentication** in `/mcp`, or revoke the connector in the results app (Settings, MCP connection).
+Sign in once: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then pick your site and choose Allow in the browser. Claude Code keeps the sign-in and renews it, so new sessions start signed in. Claude Code also reminds you at startup while the server still needs it, and if you skip it, the first Shipfound command opens the sign-in page for you. To sign out, choose **Clear authentication** in `/mcp`, or revoke the connector in the results app (Settings, MCP connection).
 
 ### Codex
 

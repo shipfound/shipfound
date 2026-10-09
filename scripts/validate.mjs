@@ -82,6 +82,8 @@ const TOOLS = {
   listing_skip: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
+// Not Shipfound's: Claude Code offers these on a server that is not signed in, to start and finish its OAuth.
+const HOST_AUTH_TOOLS = new Set(["authenticate", "complete_authentication"]);
 // In the spec, not built yet. Allowed only in files that say "not built yet".
 const NOT_YET = [
   "index_status",
@@ -121,6 +123,8 @@ const NOT_TOOLS = new Set([
   "is_suspended",
   "manifest_version",
   "env_http_headers",
+  // complete_authentication's input (Claude Code)
+  "callback_url",
 ]);
 const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
@@ -366,6 +370,7 @@ for (const f of cmdFiles) {
       continue;
     }
     const name = t.slice(MCP_PREFIX.length);
+    if (HOST_AUTH_TOOLS.has(name)) continue;
     if (!(name in TOOLS)) fail(file, `allowed-tools names unknown tool ${name}`);
     else if (TOOLS[name] > CONFIRM_ABOVE_CREDITS) fail(file, `allowed-tools pre-approves ${name} (${TOOLS[name]} credits); tools over ${CONFIRM_ABOVE_CREDITS} credits must ask first`);
   }
@@ -448,11 +453,11 @@ for (const file of DOCS) {
   const text = readFileSync(file, "utf8");
   const notYetOk = /not built yet/i.test(text);
   for (const m of text.matchAll(new RegExp(`${MCP_PREFIX}([a-z_]+)`, "g"))) {
-    if (!(m[1] in TOOLS)) fail(file, `unknown tool ${m[1]}`);
+    if (!(m[1] in TOOLS) && !HOST_AUTH_TOOLS.has(m[1])) fail(file, `unknown tool ${m[1]}`);
   }
   for (const m of text.matchAll(/`([a-z][a-z0-9]*(?:_[a-z0-9]+)+)`/g)) {
     const t = m[1];
-    if (t in TOOLS || NOT_TOOLS.has(t)) continue;
+    if (t in TOOLS || NOT_TOOLS.has(t) || HOST_AUTH_TOOLS.has(t)) continue;
     if (NOT_YET.includes(t)) {
       if (!notYetOk) fail(file, `mentions ${t}, which is not built yet, without saying so`);
       continue;

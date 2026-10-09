@@ -1,7 +1,7 @@
 ---
 description: Access audit (11 areas, read only, about 3 minutes) plus the free baseline AI visibility run. Start here.
 argument-hint: "[domain]"
-allowed-tools: AskUserQuestion, Read, Grep, Glob, WebFetch, Bash(git status *), Bash(git remote *), Bash(git log *), Bash(gh auth status *), Bash(gh repo view *), Bash(gh search repos *), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_access, mcp__plugin_shipfound_shipfound__visibility, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__shipped, Bash(gh search prs *)
+allowed-tools: AskUserQuestion, Read, Grep, Glob, WebFetch, Bash(git status *), Bash(git remote *), Bash(git log *), Bash(gh auth status *), Bash(gh repo view *), Bash(gh search repos *), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__authenticate, mcp__plugin_shipfound_shipfound__complete_authentication, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_access, mcp__plugin_shipfound_shipfound__visibility, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__shipped, Bash(gh search prs *)
 ---
 
 # /shipfound:audit
