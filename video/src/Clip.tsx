@@ -1,7 +1,7 @@
 import React from "react";
-import { AbsoluteFill, Sequence, interpolate, spring, useCurrentFrame, useVideoConfig } from "remotion";
+import { AbsoluteFill, Sequence, interpolate, useCurrentFrame, useVideoConfig } from "remotion";
 import video from "../public/video.json";
-import { C, FPS, Logo, STAGE, fonts, headingWeight, sec } from "./kit";
+import { C, FPS, FontsReady, Logo, STAGE, fonts, headingWeight, sec, settle } from "./kit";
 import { scenes } from "./scenes";
 
 // The cut: the hook (2s), the scenes (each a screen of the product recreated
@@ -38,7 +38,7 @@ export interface Size {
 const useFade = (length: number) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const enter = spring({ frame, fps, config: { damping: 200 }, durationInFrames: 12 });
+  const enter = settle(frame, fps, { damping: 200 }, 12);
   const exit = interpolate(frame, [length - 6, length], [1, 0], { extrapolateLeft: "clamp", extrapolateRight: "clamp" });
   return { frame, enter, opacity: Math.min(enter, exit) };
 };
@@ -46,7 +46,7 @@ const useFade = (length: number) => {
 const Caption: React.FC<{ text: string; size: Size }> = ({ text, size }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const s = spring({ frame: frame - 4, fps, config: { damping: 18, stiffness: 160 } });
+  const s = settle(frame - 4, fps, { damping: 18, stiffness: 160 });
   const unit = Math.min(size.w, size.h);
   return (
     <div style={{ position: "absolute", left: unit * 0.07, right: unit * 0.07, bottom: unit * 0.07, display: "flex", justifyContent: "center", transform: `translateY(${(1 - s) * unit * 0.05}px)`, opacity: s }}>
@@ -97,7 +97,7 @@ const Hook: React.FC<{ size: Size }> = ({ size }) => {
       <Logo height={unit * 0.05} />
       <div style={{ fontFamily: fonts.heading, fontWeight: headingWeight, fontSize: Math.round(unit * 0.082), lineHeight: 1.08, color: col.fg, textAlign: "center", letterSpacing: "-0.02em" }}>
         {spec.hook.split(" ").map((w, i) => {
-          const s = spring({ frame: frame - i * 2, fps, config: { damping: 16, stiffness: 180 } });
+          const s = settle(frame - i * 2, fps, { damping: 16, stiffness: 180 });
           return (
             <span key={i} style={{ display: "inline-block", opacity: s, transform: `translateY(${(1 - s) * unit * 0.03}px)`, marginRight: "0.25em" }}>
               {w}
@@ -113,7 +113,7 @@ const EndCard: React.FC<{ size: Size }> = ({ size }) => {
   const { frame, enter } = useFade(END + 6);
   const { fps } = useVideoConfig();
   const unit = Math.min(size.w, size.h);
-  const cta = spring({ frame: frame - 8, fps, config: { damping: 14, stiffness: 160 } });
+  const cta = settle(frame - 8, fps, { damping: 14, stiffness: 160 });
   return (
     <AbsoluteFill style={{ backgroundColor: col.bg, alignItems: "center", justifyContent: "center", gap: unit * 0.04, padding: unit * 0.09, opacity: enter }}>
       {Logo({ height: unit * 0.1 }) ?? <div style={{ fontFamily: fonts.heading, fontWeight: headingWeight, fontSize: Math.round(unit * 0.09), color: col.fg }}>{spec.product}</div>}
@@ -141,18 +141,20 @@ export const Clip: React.FC<Size> = (size) => {
   let at = 0;
   const next = (n: number) => ((at += n), at - n);
   return (
-    <AbsoluteFill style={{ backgroundColor: col.bg }}>
-      <Sequence from={next(HOOK)} durationInFrames={HOOK}>
-        <Hook size={size} />
-      </Sequence>
-      {spec.scenes.map((s) => (
-        <Sequence key={s.id} from={next(sec(s.seconds))} durationInFrames={sec(s.seconds)}>
-          <Scene id={s.id} caption={s.caption} size={size} length={sec(s.seconds)} />
+    <AbsoluteFill style={{ backgroundColor: col.bg, textRendering: "geometricPrecision" }}>
+      <FontsReady>
+        <Sequence from={next(HOOK)} durationInFrames={HOOK}>
+          <Hook size={size} />
         </Sequence>
-      ))}
-      <Sequence from={next(END)} durationInFrames={END}>
-        <EndCard size={size} />
-      </Sequence>
+        {spec.scenes.map((s) => (
+          <Sequence key={s.id} from={next(sec(s.seconds))} durationInFrames={sec(s.seconds)}>
+            <Scene id={s.id} caption={s.caption} size={size} length={sec(s.seconds)} />
+          </Sequence>
+        ))}
+        <Sequence from={next(END)} durationInFrames={END}>
+          <EndCard size={size} />
+        </Sequence>
+      </FontsReady>
     </AbsoluteFill>
   );
 };

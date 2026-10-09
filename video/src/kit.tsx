@@ -1,5 +1,6 @@
-import React from "react";
-import { Easing, Img, cancelRender, continueRender, delayRender, interpolate, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import React, { useEffect, useState } from "react";
+import { Easing, Img, cancelRender, continueRender, delayRender, interpolate, measureSpring, spring, staticFile, useCurrentFrame, useVideoConfig } from "remotion";
+import type { SpringConfig } from "remotion";
 import { loadFont as loadInter } from "@remotion/google-fonts/Inter";
 import { loadFont as loadMono } from "@remotion/google-fonts/JetBrainsMono";
 import brand from "../public/brand/brand.json";
@@ -23,17 +24,40 @@ interface Brand {
   logo: { file: string; width: number; height: number } | null;
 }
 export const B = brand as Brand;
-const inter = loadInter("normal", { weights: ["400", "500", "700", "800"], subsets: ["latin"] }).fontFamily;
-const jetbrains = loadMono("normal", { weights: ["400", "700"], subsets: ["latin"] }).fontFamily;
+const interFont = loadInter("normal", { weights: ["400", "500", "700", "800"], subsets: ["latin"] });
+const monoFont = loadMono("normal", { weights: ["400", "700"], subsets: ["latin"] });
+const inter = interFont.fontFamily;
+const jetbrains = monoFont.fontFamily;
 
-// The site's own font files, loaded before any frame renders.
+// Every font, the site's own files and the fallbacks, loaded once per tab.
+// FontsReady renders nothing until this is done: text laid out before its
+// font arrives keeps the fallback's measurements in some tabs (SVG text,
+// centred labels), and frames from different tabs then disagree: a flicker.
 const faces = (["heading", "body"] as const).flatMap((role) => (B.fonts[role]?.files ?? []).map((f) => ({ family: `Brand ${role}`, ...f })));
-if (faces.length) {
-  const wait = delayRender("Loading the site's fonts");
-  Promise.all(faces.map((f) => new FontFace(f.family, `url(${staticFile(f.file)})`, { weight: f.weight }).load().then((face) => document.fonts.add(face))))
-    .then(() => continueRender(wait))
-    .catch((e) => cancelRender(e));
-}
+let fontsLoaded = false;
+const fontsDone = Promise.all([
+  ...faces.map((f) => new FontFace(f.family, `url(${staticFile(f.file)})`, { weight: f.weight }).load().then((face) => void document.fonts.add(face))),
+  interFont.waitUntilDone(),
+  monoFont.waitUntilDone(),
+])
+  .then(() => document.fonts.ready)
+  .then(() => {
+    fontsLoaded = true;
+  });
+
+/** Mounts its children only once every font is loaded. Clip wraps everything in it. */
+export const FontsReady: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+  const [ready, setReady] = useState(fontsLoaded);
+  const [handle] = useState(() => (fontsLoaded ? null : delayRender("Loading fonts")));
+  useEffect(() => {
+    if (ready) return;
+    fontsDone.then(() => setReady(true)).catch((e) => cancelRender(e));
+  }, [ready]);
+  useEffect(() => {
+    if (ready && handle !== null) continueRender(handle);
+  }, [ready, handle]);
+  return ready ? <>{children}</> : null;
+};
 const bodyIsMono = /mono|code|courier/i.test(B.fonts.body?.family ?? "");
 export const fonts = {
   heading: B.fonts.heading ? `"Brand heading", ${inter}` : inter,
@@ -49,11 +73,23 @@ export const Logo: React.FC<{ height: number }> = ({ height }) =>
 
 // ─── Motion ─────────────────────────────────────────────
 
+/**
+ * A spring that is exactly 0 before it starts and exactly 1 once settled.
+ * A plain spring creeps towards 1 for ever, so anything it moves shifts by a
+ * fraction of a pixel every frame; text then re-rasterizes and flickers.
+ * Use this, never spring() directly.
+ */
+export const settle = (frame: number, fps: number, config: Partial<SpringConfig>, durationInFrames?: number): number => {
+  if (frame <= 0) return 0;
+  const end = durationInFrames ?? measureSpring({ fps, config });
+  return frame >= end ? 1 : spring({ frame, fps, config, durationInFrames });
+};
+
 /** Children enter at `at`: sliding a little from a side, scaling up, or fading. */
 export const Appear: React.FC<{ at?: number; from?: "up" | "down" | "left" | "right" | "scale" | "fade"; style?: React.CSSProperties; children: React.ReactNode }> = ({ at = 0, from = "up", style, children }) => {
   const frame = useCurrentFrame();
   const { fps } = useVideoConfig();
-  const p = spring({ frame: frame - at, fps, config: { damping: 18, stiffness: 170 } });
+  const p = settle(frame - at, fps, { damping: 18, stiffness: 170 });
   const d = 22 * (1 - p);
   const transform =
     from === "up" ? `translateY(${d}px)` : from === "down" ? `translateY(${-d}px)` : from === "left" ? `translateX(${d}px)` : from === "right" ? `translateX(${-d}px)` : from === "scale" ? `scale(${0.92 + 0.08 * p})` : undefined;
@@ -63,11 +99,11 @@ export const Appear: React.FC<{ at?: number; from?: "up" | "down" | "left" | "ri
 /** Frames Typing takes for this text. */
 export const typingFrames = (text: string, cps = 26) => Math.ceil((text.length / cps) * FPS);
 
-/** Text typed in from `at`, `cps` characters a second, with a caret. */
+/** Text typed in from `at`, `cps` characters a second, with a steady caret that goes once the text is in (a blinking one reads as a glitch). */
 export const Typing: React.FC<{ text: string; at?: number; cps?: number; caret?: boolean; style?: React.CSSProperties }> = ({ text, at = 0, cps = 26, caret = true, style }) => {
   const frame = useCurrentFrame();
   const n = Math.max(0, Math.min(text.length, Math.floor(((frame - at) / FPS) * cps)));
-  const showCaret = caret && frame >= at && (n < text.length || Math.floor(frame / 15) % 2 === 0);
+  const showCaret = caret && frame >= at && frame < at + typingFrames(text, cps) + sec(0.4);
   return (
     <span style={{ whiteSpace: "pre-wrap", ...style }}>
       {text.slice(0, n)}
