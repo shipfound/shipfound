@@ -17,7 +17,7 @@ The same skill, routines and MCP server run in Claude Code and in Codex. Only th
 |---|---|---|
 | Start a routine | `/shipfound:<routine> [input]` | The founder asks in words ("run the Shipfound audit"), or names the skill: `$shipfound:shipfound` when installed as a plugin, `$shipfound` when the skill was copied by hand |
 | Shipfound tools | `mcp__plugin_shipfound_shipfound__<name>` (plugin) or `mcp__shipfound__<name>` (added by hand) | The `shipfound` MCP server's tools, same names |
-| Sign in | From the chat: the login routine (`sign_in`), a link and a code the founder approves. With an API key: the plugin README, "Sign in with an API key instead" | `codex mcp login shipfound`, or the API key steps in the plugin README |
+| Sign in | Once per machine: the founder runs `/mcp`, picks plugin:shipfound:shipfound and chooses Authenticate (login routine); Claude Code keeps and renews it. With an API key: the plugin README, "Sign in with an API key instead" | `codex mcp login shipfound`, or the API key steps in the plugin README |
 | Browser | Claude in Chrome (`mcp__claude-in-chrome__*`), in the founder's own Chrome. To connect: install the extension from https://claude.ai/chrome, sign in to claude.ai with the same account as Claude Code, restart Chrome, then `/chrome` in Claude Code if it still does not answer | The Browser plugin with its Chrome extension, in the founder's own Chrome. To connect: install the Browser plugin in Codex and its Chrome extension, and keep Chrome open. The in-app browser is not signed in to their accounts, so use it only for public pages and local previews |
 | Gmail | The Gmail connector, if connected | A Gmail connector or plugin, if one is installed and can create drafts |
 | `record_access` client | `"claude-code"` | `"codex"` |
@@ -33,7 +33,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | Routine | Claude Code | Codex: the founder says | Does |
 |---|---|---|---|
 | [grow](routines/grow.md) | `/shipfound:grow [module]` | "What should I do today?" | Every day: what changed since the last session, what is due, what is still failing, then one move. Start here after the audit |
-| [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign this session in: a link and a code to approve. Other routines do it for you when needed |
+| [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign in once per machine; the host keeps it. Other routines do it for you when needed |
 | [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 11 areas plus the first baseline visibility run. Start here |
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
 | [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
@@ -49,7 +49,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [video](routines/video.md) | `/shipfound:video [redo]` | "Make a video of my product" | The product's screens recreated in HTML and animated, in their branding, no sound, 30 seconds at most, made on their machine and checked against the real screens. Never a screen recording. Free |
 | [aso](routines/aso.md) | `/shipfound:aso [App Store link, country, or reviews, site, connect, test, cpp, ads]` | "Fix our App Store listing" | iOS apps: listing audit (free), fixes as a PR or staged in the next version, review to-do, the app's own site, screenshot A/B tests, custom product pages, Apple Ads proposals; verified once live |
 
-If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when any Shipfound tool answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
+If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when the Shipfound tools are missing or any of them answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
 
 ## The loop
 
@@ -143,7 +143,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 
 | Tool | Input | Use it to |
 |---|---|---|
-| `sign_in` | `{ client? }` | Sign this session in from the chat (login routine): returns a link and a code, then waits for the founder's Allow. Signed in, says which site the session works on |
+| `sign_in` | `{ client? }` | Signed in, says which site the session works on. Signed out, only on plugins up to 0.3.22: returns a link and a code, then waits for the founder's Allow (login routine) |
 | `workspace` | none | Product, credits, plan, access summary, tracking state, results app links, and `pluginUpdate` when a newer plugin is out. Call first in every routine; if `pluginUpdate` is there, pass its line to the founder once, then carry on |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |

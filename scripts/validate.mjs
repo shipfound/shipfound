@@ -206,9 +206,9 @@ if (mcp) {
   if (!s) fail(mcpFile, 'mcpServers.shipfound is missing');
   else {
     if (s.type !== "http") fail(mcpFile, `shipfound.type must be "http", got ${s.type}`);
-    // /mcp/plugin, not /mcp: it never answers 401, so Claude Code loads the tools signed out and sign_in works from the chat.
-    // ?v= is the plugin's version, so the server can tell the founder when a newer one is out.
-    const want = `\${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin?v=${plugin?.version}`;
+    // /mcp, which answers 401 with OAuth metadata: the founder signs in once from /mcp and Claude Code keeps and refreshes the token.
+    // ?v= is the plugin's version, so the server can tell the founder when a newer one is out; host=claude tells it apart from Codex's.
+    const want = `\${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp?v=${plugin?.version}&host=claude`;
     if (s.url !== want) fail(mcpFile, `url must be ${want}, got ${s.url}`);
     if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; API-key users add their own server (README)");
     if (s.headersHelper) {
@@ -294,9 +294,9 @@ if (codex) {
   }
 }
 if (mcp?.mcpServers?.shipfound?.url) {
-  // Same API as the Codex manifest; Codex stays on /mcp, where `codex mcp login` finds OAuth through the 401.
-  const fallback = /:-([^}]+)\}(\/mcp)\/plugin(\?v=[0-9.]+)?$/.exec(mcp.mcpServers.shipfound.url);
-  if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}/plugin, on the same API as the Codex manifest`);
+  // Same API and path as the Codex manifest: both sign in with OAuth through /mcp's 401.
+  const fallback = /:-([^}]+)\}(\/mcp)(\?[^"]*)?$/.exec(mcp.mcpServers.shipfound.url);
+  if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}, on the same API as the Codex manifest`);
 }
 if (codexMarket) {
   if (codexMarket.name !== (market?.name ?? "shipfound")) fail(codexMarketFile, `marketplace name must match .claude-plugin/marketplace.json (${market?.name})`);

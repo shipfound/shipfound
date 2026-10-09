@@ -1,29 +1,26 @@
 # Routine: login
 
-Sign this session in to Shipfound from the chat: a link and a code the founder approves in their browser. Nothing to restart. Every other routine runs this one in place when a Shipfound tool says it is not signed in, then carries on where it was.
+Sign the founder in to Shipfound. They do it once per machine: the host keeps the sign-in and renews it by itself, so a new session starts signed in. Every other routine runs this one in place when the Shipfound tools are missing or say they are not signed in, then carries on where it was.
 
 Input: none needed.
 
 ## Procedure
 
-1. Call `sign_in`, with `client` "claude-code" in Claude Code or "codex" in Codex.
-   - **SIGNED_IN**: go to step 4.
-   - **OPEN_LINK**: go to step 2.
-   - An error saying the connection has no session: this connection cannot sign in from the chat. Give the founder the API key steps for their host (SKILL.md, "Hosts") and stop.
-   - No `sign_in` tool, and the Shipfound tools fail with an auth error: the host signs in its own way. Give the founder the sign-in step for their host (SKILL.md, "Hosts") and stop.
-2. Open the `url` in the founder's default browser from the shell, quoted because of the `?`: `open "<url>"` on macOS, `xdg-open "<url>"` on Linux. Print it as well, in case it did not open:
+1. Call `workspace`.
+   - It answers with a site: the founder is signed in. Go to step 4.
+   - It says you are not signed in and a `sign_in` tool is there: this is an older plugin that signs in from the chat. Go to step 3.
+   - There is no `workspace` tool, or it fails with an auth error: go to step 2.
+2. Only the founder can start the host's sign-in; you cannot press it for them. Tell them, in one short block, for their host:
+   - **Claude Code**: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then in the browser pick the site and choose Allow. Say they only do this once on this machine. When they say it is done, call `workspace` again and go to step 4.
+   - **Codex**: run `codex mcp login shipfound` in a terminal, approve in the browser, then start a new thread.
+   - If they would rather use an API key (CI, a machine without a browser): the plugin README, "Sign in with an API key instead".
 
-   > Approve Shipfound in your browser: <url>
-   > Check it shows **<code>**, pick your site and choose Allow.
-
-   The founder approves their own access. Never press Allow for them, and never open the link with browser tools that can click.
-3. Call `sign_in` again. Each call waits up to 40 seconds for the founder's answer.
-   - **SIGNED_IN**: go to step 4.
-   - **WAITING**: call it again. Keep going for up to 10 minutes in all, which is how long the code lives. Say nothing between calls unless the founder asks.
-   - **OPEN_LINK** (the code expired): go back to step 2 once. If that one expires too, stop and say to run the login routine again when they are ready.
-   - An error saying the founder chose Deny: say nothing was signed in, and stop.
-4. Call `workspace` and say, in one line, which site this session works on, the plan and credits, and whether there is an audit yet. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
+   Then stop and wait for the founder. If `workspace` still fails after they say it is done, ask them to check `/mcp` shows the server as connected, and stop.
+3. Older plugin, signing in from the chat. Suggest updating the plugin once (in Claude Code: `/plugin`, update Shipfound, new session; then sign-in lasts across sessions), and carry on with this one:
+   - Call `sign_in` with `client` "claude-code" in Claude Code or "codex" in Codex. **SIGNED_IN**: go to step 4. **OPEN_LINK**: open the `url` in the founder's default browser from the shell, quoted because of the `?` (`open "<url>"` on macOS, `xdg-open "<url>"` on Linux), print it as well, and ask them to check it shows the `code`, pick their site and choose Allow. Never press Allow for them, and never open the link with browser tools that can click.
+   - Call `sign_in` again; each call waits up to 40 seconds. **WAITING**: call it again, for up to 10 minutes in all, saying nothing between calls. **OPEN_LINK** again (the code expired): give the new link once; if that one expires too, stop and say to run the login routine again when they are ready. The founder chose Deny: say nothing was signed in, and stop.
+4. Say, in one line, which site the founder works on, the plan and credits, and whether there is an audit yet (from `workspace`). If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
 
 If the founder has no Shipfound account yet, the approval page asks them to register first and lets them add their site there. There is nothing to do here for that.
 
-The sign-in lasts for this session. A new session signs in again the same way, with one click if the founder is still signed in on the web. To sign every session out, they revoke the "signed in from chat" key in the results app (Settings, MCP connection).
+To sign out, they revoke the connector's key in the results app (Settings, MCP connection), or choose **Clear authentication** for the server in `/mcp`.
