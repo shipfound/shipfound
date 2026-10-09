@@ -6,7 +6,7 @@ Every hard line applies here more than anywhere: never post, never send, no karm
 
 **What is not built yet:** thread discovery for Quora and Hacker News. Reddit's and X's are on Assisted posts in the results app: Reddit finds 5 threads a run plus a post where it fits, X finds up to 5 live conversations and writes a reply to each. For Quora and HN, this routine works on threads the founder brings, and on inbox drafts.
 
-**X is replies, never posts.** Never write the founder's own X posts: no progress updates, no "today it wrote 2 pages" status reports, no numbers from Shipfound's own runs or visibility checks. A post like that tells the founder's followers nothing they can use. On X, Shipfound joins conversations that are already happening.
+**X is replies, never posts.** Never write the founder's own X posts: no progress updates, no "today it wrote 2 pages" status reports, no numbers from Shipfound's own runs or visibility checks. A post like that tells the founder's followers nothing they can use. On X, Shipfound joins conversations that are already happening. A boost is the one exception, and it lives in its own routine (boost.md).
 
 Input: a thread URL, `signups`, or `network`.
 

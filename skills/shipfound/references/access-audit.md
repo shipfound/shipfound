@@ -84,7 +84,7 @@ Never upvote, comment or post during the audit.
 
 In the browser, open https://x.com/home. If logged in, read the profile: joined date, followers, date of the last post.
 
-Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ accountAgeDays, followers, daysSinceLastPost }`.
+Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ handle, accountAgeDays, followers, daysSinceLastPost }`, with `handle` without the @ (boost reads it).
 
 ## 8. GitHub (`github`)
 

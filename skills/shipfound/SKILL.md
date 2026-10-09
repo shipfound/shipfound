@@ -1,6 +1,6 @@
 ---
 name: shipfound
-description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, analytics, test), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
+description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, analytics, test, boost), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
 ---
 
 # Shipfound
@@ -45,6 +45,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
+| [boost](routines/boost.md) | `/shipfound:boost [post link, read, or stop]` | "Boost this post on X" | A small paid test of the founder's own X posts: planned, filled in X Ads Manager for them to launch, read on clicks and traced to signups |
 | [aso](routines/aso.md) | `/shipfound:aso [App Store link, country, or reviews, site, connect, test, cpp, ads]` | "Fix our App Store listing" | iOS apps: listing audit (free), fixes as a PR or staged in the next version, review to-do, the app's own site, screenshot A/B tests, custom product pages, Apple Ads proposals; verified once live |
 
 If a request does not match one routine, use the closest one or answer from the tools directly; never run several routines in one go. The one exception is login: when any Shipfound tool answers that you are not signed in, run the login routine right there, then carry on with the routine you were in.
@@ -173,6 +174,10 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect |
 | `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
 | `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |
+| `boost_candidates` | `{ handle? }` | The founder's recent X posts ranked for a boost, only when they ask which to boost |
+| `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source? }` | Plan a boost of 1 to 3 posts: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
+| `boost_record` | `{ id, status?, posts? }` | Store what X Ads Manager shows: launched, stopped, and per post the spend, impressions and clicks |
+| `boost_results` | `{ id? }` | The boost's read-out and verdict |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https.
 
@@ -209,7 +214,7 @@ When the founder asks why it is not automated, or the first time Reddit comes up
 
 ## X: join conversations, never post for the founder
 
-On X, Shipfound replies to conversations already happening: Assisted posts in the results app finds live posts where the founder's buyers talk about the problem or ask what to use, and writes one reply each (8 credits a run), each opening X's reply box filled in. Never write the founder's own X posts, and never turn a session's results into one ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's own work tells their followers nothing they can use.
+On X, Shipfound replies to conversations already happening: Assisted posts in the results app finds live posts where the founder's buyers talk about the problem or ask what to use, and writes one reply each (8 credits a run), each opening X's reply box filled in. Never write the founder's own X posts, and never turn a session's results into one ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's own work tells their followers nothing they can use. The one exception is a boost (routines/boost.md): its Promoted-only copy is the founder's own post or their landing page's own words, shown only to the ad audience, never on their timeline.
 
 Before the first draft for a sub, ask the founder to check its rules for account age, karma and self-promotion limits. If their account does not meet them yet, suggest a few weeks of genuinely helpful comments they write and post themselves. You never automate karma building and never draft comments whose purpose is karma.
 

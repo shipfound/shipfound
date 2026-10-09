@@ -72,6 +72,10 @@ const TOOLS = {
   app_downloads: 0,
   ads_review: 0,
   ads_propose: 0,
+  boost_candidates: 0,
+  boost_plan: 0,
+  boost_record: 0,
+  boost_results: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // In the spec, not built yet. Allowed only in files that say "not built yet".
@@ -88,6 +92,11 @@ const NOT_TOOLS = new Set([
   // content types (content_brief, check_content)
   "answer_page",
   "glossary_term",
+  // boost_results verdicts and fields
+  "too_early",
+  "no_clear_winner",
+  "not_launched",
+  "needs_numbers",
   // experiment_results verdicts
   "keep_running",
   "control_wins",
@@ -109,7 +118,7 @@ const NOT_TOOLS = new Set([
   "manifest_version",
   "env_http_headers",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
