@@ -99,13 +99,14 @@ Payments need no code. When goals are listed, Shipfound proposes a soft `payment
 
 ### Signup and payment, read from the code
 
-The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both with `goals` `{ action: "create", name: "signup" | "payment", ... }` (same name: redefined). Add nothing to the site.
+The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both, and add `signin`, with `goals` `{ action: "create", name: "signup" | "payment" | "signin", ... }` (same name: redefined). Add nothing to the site.
 
 - **Signup.** Find where an account is created: the signup page, its form, the API call, and where the browser goes after it succeeds. Pick the first that holds:
   1. The site already calls `sf(...)` on success: `EVENT` with that name.
   2. Only new accounts reach a page (`/welcome`, `/onboarding`, `/verify-email`, `/check-your-email`): `PAGEVIEW` on it. Not a page that logins also reach, such as `/app` or `/dashboard`.
   3. Otherwise the form sent on the signup page, which t.js reports as `form_submit` with that page's path: `EVENT` `form_submit@/register` (the real path from the code, with `*` for locale prefixes). It also counts rejected submits, so say that in the note.
   Signup only through OAuth buttons (Google, GitHub) has no page or form of its own: say so and leave the goal as it is.
+- **Sign-in.** If the site has a login, add a soft `signin` goal the same way, from the login code: an `sf(...)` call on success, else the login form sent on its page (`form_submit@/login`, the real path). It counts the sessions that signed in, so returning users show next to new ones. A rejected password counts too; say that in the note. Never make it the headline: it is not a conversion. Login only through OAuth buttons: say so and add nothing.
 - **Payment.** Find the checkout call (Stripe `success_url`, Dodo `return_url`, Paddle `successUrl`, Lemon Squeezy `redirect_url`, Polar `success_url`) and the path the buyer comes back to. `CHECKOUT` with that path (`/billing*`); the query string is not stored, so match the path only. A success page only buyers reach (`/thank-you`, `/checkout/success`) is surer: `PAGEVIEW` on it. A plan change that bills in place, with no checkout page, is not seen from outside: say so.
 - Put the evidence in `note`: the file and line, and what happens there.
 - `payment` may already be hard. Redefining it puts it back to soft, so show the founder the new definition and ask first.
