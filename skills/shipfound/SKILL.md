@@ -176,7 +176,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
 | `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |
 | `boost_candidates` | `{ handle? }` | The founder's recent X posts ranked for a boost, only when they ask which to boost |
-| `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source? }` | Plan a boost of 1 to 3 posts: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
+| `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source?, targeting? }` | Plan a boost of 1 to 3 posts for the audience the founder chose: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
 | `boost_record` | `{ id, status?, posts? }` | Store what X Ads Manager shows: launched, stopped, and per post the spend, impressions and clicks |
 | `boost_results` | `{ id? }` | The boost's read-out and verdict |
 
