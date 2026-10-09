@@ -89,7 +89,7 @@ Green: logged in, account older than 30 days, posted in the last 30 days. Amber:
 ## 8. GitHub (`github`)
 
 - `gh auth status`.
-- Relevant awesome lists: `gh search repos "awesome <category>" --sort stars --limit 10`. For the top 3, check whether the product is already listed: `gh api repos/{owner}/{repo}/readme --jq .content | base64 -d | grep -i <domain>`.
+- Relevant awesome lists: `gh search repos "awesome <category>" --sort stars --limit 10`. For the top 3, check whether the product is already listed: `gh api repos/{owner}/{repo}/readme --jq .content | base64 -d | grep -i <domain>`. A list also counts as done when `shipped` (module LISTINGS) has it or the founder has an open or merged PR or issue there (`gh search prs --author @me --json repository,state`), including a sister list (awesome-remote-mcp-servers stands for awesome-mcp-servers). Leave those out of `lists`, and never carry a "not listed" line over from an older audit without checking again.
 
 Green: authed and at least one relevant list where the product is not yet listed. Amber: authed, no fitting list. Red: `gh` missing or not authed. Facts: `{ authed: true, lists: ["owner/awesome-x"] }`.
 

@@ -83,6 +83,10 @@ No routine ends in silence. When a routine finishes (and after you answer a Ship
 
 Start one move at a time, never start one without the founder's pick, and state the price of anything over 5 credits in the option itself.
 
+## Done is done
+
+Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `site_fixes` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
+
 ## Asking the founder
 
 The founder is usually not a marketer. Every question you ask them (AskUserQuestion in Claude Code, a line in Codex) follows these rules, in every routine:
@@ -165,7 +169,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_add` | `{ url }` | Add the founder's iOS app from its App Store link; the public listing |
 | `app_audit` | `{ appId?, storefront?, locales? }` | ASO findings for the metadata passed (from fastlane/metadata), else the public listing |
 | `app_reviews` | `{ appId?, country?, pages? }` | Latest App Store reviews: stars, by version, the 1 and 2 star ones to group into a to-do list |
-| `listing_targets` | `{ count?, include? }` | The next directories to list on: free, open to this product, not yet listed, ranked by AI citations, with submit URLs |
+| `listing_targets` | `{ count?, include?, marketplaces? }` | The next directories to list on: free, open to this product, not yet listed, ranked by AI citations, with submit URLs. With `marketplaces` (free): the MCP registries, plugin lists, extension stores and awesome lists the product fits, minus what is recorded |
+| `listing_skip` | `{ site }` | A listing the founder will not do: never offered again. Free. One they already did is recorded with `record_action` instead |
 | `app_site` | `{ appId?, slug?, content? }` | Read or write the app's site on shipfound.site: a home page and a page per search; the founder publishes it |
 | `app_metadata` | `{ appId? }` | Every locale's metadata from App Store Connect (keyword field included): the version being prepared and the live one |
 | `app_metadata_stage` | `{ appId?, changes }` | Write listing changes into the version the founder will submit (Builder); never the live listing |
@@ -181,6 +186,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `boost_results` | `{ id? }` | The boost's read-out and verdict |
 | `reach_find` | `{ platform }` | Start a Reddit or X run on Assisted posts (8 credits, only when it finds drafts): threads or live conversations and a reply for each, in the background, about two minutes. Returns the link to the drafts |
 | `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
+| `reach_mark` | `{ platform, id, status, url? }` | Mark a draft posted (with the link to the reply) or skipped when the founder says so, so it is not offered again. Free |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https.
 
