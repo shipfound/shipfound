@@ -97,6 +97,19 @@ Goals are **hard** or **soft**:
 
 Payments need no code. When goals are listed, Shipfound proposes a soft `payment` goal from the site's own data: a payment-like event the site already sends, or a `CHECKOUT` goal (a visit back from a hosted checkout such as Stripe, Dodo, Paddle, Lemon Squeezy or Polar, which also counts past payments). Point the founder at it to convert it to hard. Do not add payment events to the site for this.
 
+### Signup and payment, read from the code
+
+The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both with `goals` `{ action: "create", name: "signup" | "payment", ... }` (same name: redefined). Add nothing to the site.
+
+- **Signup.** Find where an account is created: the signup page, its form, the API call, and where the browser goes after it succeeds. Pick the first that holds:
+  1. The site already calls `sf(...)` on success: `EVENT` with that name.
+  2. Only new accounts reach a page (`/welcome`, `/onboarding`, `/verify-email`, `/check-your-email`): `PAGEVIEW` on it. Not a page that logins also reach, such as `/app` or `/dashboard`.
+  3. Otherwise the form sent on the signup page, which t.js reports as `form_submit` with that page's path: `EVENT` `form_submit@/register` (the real path from the code, with `*` for locale prefixes). It also counts rejected submits, so say that in the note.
+  Signup only through OAuth buttons (Google, GitHub) has no page or form of its own: say so and leave the goal as it is.
+- **Payment.** Find the checkout call (Stripe `success_url`, Dodo `return_url`, Paddle `successUrl`, Lemon Squeezy `redirect_url`, Polar `success_url`) and the path the buyer comes back to. `CHECKOUT` with that path (`/billing*`); the query string is not stored, so match the path only. A success page only buyers reach (`/thank-you`, `/checkout/success`) is surer: `PAGEVIEW` on it. A plan change that bills in place, with no checkout page, is not seen from outside: say so.
+- Put the evidence in `note`: the file and line, and what happens there.
+- `payment` may already be hard. Redefining it puts it back to soft, so show the founder the new definition and ask first.
+
 Prefer goals that read data the site already sends (a `PAGEVIEW` on a path, `CHECKOUT`) over new code. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals` `{ action: "create", ... }` only if nothing already sent shows it.
 
 The founder's own visits are excluded by the server while they are signed in to the results app; never add code to the site to filter them.

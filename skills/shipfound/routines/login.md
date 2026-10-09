@@ -15,8 +15,14 @@ Input: none needed.
    - When the founder says it is done, the Shipfound tools are there: call `workspace` and go to step 4. If the browser showed a connection error after Allow, ask for the full address from the address bar and pass it to `complete_authentication` as `callback_url`, then call `workspace`.
    - It fails, or says to sign in from `/mcp`: fall through to the steps below.
 
-   With no such tool, only the founder can start the sign-in. Tell them, in one short block, for their host:
-   - **Claude Code**: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then in the browser pick the site and choose Allow. Say they only do this once on this machine. When they say it is done, call `workspace` again and go to step 4.
+   With no such tool in Claude Code (the VS Code and JetBrains extensions, and other sessions that cannot run the sign-in themselves), start it from the shell. `claude mcp login` needs a terminal, so give it one with `script`, and run it in the background because it waits for the founder:
+   - macOS: `script -q /dev/null claude mcp login plugin:shipfound:shipfound`
+   - Linux: `script -qec "claude mcp login plugin:shipfound:shipfound" /dev/null`
+
+   It opens the sign-in page in the founder's browser and prints the link after "If the browser didn't open, visit:". Read the output after a few seconds, print that link, and tell the founder in one line: pick the site and choose Allow; they only do this once on this machine. It exits by itself once they choose Allow; then call `workspace` and go to step 4. If the tools are still missing after it exits 0, the sign-in is saved but this session loaded its tools before it: ask the founder to start a new conversation and run the same command again, and stop. If it fails (no `claude` on the path, no `script`), fall through to the steps below.
+
+   Only when neither works, the founder starts the sign-in. Tell them, in one short block, for their host:
+   - **Claude Code**: run `/mcp`, pick **plugin:shipfound:shipfound**, choose **Authenticate**, then in the browser pick the site and choose Allow. In the VS Code extension, run `claude mcp login plugin:shipfound:shipfound` in its terminal instead. Say they only do this once on this machine. When they say it is done, call `workspace` again and go to step 4.
    - **Codex**: run `codex mcp login shipfound` in a terminal, approve in the browser, then start a new thread.
    - If they would rather use an API key (CI, a machine without a browser): the plugin README, "Sign in with an API key instead".
 

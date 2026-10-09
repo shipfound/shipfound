@@ -125,6 +125,11 @@ const NOT_TOOLS = new Set([
   "env_http_headers",
   // complete_authentication's input (Claude Code)
   "callback_url",
+  // t.js event, and checkout return-URL fields in the founder's code (tracking.md)
+  "form_submit",
+  "success_url",
+  "return_url",
+  "redirect_url",
 ]);
 const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
