@@ -1,7 +1,7 @@
 ---
 description: A short video of your product for a boost on X. Your agent recreates its screens and animates them, in your branding, no sound, 30 seconds at most. No screen recording. Free.
 argument-hint: "[redo]"
-allowed-tools: AskUserQuestion, Read, Bash(script -q /dev/null claude mcp login plugin:shipfound:shipfound), Bash(script -qec "claude mcp login plugin:shipfound:shipfound" /dev/null), Bash(npm install), Bash(npx playwright install chromium), Bash(node capture.mjs*), Bash(npm run sheet), Bash(npm run render), Bash(npx remotion still *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__authenticate, mcp__plugin_shipfound_shipfound__complete_authentication, mcp__plugin_shipfound_shipfound__workspace
+allowed-tools: AskUserQuestion, Read, Bash(sh */scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), Bash(npm install), Bash(npx playwright install chromium), Bash(node capture.mjs*), Bash(npm run sheet), Bash(npm run render), Bash(npx remotion still *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
 ---
 
 # /shipfound:video

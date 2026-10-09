@@ -215,15 +215,15 @@ if (mcp) {
   if (!s) fail(mcpFile, 'mcpServers.shipfound is missing');
   else {
     if (s.type !== "http") fail(mcpFile, `shipfound.type must be "http", got ${s.type}`);
-    // /mcp, which answers 401 with OAuth metadata: the founder signs in once from /mcp and Claude Code keeps and refreshes the token.
+    // /mcp/plugin, which never answers 401 (a 401 sends Claude Code to its own OAuth, which ends on a localhost page):
+    // signed out, sign_in signs the session and this machine in on shipfound.co, and the headersHelper
+    // sends the machine's secret on every later connection (scripts/device.sh, login routine).
     // ?v= is the plugin's version, so the server can tell the founder when a newer one is out; host=claude tells it apart from Codex's.
-    const want = `\${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp?v=${plugin?.version}&host=claude`;
+    const want = `\${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin?v=${plugin?.version}&host=claude`;
     if (s.url !== want) fail(mcpFile, `url must be ${want}, got ${s.url}`);
-    if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header breaks the OAuth default; API-key users add their own server (README)");
-    if (s.headersHelper) {
-      const m = /\$\{CLAUDE_PLUGIN_ROOT\}\/([^"\s]+)/.exec(s.headersHelper);
-      if (!m || !existsSync(join(ROOT, m[1]))) fail(mcpFile, `headersHelper script not found: ${s.headersHelper}`);
-    }
+    if (s.headers?.Authorization) fail(mcpFile, "a static Authorization header would replace the machine's sign-in; API-key users add their own server (README)");
+    const m = /\$\{CLAUDE_PLUGIN_ROOT\}\/([^"\s]+)/.exec(s.headersHelper ?? "");
+    if (!m || m[1] !== "scripts/device.sh" || !existsSync(join(ROOT, m[1]))) fail(mcpFile, `headersHelper must run scripts/device.sh header, got ${s.headersHelper}`);
   }
 }
 
@@ -303,8 +303,8 @@ if (codex) {
   }
 }
 if (mcp?.mcpServers?.shipfound?.url) {
-  // Same API and path as the Codex manifest: both sign in with OAuth through /mcp's 401.
-  const fallback = /:-([^}]+)\}(\/mcp)(\?[^"]*)?$/.exec(mcp.mcpServers.shipfound.url);
+  // Same API as the Codex manifest: Codex signs in with OAuth through /mcp's 401, Claude Code on /mcp/plugin.
+  const fallback = /:-([^}]+)\}(\/mcp)(?:\/plugin)?(\?[^"]*)?$/.exec(mcp.mcpServers.shipfound.url);
   if (!fallback || `${fallback[1]}${fallback[2]}` !== API_MCP_URL) fail(mcpFile, `the default URL must be ${API_MCP_URL}, on the same API as the Codex manifest`);
 }
 if (codexMarket) {

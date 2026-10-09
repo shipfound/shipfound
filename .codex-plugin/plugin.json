@@ -1,6 +1,6 @@
 {
   "name": "shipfound",
-  "version": "0.3.26",
+  "version": "0.3.27",
   "description": "Turns your coding agent into your growth engineer: checks what you have access to, fixes your site for Google and AI search, ships content as pull requests, gets you indexed, and tracks AI crawlers and AI traffic. Every result is checked by the Shipfound server.",
   "author": {
     "name": "Shipfound",
@@ -14,7 +14,7 @@
   "mcpServers": {
     "shipfound": {
       "type": "http",
-      "url": "https://api.shipfound.co/mcp?v=0.3.26",
+      "url": "https://api.shipfound.co/mcp?v=0.3.27",
       "env_http_headers": {
         "Authorization": "SHIPFOUND_AUTHORIZATION"
       }
