@@ -1,7 +1,7 @@
 ---
 description: Answer an analytics question in plain words with numbers, for example "which channel brought paid users in September".
 argument-hint: "<question>"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__goals, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__shipped
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__goals_list, mcp__plugin_shipfound_shipfound__goals_save, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__shipped
 ---
 
 # /shipfound:analytics

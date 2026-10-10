@@ -77,7 +77,7 @@ Rules:
 ## Custom product pages
 
 Up to 70 per app. Each has its own promotional text, screenshots and deep link, and since 2025 its own search keywords: Apple shows it in App Store search for those words once it is approved.
-- Only words already in the app's approved keyword field can be assigned. `app_cpp` reports the others, and they go into the next version's keyword field first.
+- Only words already in the app's approved keyword field can be assigned. `app_cpp_create` reports the others, and they go into the next version's keyword field first.
 - Give each page a distinct set of keywords and screenshots made for that search.
 - Link to it from the matching shipfound.site page (`ppid`) and from Apple Ads ad groups.
 

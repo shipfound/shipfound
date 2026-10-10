@@ -18,7 +18,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
    - Tracking: one line from `tracking_check`.
    - The results app link from `workspace` (else https://www.shipfound.co).
 5. Offer to verify the claimed items the founder says are merged or live: "`verify` costs 1 credit each; 4 items is 4 credits." Only on a yes, and only those items; if the total is over 5 credits, wait for an explicit yes with the number in it.
-6. Call `plan` (free) and `goals` `{ action: "list" }` (free). Then end with what the founder can do now. Status is never the end of the day: it hands over to the next move.
+6. Call `plan` (free) and `goals_list` (free). Then end with what the founder can do now. Status is never the end of the day: it hands over to the next move.
 
    **What you can do now**: the top 3 `plan` items, in its order, one line each: what it gets them, the reason from `why` with its number, how to start it, and the credits. For example:
 

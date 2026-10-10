@@ -86,7 +86,7 @@ The proxy must pass the visitor's IP in `X-Forwarded-For`; cookieless mode deriv
 
 ## 6. Goals and events
 
-`tracking_install` creates the default goals. Check them with `goals` `{ action: "list" }`.
+`tracking_install` creates the default goals. Check them with `goals_list`.
 
 Goals are **hard** or **soft**:
 
@@ -99,7 +99,7 @@ Payments need no code. When goals are listed, Shipfound proposes a soft `payment
 
 ### Signup and payment, read from the code
 
-The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both, and add `signin`, with `goals` `{ action: "create", name: "signup" | "payment" | "signin", ... }` (same name: redefined). Add nothing to the site.
+The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both, and add `signin`, with `goals_save` `{ name: "signup" | "payment" | "signin", ... }` (same name: redefined). Add nothing to the site.
 
 - **Signup.** Find where an account is created: the signup page, its form, the API call, and where the browser goes after it succeeds. Pick the first that holds:
   1. The site already calls `sf(...)` on success: `EVENT` with that name.
@@ -111,7 +111,7 @@ The defaults are guesses: `signup` waits for an `sf('signup')` most sites never 
 - Put the evidence in `note`: the file and line, and what happens there.
 - `payment` may already be hard. Redefining it puts it back to soft, so show the founder the new definition and ask first.
 
-Prefer goals that read data the site already sends (a `PAGEVIEW` on a path, `CHECKOUT`) over new code. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals` `{ action: "create", ... }` only if nothing already sent shows it.
+Prefer goals that read data the site already sends (a `PAGEVIEW` on a path, `CHECKOUT`) over new code. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals_save` `{ ... }` only if nothing already sent shows it.
 
 The founder's own visits are excluded by the server while they are signed in to the results app; never add code to the site to filter them.
 

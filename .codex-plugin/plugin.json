@@ -1,6 +1,6 @@
 {
   "name": "shipfound",
-  "version": "0.3.33",
+  "version": "0.3.34",
   "description": "Turns your coding agent into your growth engineer: checks what you have access to, fixes your site for Google and AI search, ships content as pull requests, gets you indexed, and tracks AI crawlers and AI traffic. Every result is checked by the Shipfound server.",
   "author": {
     "name": "Shipfound",

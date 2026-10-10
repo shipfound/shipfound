@@ -168,7 +168,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `tracking_install` | `{ domain, framework, identityMode? }` | Site key, secret (first time only), script tag, crawler snippet for the stack |
 | `tracking_check` | `{ siteId? }` | Events and crawler hits seen, goals fired, what is missing |
 | `analytics` | `{ report, from?, to?, compare?, filters? }` | Any report: overview, realtime, channels, ai_search, sources, landing_pages, pages, shipped_work, ai_crawlers, conversions, timeseries |
-| `goals` | `{ action: "list" }` or `{ action: "create", ... }` | Goals and funnels. Yours are soft; only the founder converts one to hard (references/tracking.md, section 6) |
+| `goals_list` | `{ siteId? }` | Goals and funnels |
+| `goals_save` | `{ siteId?, name, type, match?, valueCents?, note? }` | Create a goal, or redefine one with the same name. Yours are soft; only the founder converts one to hard (references/tracking.md, section 6) |
 | `experiment_create` | `{ key, name, hypothesis, path, goal, variants?, mde?, site? }` | Size and start an A/B test; returns the sizing and the page code, or a refusal with the numbers |
 | `experiment_results` | `{ key?, site? }` | Every test, or one test's table and verdict |
 | `experiment_close` | `{ key, keep, note?, site? }` | Stop a test and record the variant kept |
@@ -185,8 +186,10 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_metadata` | `{ appId? }` | Every locale's metadata from App Store Connect (keyword field included): the version being prepared and the live one |
 | `app_metadata_stage` | `{ appId?, changes }` | Write listing changes into the version the founder will submit (Builder); never the live listing |
 | `app_screenshots` | `{ screenshots, size? }` | New screenshots: a caption over each raw screen, at App Store size; links to show or download |
-| `app_cpp` | `{ appId?, action, name?, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | List custom product pages, or make one as a draft with its keywords and screenshots (Growth); the founder submits it |
-| `app_experiment` | `{ appId?, action, name?, trafficProportion?, locale?, treatments? }` | List App Store A/B tests, or set one up with new screenshots as a draft (Growth); the founder starts it |
+| `app_cpp_list` | `{ appId? }` | The app's custom product pages with their ppid |
+| `app_cpp_create` | `{ appId?, name, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | Make a custom product page as a draft with its keywords and screenshots (Growth); the founder submits it |
+| `app_experiment_list` | `{ appId? }` | The app's App Store A/B tests |
+| `app_experiment_create` | `{ appId?, name, trafficProportion?, locale?, treatments }` | Set up an App Store A/B test with new screenshots as a draft (Growth); the founder starts it |
 | `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect |
 | `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
 | `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |

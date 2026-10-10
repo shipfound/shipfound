@@ -68,16 +68,16 @@ Input, optional:
     1. Read the current screenshots (`app_add` lists them).
     2. Write 1 to 3 treatments, each a new set of captions over the raw screens (see the reference).
     3. Render them with `app_screenshots` and show the founder.
-    4. On a yes, call `app_experiment` with `action: create`. Most tests send 50% of visitors.
+    4. On a yes, call `app_experiment_create`. Most tests send 50% of visitors.
     5. The founder starts it on the App Store page of the results app. Never say it is running before then.
-    6. `app_experiment` `list` shows its state; the results are in App Store Connect.
+    6. `app_experiment_list` shows its state; the results are in App Store Connect.
 
 ### A custom product page (Growth)
 
 14. One page per audience or search.
     1. Pick the search, and the words from the app's approved keyword field it should show for.
     2. Write the promotional text and new captioned screenshots for it.
-    3. On the founder's yes, call `app_cpp` with `action: create`.
+    3. On the founder's yes, call `app_cpp_create`.
     4. The founder submits it for review in App Store Connect.
     5. Then link it: the matching shipfound.site page takes its `ppid` (`app_site`), and so can an Apple Ads ad group.
 
