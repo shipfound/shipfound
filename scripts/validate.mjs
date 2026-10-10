@@ -302,7 +302,7 @@ if (codex) {
   const ui = codex.interface;
   if (!ui || typeof ui !== "object") fail(codexFile, "interface must be an object");
   else {
-    const uiAllowed = new Set(["displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "websiteURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor", "composerIcon", "logo", "logoDark", "screenshots", "defaultPrompt", "default_prompt"]);
+    const uiAllowed = new Set(["displayName", "shortDescription", "longDescription", "developerName", "category", "capabilities", "websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL", "brandColor", "composerIcon", "logo", "logoDark", "screenshots", "defaultPrompt", "default_prompt"]);
     for (const k of Object.keys(ui)) if (!uiAllowed.has(k)) fail(codexFile, `interface.${k} is not accepted`);
     for (const k of ["displayName", "shortDescription", "longDescription", "developerName", "category"]) if (!nonEmpty(ui[k])) fail(codexFile, `interface.${k} is required`);
     if (!Array.isArray(ui.capabilities) || !ui.capabilities.every(nonEmpty)) fail(codexFile, "interface.capabilities must be an array of strings");
@@ -312,7 +312,7 @@ if (codex) {
       if (prompts.length > 3) fail(codexFile, "interface.defaultPrompt: Codex shows only the first 3");
       for (const p of prompts) if (!nonEmpty(p) || p.length > 128) fail(codexFile, `interface.defaultPrompt entry must be 1 to 128 characters: ${p}`);
     }
-    for (const k of ["websiteURL", "privacyPolicyURL", "termsOfServiceURL"]) if (ui[k] !== undefined && !isHttps(ui[k])) fail(codexFile, `interface.${k} must be an https URL`);
+    for (const k of ["websiteURL", "supportURL", "privacyPolicyURL", "termsOfServiceURL"]) if (ui[k] !== undefined && !isHttps(ui[k])) fail(codexFile, `interface.${k} must be an https URL`);
     if (ui.brandColor !== undefined && !/^#[0-9A-F]{6}$/i.test(ui.brandColor)) fail(codexFile, "interface.brandColor must be #RRGGBB");
     for (const k of ["composerIcon", "logo", "logoDark"]) if (ui[k] !== undefined) checkAsset(codexFile, `interface.${k}`, ui[k]);
     for (const [i, s] of (ui.screenshots ?? []).entries()) checkAsset(codexFile, `interface.screenshots[${i}]`, s);

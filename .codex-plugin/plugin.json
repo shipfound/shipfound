@@ -1,6 +1,6 @@
 {
   "name": "shipfound",
-  "version": "0.3.31",
+  "version": "0.3.32",
   "description": "Turns your coding agent into your growth engineer: checks what you have access to, fixes your site for Google and AI search, ships content as pull requests, gets you indexed, and tracks AI crawlers and AI traffic. Every result is checked by the Shipfound server.",
   "author": {
     "name": "Shipfound",
@@ -23,16 +23,17 @@
   "mcpServers": "./.codex-plugin/mcp.json",
   "interface": {
     "displayName": "Shipfound",
-    "shortDescription": "Site fixes, content PRs, indexing, AI crawler tracking",
-    "longDescription": "Checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when GPTBot, PerplexityBot and ClaudeBot read your pages and when ChatGPT sends you a visitor. The Shipfound server checks every result and labels it Verified or Claimed. Never posts, sends or merges without you.",
+    "shortDescription": "Your agent ships customers",
+    "longDescription": "Checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when AI bots read your pages and when AI answers send you a visitor. The Shipfound server checks every result and labels it Verified or Claimed. Never posts, sends or merges without you.",
     "developerName": "Shipfound",
-    "category": "Marketing",
+    "category": "Business & Operations",
     "capabilities": [
       "Interactive",
       "Read",
       "Write"
     ],
     "websiteURL": "https://www.shipfound.co",
+    "supportURL": "https://github.com/shipfound/shipfound/issues",
     "privacyPolicyURL": "https://www.shipfound.co/privacy",
     "termsOfServiceURL": "https://www.shipfound.co/terms",
     "defaultPrompt": [

@@ -2,7 +2,7 @@
   "mcpServers": {
     "shipfound": {
       "type": "http",
-      "url": "https://api.shipfound.co/mcp?v=0.3.31",
+      "url": "https://api.shipfound.co/mcp?v=0.3.32",
       "env_http_headers": {
         "Authorization": "SHIPFOUND_AUTHORIZATION"
       }
