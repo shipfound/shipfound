@@ -1,7 +1,7 @@
 ---
 description: Launch on Show HN, Indie Hackers, DevHunt or Product Hunt. Drafted from your site in your voice and filled in your Chrome; you post it and answer the comments.
 argument-hint: "[show_hn | indie_hackers | devhunt | product_hunt]"
-allowed-tools: AskUserQuestion, Read, Bash(sh */scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__launch_targets, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__verify, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__listing_skip
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__launch_targets, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__verify, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__listing_skip
 ---
 
 # /shipfound:launch
