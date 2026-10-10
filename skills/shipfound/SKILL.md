@@ -190,10 +190,10 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect |
 | `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
 | `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |
-| `boost_candidates` | `{ handle? }` | The founder's recent X posts ranked for a boost, only when they ask which to boost |
-| `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source?, targeting? }` | Plan a boost of 1 to 3 posts for the audience the founder chose: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
+| `boost_candidates` | `{ handle? }` | The founder's recent X posts ranked for a boost, minus any boosted before, only when they ask which to boost |
+| `boost_plan` | `{ posts, goal?, landingUrl?, budgetUsd?, days?, source?, targeting?, repeat? }` | Plan a boost of 1 to 3 posts for the audience the founder chose: budget split, tagged links, what to expect, the stop rule, the Ads Manager setup. Spends nothing |
 | `boost_record` | `{ id, status?, posts? }` | Store what X Ads Manager shows: launched, stopped, and per post the spend, impressions and clicks |
-| `boost_results` | `{ id? }` | The boost's read-out and verdict |
+| `boost_results` | `{ id?, history? }` | The boost's read-out and verdict; with `history`, every boost launched before (posts, words, verdict), so a new boost tests something new |
 | `reach_find` | `{ platform }` | Start a Reddit or X run on Assisted posts (8 credits, only when it finds drafts): threads or live conversations and a reply for each, in the background, about two minutes. Returns the link to the drafts |
 | `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
 | `reach_mark` | `{ platform, id, status, url? }` | Mark a draft posted (with the link to the reply) or skipped when the founder says so, so it is not offered again. Free |
