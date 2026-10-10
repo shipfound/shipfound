@@ -276,20 +276,28 @@ if (codex) {
   }
   if ((codex.skills ?? "").replace(/^\.\//, "").replace(/\/+$/, "") !== "skills") fail(codexFile, 'skills must be "./skills/"');
   if (codex.apps !== undefined) fail(codexFile, "apps needs a .app.json; Shipfound has none");
-  // An object here makes Codex skip .mcp.json, whose ${SHIPFOUND_API_URL:-...} URL and
-  // headersHelper are Claude Code features Codex does not expand.
-  const server = codex.mcpServers?.shipfound;
-  if (typeof codex.mcpServers !== "object" || codex.mcpServers === null || Array.isArray(codex.mcpServers)) fail(codexFile, "mcpServers must be an inline object, so Codex ignores the Claude Code .mcp.json");
-  else if (!server) fail(codexFile, "mcpServers.shipfound is missing");
+  // A path to Codex's own MCP file makes Codex skip .mcp.json, whose ${SHIPFOUND_API_URL:-...}
+  // URL and headersHelper are Claude Code features Codex does not expand. The ChatGPT plugin
+  // directory accepts only a path here, not an inline object.
+  let codexMcp = null;
+  if (codex.mcpServers !== "./.codex-plugin/mcp.json") fail(codexFile, 'mcpServers must be "./.codex-plugin/mcp.json", so Codex ignores the Claude Code .mcp.json');
+  else codexMcp = readJson(".codex-plugin/mcp.json");
+  const codexMcpFile = ".codex-plugin/mcp.json";
+  const servers = codexMcp?.mcpServers;
+  const server = servers?.shipfound;
+  if (!codexMcp) {
+    /* reported above */
+  } else if (!servers || typeof servers !== "object" || Array.isArray(servers)) fail(codexMcpFile, "mcpServers must be an object");
+  else if (!server) fail(codexMcpFile, "mcpServers.shipfound is missing");
   else {
-    for (const k of Object.keys(codex.mcpServers)) if (k !== "shipfound") fail(codexFile, `unexpected MCP server ${k}`);
-    if (!["http", "streamable_http", "streamable-http"].includes(server.type)) fail(codexFile, `mcpServers.shipfound.type must be an HTTP transport, got ${server.type}`);
+    for (const k of Object.keys(servers)) if (k !== "shipfound") fail(codexMcpFile, `unexpected MCP server ${k}`);
+    if (!["http", "streamable_http", "streamable-http"].includes(server.type)) fail(codexMcpFile, `mcpServers.shipfound.type must be an HTTP transport, got ${server.type}`);
     // ?v= is the plugin's version, so the server can tell the founder when a newer one is out.
-    if (server.url !== `${API_MCP_URL}?v=${codex.version}`) fail(codexFile, `mcpServers.shipfound.url must be ${API_MCP_URL}?v=${codex.version}, got ${server.url}`);
-    if (/\$\{/.test(JSON.stringify(server))) fail(codexFile, "Codex does not expand ${...} in plugin MCP config");
-    if (server.bearer_token_env_var) fail(codexFile, "bearer_token_env_var fails startup when the variable is unset, which breaks the OAuth default; use env_http_headers");
-    if (server.http_headers?.Authorization || server.http_headers?.authorization) fail(codexFile, "a static Authorization header breaks the OAuth default");
-    for (const k of ["command", "args", "headersHelper", "http_headers_helper"]) if (server[k] !== undefined) fail(codexFile, `mcpServers.shipfound.${k} is not used; the server is remote and the helper cannot see SHIPFOUND_API_KEY`);
+    if (server.url !== `${API_MCP_URL}?v=${codex.version}`) fail(codexMcpFile, `mcpServers.shipfound.url must be ${API_MCP_URL}?v=${codex.version}, got ${server.url}`);
+    if (/\$\{/.test(JSON.stringify(server))) fail(codexMcpFile, "Codex does not expand ${...} in plugin MCP config");
+    if (server.bearer_token_env_var) fail(codexMcpFile, "bearer_token_env_var fails startup when the variable is unset, which breaks the OAuth default; use env_http_headers");
+    if (server.http_headers?.Authorization || server.http_headers?.authorization) fail(codexMcpFile, "a static Authorization header breaks the OAuth default");
+    for (const k of ["command", "args", "headersHelper", "http_headers_helper"]) if (server[k] !== undefined) fail(codexMcpFile, `mcpServers.shipfound.${k} is not used; the server is remote and the helper cannot see SHIPFOUND_API_KEY`);
   }
   const ui = codex.interface;
   if (!ui || typeof ui !== "object") fail(codexFile, "interface must be an object");

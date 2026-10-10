@@ -1,6 +1,6 @@
 {
   "name": "shipfound",
-  "version": "0.3.30",
+  "version": "0.3.31",
   "description": "Turns your coding agent into your growth engineer: checks what you have access to, fixes your site for Google and AI search, ships content as pull requests, gets you indexed, and tracks AI crawlers and AI traffic. Every result is checked by the Shipfound server.",
   "author": {
     "name": "Shipfound",
@@ -9,25 +9,32 @@
   "homepage": "https://www.shipfound.co",
   "repository": "https://github.com/shipfound/shipfound",
   "license": "MIT",
-  "keywords": ["seo", "aeo", "ai-search", "growth", "indexing", "analytics", "ai-crawlers", "content"],
+  "keywords": [
+    "seo",
+    "aeo",
+    "ai-search",
+    "growth",
+    "indexing",
+    "analytics",
+    "ai-crawlers",
+    "content"
+  ],
   "skills": "./skills/",
-  "mcpServers": {
-    "shipfound": {
-      "type": "http",
-      "url": "https://api.shipfound.co/mcp?v=0.3.30",
-      "env_http_headers": {
-        "Authorization": "SHIPFOUND_AUTHORIZATION"
-      }
-    }
-  },
+  "mcpServers": "./.codex-plugin/mcp.json",
   "interface": {
     "displayName": "Shipfound",
     "shortDescription": "Site fixes, content PRs, indexing, AI crawler tracking",
     "longDescription": "Checks what you have access to, fixes your site for Google and AI search, ships blog, glossary and comparison pages as pull requests, gets your pages indexed on Google and Bing, and installs tracking that shows when GPTBot, PerplexityBot and ClaudeBot read your pages and when ChatGPT sends you a visitor. The Shipfound server checks every result and labels it Verified or Claimed. Never posts, sends or merges without you.",
     "developerName": "Shipfound",
     "category": "Marketing",
-    "capabilities": ["Interactive", "Read", "Write"],
+    "capabilities": [
+      "Interactive",
+      "Read",
+      "Write"
+    ],
     "websiteURL": "https://www.shipfound.co",
+    "privacyPolicyURL": "https://www.shipfound.co/privacy",
+    "termsOfServiceURL": "https://www.shipfound.co/terms",
     "defaultPrompt": [
       "Run the Shipfound audit",
       "What should I do today?",
