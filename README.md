@@ -51,7 +51,7 @@ For CI or a machine without a browser, make a key in the Shipfound app (Settings
   ```
   claude mcp add --transport http shipfound-key https://api.shipfound.co/mcp --header "Authorization: Bearer $SHIPFOUND_API_KEY"
   ```
-- **Codex plugin:** `export SHIPFOUND_AUTHORIZATION="Bearer wl_..."` before starting Codex. The plugin sends it as the `Authorization` header; unset, OAuth is used.
+- **Codex plugin:** the plugin's server signs in with OAuth only. Add `codex mcp add shipfound-key --url https://api.shipfound.co/mcp --bearer-token-env-var SHIPFOUND_API_KEY` with `SHIPFOUND_API_KEY` exported, and turn the plugin's server off (docs/codex.md).
 - **Codex, MCP server only:** `codex mcp add shipfound --url https://api.shipfound.co/mcp --bearer-token-env-var SHIPFOUND_API_KEY`, with `SHIPFOUND_API_KEY` exported.
 
 ### Point at another server

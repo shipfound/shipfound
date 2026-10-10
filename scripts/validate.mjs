@@ -296,7 +296,8 @@ if (codex) {
     if (server.url !== `${API_MCP_URL}?v=${codex.version}`) fail(codexMcpFile, `mcpServers.shipfound.url must be ${API_MCP_URL}?v=${codex.version}, got ${server.url}`);
     if (/\$\{/.test(JSON.stringify(server))) fail(codexMcpFile, "Codex does not expand ${...} in plugin MCP config");
     if (server.bearer_token_env_var) fail(codexMcpFile, "bearer_token_env_var fails startup when the variable is unset, which breaks the OAuth default; use env_http_headers");
-    if (server.http_headers?.Authorization || server.http_headers?.authorization) fail(codexMcpFile, "a static Authorization header breaks the OAuth default");
+    // The ChatGPT plugin directory connects only no-auth or OAuth servers, and treats a header change as a new server.
+    for (const k of ["http_headers", "env_http_headers", "headers"]) if (server[k] !== undefined) fail(codexMcpFile, `mcpServers.shipfound.${k}: the server signs in with OAuth only; an API key goes on a separate server (docs/codex.md)`);
     for (const k of ["command", "args", "headersHelper", "http_headers_helper"]) if (server[k] !== undefined) fail(codexMcpFile, `mcpServers.shipfound.${k} is not used; the server is remote and the helper cannot see SHIPFOUND_API_KEY`);
   }
   const ui = codex.interface;

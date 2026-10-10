@@ -24,13 +24,20 @@ To update: `codex plugin marketplace upgrade shipfound`, then `codex plugin add 
 
 ### With an API key instead of OAuth
 
-For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`) and export it as a full header value before starting Codex:
+For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). The plugin's server signs in with OAuth only, so add a second server that sends the key, and turn the plugin's server off:
 
 ```bash
-export SHIPFOUND_AUTHORIZATION="Bearer wl_..."
+export SHIPFOUND_API_KEY="wl_..."
+codex mcp add shipfound-key --url https://api.shipfound.co/mcp --bearer-token-env-var SHIPFOUND_API_KEY
 ```
 
-The plugin sends it as the `Authorization` header. With the variable unset, nothing is sent and OAuth is used. Each key carries a daily credit cap, so a leaked key cannot spend more than that in a day.
+```toml
+# ~/.codex/config.toml
+[plugins."shipfound@shipfound".mcp_servers.shipfound]
+enabled = false
+```
+
+The skill and routines keep working with either server. Each key carries a daily credit cap, so a leaked key cannot spend more than that in a day.
 
 ### Another server URL
 
