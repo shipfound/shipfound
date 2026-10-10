@@ -2,7 +2,7 @@
 
 The daily front door. The founder runs it whenever they sit down to work on growth, without having to know which routine comes next. It looks first, then offers one move.
 
-Input: optional. A module ("content", "listings", "fixes") means the founder wants a move from that area today.
+Input: optional. A module ("content", "listings", "fixes", "landing", "offer", "build", "launch") means the founder wants a move from that area today.
 
 ## Procedure
 

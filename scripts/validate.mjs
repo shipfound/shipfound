@@ -80,6 +80,10 @@ const TOOLS = {
   reach_drafts: 0,
   reach_mark: 0,
   listing_skip: 0,
+  launch_targets: 0,
+  build_ideas: 4, // a skill's ideas are free
+  landing_check: 3,
+  offer_plan: 0,
 };
 const CONFIRM_ABOVE_CREDITS = 5;
 // Not Shipfound's: Claude Code offers these on a server that is not signed in, to start and finish its OAuth.
@@ -95,6 +99,18 @@ const NOT_YET = [
 const NOT_TOOLS = new Set([
   // fields in tool results
   "credits_ask",
+  // launch_targets board ids, and the free tool's t.js event (build.md)
+  "show_hn",
+  "indie_hackers",
+  "product_hunt",
+  "tool_run",
+  // offer_plan suggestion kinds and the founding offer's record type
+  "founding_price",
+  "lifetime_deal",
+  "pre_order",
+  "founding_offer",
+  // Stripe Checkout's setting, in the founder's code (offer.md)
+  "allow_promotion_codes",
   // content types (content_brief, check_content)
   "answer_page",
   "glossary_term",
@@ -131,7 +147,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "write", "index", "status", "week", "list", "reach", "analytics", "test", "aso", "boost", "video"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "landing", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

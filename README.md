@@ -78,11 +78,15 @@ You need two: `/shipfound:audit` on day 1, then `/shipfound:grow` every day afte
 | `/shipfound:plan` | "What should I do next?" | The ranked queue for this week, built only from what the audit found open |
 | `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
 | `/shipfound:write <type>` | "Write a glossary page about X" | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |
+| `/shipfound:landing` | "Is our home page clear?" | Your home page read the way a first-time visitor reads it, and what they miss fixed as one PR, with copy from your own words |
+| `/shipfound:offer` | "Make a founding offer" | A founding price, lifetime deal or pre-order for your first customers. You set every number; your agent ships the page and fills the discount in your payment dashboard for you to save. Boosts on X lead with it |
+| `/shipfound:build <tool or skill>` | "Build a free tool for our site" | A free tool your buyers search for (a checker, generator or calculator), no signup, one link to your product, as a PR; or an agent skill for your product that coding agents install with one command, published by you |
 | `/shipfound:index` | "Get us indexed" | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your browser |
 | `/shipfound:status` | "Shipfound status" | Credits, what shipped, what is verified and what is still claimed, then what you can do next |
 | `/shipfound:analytics <question>` | Any analytics question | Answers it in plain words with numbers |
 | `/shipfound:week` | "Run the Shipfound week" | The Monday routine. The server-side weekly re-check is not built yet; the routine does it by hand |
-| `/shipfound:list` | "List us on directories" | The directories AI answers cite, picked for your product from about 270 and filled in your browser one after another; you press submit. Launch and review sites when you ask |
+| `/shipfound:list` | "List us on directories" | The directories AI answers cite, picked for your product from about 270 and filled in your browser one after another; you press submit. Review sites when you ask |
+| `/shipfound:launch` | "Launch us on Show HN" | Show HN, Indie Hackers, DevHunt or Product Hunt: drafted from your site in your voice, filled in your browser; you post it and answer the comments. Each launch's visits and signups counted on their own |
 | `/shipfound:reach` | "Draft a reply to this thread" | Community replies and Gmail drafts. Thread discovery comes later |
 | `/shipfound:test` | "What should we A/B test?" | A/B tests: a change proposed from your analytics, sized from your traffic, shipped as a variant, read honestly, winner shipped |
 | `/shipfound:video` | "Make a video of my product" | Your product's screens recreated and animated by your agent, in your own logo, fonts and colors, no sound, 30 seconds at most, made on your machine and checked frame by frame. No screen recording. Every boost carries one. Free |

@@ -38,10 +38,14 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
 | [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
 | [write](routines/write.md) | `/shipfound:write <type> [topic]` | "Write a glossary page about X" | One content page, gated, as a PR |
+| [landing](routines/landing.md) | `/shipfound:landing [page]` | "Is our home page clear?" | The home page read as a first-time visitor reads it: who it is for, what they get, why it is different, the next step, a price, the product shown, honest proof. Misses fixed as one PR, copy from the founder's words |
+| [offer](routines/offer.md) | `/shipfound:offer [kind]` | "Make a founding offer" | A founding price, lifetime deal or pre-order for the first customers: the founder sets every number, the page ships as a PR, the discount is filled in the payment dashboard for them to save. Boosts lead with it |
+| [build](routines/build.md) | `/shipfound:build <tool or skill> [idea]` | "Build a free tool for our site" | A free tool buyers search for (checker, generator, calculator), no signup, as a PR; or an agent skill for the product, published by the founder and listed where agents find skills |
+| [launch](routines/launch.md) | `/shipfound:launch [board]` | "Launch us on Show HN" | Show HN, Indie Hackers, DevHunt or Product Hunt: drafted from the site in the founder's voice, filled in their browser, posted by them; each launch counted on its own |
 | [index](routines/index.md) | `/shipfound:index [urls]` | "Get us indexed" | Sitemap and IndexNow by PR, then submits in the browser |
 | [status](routines/status.md) | `/shipfound:status [module]` | "Shipfound status" | Credits, verified vs claimed, tracking, then the next moves to start |
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
-| [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; launch and review sites on request |
+| [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; review sites on request (launch boards are the launch routine) |
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
@@ -85,7 +89,7 @@ Start one move at a time, never start one without the founder's pick, and state 
 
 ## Done is done
 
-Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `site_fixes` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
+Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `launch_targets`, `build_ideas`, `site_fixes`, `landing_check`, `offer_plan` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`; a launch on a board with the step's `recordAs` from `launch_targets`, or `meta.site` the board's host for all of it), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
 
 ## Asking the founder
 
@@ -125,6 +129,8 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 |---|---|
 | `site_fixes` | 6 (nothing when it finds nothing to fix) |
 | `keyword_research` | 4 |
+| `build_ideas` (tool) | 4 (a skill's ideas are free) |
+| `landing_check` | 3 |
 | `content_brief` | 5 |
 | `check_content` | 2 |
 | `verify` | 1 |
@@ -151,7 +157,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `visibility` | none | Latest full run: pairs with stability labels ("named in 3 of 4 runs"), competitors |
 | `today` | none | What grow shows: `happened` since the last session, `due` (tests with a verdict, work to verify), the one `offer` with its `key`, `after` and `resting`. Logs the offer |
 | `grow_answer` | `{ key, answer: "yes" \| "no" }` | The founder's answer to a move. A no rests it for 7 days |
-| `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]`: the full menu, where grow picks one |
+| `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]` and the founder's `stage`: the full menu, where grow picks one. At zero (no payment seen yet) it leads with the landing page, a founding offer, a free tool, the launches and a paid test of the offer |
 | `site_fixes` | `{ url? }` | Fix specs `{ id, theme, page, issue, evidence, fix }[]`, minus fixes already shipped |
 | `keyword_research` | `{ topic }` | Keywords, difficulty, SERP and AI-cited pages for one topic |
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
@@ -170,6 +176,10 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_audit` | `{ appId?, storefront?, locales? }` | ASO findings for the metadata passed (from fastlane/metadata), else the public listing |
 | `app_reviews` | `{ appId?, country?, pages? }` | Latest App Store reviews: stars, by version, the 1 and 2 star ones to group into a to-do list |
 | `listing_targets` | `{ count?, include?, marketplaces? }` | The next directories to list on: free, open to this product, not yet listed, ranked by AI citations, with submit URLs. With `marketplaces` (free): the MCP registries, plugin lists, extension stores and awesome lists the product fits, minus what is recorded |
+| `landing_check` | `{ url?, skip? }` | Read a page of the site as a first-time visitor: only the misses, each with the page's own words, a fix and an id for meta.fixIds; shipped ones left out; the same content answered from the cache. 3 credits |
+| `offer_plan` | none | Whether a founding offer fits this product (`fits`: software sold online; not an App Store app, an agency, a shop or a media site), the founder's stage (zero: no payment seen yet), signups and payments, any founding offer recorded (`offer`) and the one verified live (`live`, what a boost leads with), three kinds to propose and the rules every offer keeps. Free |
+| `launch_targets` | `{ hnUser?, all? }` | The launch boards left that fit this product (Show HN for something technical, Indie Hackers when the buyers are founders, DevHunt for developer tools, Product Hunt for software and apps; `notOffered` says why the others do not; `all` only when the founder asks for one of those), each with its steps, form fields, tagged link, `utmSource`, timing, rules and `recordAs`; `readiness` (blockers, a free tool to link) and, with `hnUser`, whether Show HN is likely open to that account. Free |
+| `build_ideas` | `{ kind: "tool" \| "skill" }` | Free tool ideas with their keyword, monthly searches and the bridge to the product (4 credits), or agent skill ideas with whether a skill fits and the skill directories left (free). What is built is left out |
 | `listing_skip` | `{ site }` | A listing the founder will not do: never offered again. Free. One they already did is recorded with `record_action` instead |
 | `app_site` | `{ appId?, slug?, content? }` | Read or write the app's site on shipfound.site: a home page and a page per search; the founder publishes it |
 | `app_metadata` | `{ appId? }` | Every locale's metadata from App Store Connect (keyword field included): the version being prepared and the live one |
@@ -188,7 +198,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
 | `reach_mark` | `{ platform, id, status, url? }` | Mark a draft posted (with the link to the reply) or skipped when the founder says so, so it is not offered again. Free |
 
-`record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https.
+`record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https. A free tool or a skill is CONTENT with `meta.type` "free_tool" or "skill"; a landing page PR is FIXES with `meta.type` "landing" and its `fixIds`; a founding offer is FIXES with `meta.type` "founding_offer" and its terms as flat keys (`offerKind`, `offerPrice`, `offerCap`, `offerKeptFor`, `offerMoneyBackDays`, `offerEndsAt`); `meta` takes only strings, numbers, booleans and lists of strings; a launch step is recorded with the `recordAs` that `launch_targets` gave it.
 
 If a tool you need is not on this list, do not invent one. Say what is missing and do the part you can.
 
