@@ -1,10 +1,10 @@
 # Routine: boost
 
-A small paid test of which message makes strangers click: on X, the founder's own posts; on Meta (Facebook and Instagram), ads written for the boost (the Meta section below). They spend their own money in the platform's Ads Manager; you plan it, fill the form in their browser, and read the result. Shipfound never launches, pays or changes a budget.
+A small paid test of which message makes strangers click: on X, the founder's own posts; on Meta (Facebook and Instagram) and Reddit, ads written for the boost (the Meta and Reddit sections below). They spend their own money in the platform's Ads Manager; you plan it, fill the form in their browser, and read the result. Shipfound never launches, pays or changes a budget.
 
-Input: one or more post links, `meta`, `read`, `stop`, or nothing.
+Input: one or more post links, `meta`, `reddit`, `read`, `stop`, or nothing.
 
-**Which platform.** X, unless the input says `meta` or the founder asks for Facebook or Instagram: then follow the Meta section, which reuses the steps below where it says so. Ask only when both are set up and they did not say.
+**Which platform.** X, unless the input says `meta` or `reddit`, or the founder asks for Facebook, Instagram or Reddit: then follow that section, which reuses the steps below where it says so. Ask only when more than one is set up and they did not say. Reddit suits a product whose buyers read particular communities (developers, a hobby, a profession); say so when it fits.
 
 ## What a boost is
 
@@ -23,7 +23,7 @@ Say this once, in plain words, the first time it comes up: "A boost pays X to sh
 - Only the founder's own posts, from their own account. Never boost someone else's post, and never buy followers, likes or views.
 - The only post you fill in for their timeline is the one message picked for a boost (step 4, "Not a post yet"): their landing page's own headline and subhead or the line they named, or one new angle you write from what their site says. They approve or edit every word before it is filled in, and they press Post.
 - No boost without the product video. If it cannot be made clean, the boost stops with the reason.
-- Never press Create event in Events manager, or Create on a Meta business portfolio, Page or dataset: you fill the form, they press it.
+- Never press Create event in Events manager, or Create on a Meta business portfolio, Page or dataset, or on a Reddit ad account or pixel: you fill the form, they press it.
 - The money is the founder's, not credits: ask for a yes on the amount every time, even when they picked the boost as today's move.
 
 ## Procedure
@@ -91,4 +91,20 @@ The same test on Facebook and Instagram. Meta has no "boost my X post": each ad 
 4. **Plan.** `boost_plan` with `platform` meta, `posts` (each `text` and `headline`, no `url`), `targeting`, `optimize` as confirmed. Say the five lines of step 5 and ask for the money. When `ads_setup` recorded a currency other than USD, say the amount in both.
 5. **Fill a new campaign in Meta Ads Manager** (adsmanager.facebook.com, the recorded ad account) from `brief.setup`, line by line: the objective and performance goal for the step, Advantage+ campaign budget off and one ad set per ad with its lifetime budget and end date, the audience with Advantage+ audience switched off, Advantage+ placements, and each ad's Page, video (`out/video-1x1.mp4`, the browser's file upload), primary text, headline, call to action, website URL and URL parameters. Switch off Advantage+ creative enhancements. Never Boost on a Page post. Check every line of `brief.review` against the page and fix what differs; never hand over a total bigger than the yes they gave. If the page does not offer what the setup names, stop and say what it offers. Stop before Publish: they press it. Then `boost_record` with status running.
 6. **Read and stop** as steps 8 and 9, in Meta Ads Manager at the ad set level: Amount spent, Impressions and Link clicks, never "Clicks (all)", which counts every tap. An account billing in another currency: convert the spend to USD at today's rate for `boost_record`, and say both amounts. Pausing, stopping and moving budget are their clicks.
+
+## Reddit
+
+The same test on Reddit, for buyers who read particular communities. Like Meta, each ad is written for the boost: on Reddit an ad is a post, its headline the message tested, over the product video. The hard lines, the video, what was boosted before (a message is a new test on each platform), the money asked every time, the stop rule and the verdicts all hold.
+
+**The founder does the Reddit steps themselves.** Your browser tools cannot open ads.reddit.com, so every step there is theirs: you give it as a numbered list in plain words with every value to copy, they do it in their own browser and tell you what it asks for, and you record it. Never ask for card details or a password.
+
+1. **Account, then tracking.** `ads_setup` with `platform` reddit, and work `readiness.next` until it says `launch`.
+   - **Ad account.** Give them `steps` from `ads_setup` as a numbered list. From their answer, record `adAccountId`, `payment` and `currency` with `record.account`.
+   - **Pixel (tracking).** Then `steps` again (now the pixel's): from their answer, record the id (it starts a2_ or t2_) as `record.tracking.pixelId`. Nothing else: no code to install, no events to create. Shipfound's script loads Reddit's pixel on the site and sends PageVisit, SignUp (signup goal) and Purchase (payment goal, with the goal's value) as Reddit's standard events; Reddit keeps its click id in its own cookie, so a signup on a later page still ties to the ad. A goal that is not `firable` cannot be sent from the browser: say so in one line. If Events Manager offers its event setup tool or a conversions API token, leave it: the script sends the events.
+   - **Verify from the outside.** Open their site in your browser, then ask them to look at the pixel in Events Manager: when they see a PageVisit received in the last hour, `ads_setup` with `record.tracking.verified` true.
+2. **The messages.** Two or three headlines to compare, each under 300 characters and plain: Reddit readers skip anything that reads like an ad. Offer, in the step 4 way (header "Ads", multi-select): their landing page's headline as it is; the words of an X post of theirs that did well, when there is one; one new angle written only from what their site says, in the words a reader of those communities would use; the founding offer word for word, when one is live. The step 4 rules for a new angle hold. Leave out anything Reddit's ad policy rejects: personal attributes addressed to the reader, before-and-after promises, money or health claims. They approve or edit every word.
+3. **Who sees it.** As step 5, with Reddit's options: Where (countries); Communities (header "Communities": 3 to 8 subreddits their buyers read, named as r/<name>, proposed from the problem the product solves; only real ones, open to ads); Interests or keywords if they want them; Language. No follower look-alikes. The same question asks what it optimises for, from `ads_setup`'s `recommend`.
+4. **Plan.** `boost_plan` with `platform` reddit, `posts` (each `text`, the headline; no `url`), `targeting` (with `communities`), `optimize` as confirmed. Say the five lines of step 5 and ask for the money; when the account bills in another currency, say both amounts.
+5. **They set the campaign up** in ads.reddit.com from `brief.setup`, which you give as a numbered list: objective Conversions, campaign budget optimization off, one ad group per ad optimising for the step's event on the pixel, its lifetime budget and end date, the audience with expansion off, and each ad's video (give the path, `.shipfound/video/out/video-1x1.mp4`, for them to upload), headline, call to action, destination URL and display URL, with comments off. Give each ad's headline and tagged link on its own line, exactly, so they can copy it. Then give `brief.review` as the checks to make on the last screen before they launch, and the total they said yes to: never more. If a screen does not offer what a step names, they tell you what it shows and you say what to pick, or stop. They launch and tell you; then `boost_record` with status running.
+6. **Read and stop** as steps 8 and 9: ask them to open the campaign in ads.reddit.com and read you each ad group's spend, impressions and clicks, or paste the table. Never "all clicks" if the table splits them: clicks on the ad's link. An account billing in another currency: convert the spend to USD at today's rate for `boost_record`, and say both amounts. Pausing, stopping and moving budget are their clicks, from your numbered steps.
 
