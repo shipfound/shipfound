@@ -1,8 +1,10 @@
 # Routine: boost
 
-A small paid test of the founder's own X posts. They spend their own money in X Ads Manager; you plan it, fill the form in their browser, and read the result. Shipfound never launches, pays or changes a budget.
+A small paid test of which message makes strangers click: on X, the founder's own posts; on Meta (Facebook and Instagram), ads written for the boost (the Meta section below). They spend their own money in the platform's Ads Manager; you plan it, fill the form in their browser, and read the result. Shipfound never launches, pays or changes a budget.
 
-Input: one or more post links, `read`, `stop`, or nothing.
+Input: one or more post links, `meta`, `read`, `stop`, or nothing.
+
+**Which platform.** X, unless the input says `meta` or the founder asks for Facebook or Instagram: then follow the Meta section, which reuses the steps below where it says so. Ask only when both are set up and they did not say.
 
 ## What a boost is
 
@@ -21,7 +23,7 @@ Say this once, in plain words, the first time it comes up: "A boost pays X to sh
 - Only the founder's own posts, from their own account. Never boost someone else's post, and never buy followers, likes or views.
 - The only post you fill in for their timeline is the one message picked for a boost (step 4, "Not a post yet"): their landing page's own headline and subhead or the line they named, or one new angle you write from what their site says. They approve or edit every word before it is filled in, and they press Post.
 - No boost without the product video. If it cannot be made clean, the boost stops with the reason.
-- Never press Create event in Events manager: you fill the dialog, they press it.
+- Never press Create event in Events manager, or Create on a Meta business portfolio, Page or dataset: you fill the form, they press it.
 - The money is the founder's, not credits: ask for a yes on the amount every time, even when they picked the boost as today's move.
 
 ## Procedure
@@ -73,3 +75,20 @@ Say this once, in plain words, the first time it comes up: "A boost pays X to sh
 9. **Stop.** They stop the campaign in Ads Manager. Read the final numbers as in step 8 and call `boost_record` with them and `status` stopped. Its `then` is the next move: the hand-over (SKILL.md) after they confirm it is stopped.
 
 Close the routine as SKILL.md says, with the money spent in dollars on its own line, apart from credits (boosts cost no credits).
+
+## Meta
+
+The same test on Facebook and Instagram. Meta has no "boost my X post": each ad is written for the boost, a primary text and a headline over the product video, and the test compares those messages. Everything else holds: the hard lines, the video, what was boosted before (a message tested on X is a new test on Meta; one tested on Meta is not), the money asked every time, the stop rule and the verdicts.
+
+1. **Account, then tracking.** `ads_setup` with `platform` meta, and work `readiness.next` until it says `launch`. The account comes in this order:
+   - **Business portfolio.** business.facebook.com/latest/settings: the portfolio name is at the top left and its id is business_id in the URL. Without one, they create it (business.facebook.com/overview, Create a business portfolio: name, their name, work email); they press Create. If they have one for another product, ask whether to use it or make one for this product. Record `businessId`.
+   - **Facebook Page.** Settings, Accounts, Pages: the ads run under a Page, so it must be the product's own. Not there: Add, then "Add an existing Facebook Page" if the product has one, or "Create a new Facebook Page" (the product's name, category Software or Product/service); they press Create. Record `pageId` and `pageName` (the id is in the Page's settings or URL).
+   - **Ad account.** Settings, Accounts, Ad accounts: one owned by the portfolio (its id, also `act=` in Ads Manager's URL). A personal ad account outside the portfolio cannot get a new dataset: use or add one in the portfolio. Billing & payments shows whether a payment method is on it and what it bills in: record `payment` and `currency` with `adAccountId`. They add the payment method themselves; you never type card details.
+   - **Dataset (tracking).** Events Manager (Ads Manager, Events Manager), Connect data, Web, named after the product, then the manual Meta Pixel setup; they press Create. Record its id as `record.tracking.pixelId`. Nothing else: no code to install, no events to create. Shipfound's script loads Meta's pixel on the site and sends PageView, Complete registration (signup goal) and Purchase (payment goal, with the goal's value) as Meta's standard events. A goal that is not `firable` cannot be sent from the browser: say so in one line. If Events Manager asks to set up events with its event setup tool or to verify the domain, say what it asks and leave it: the script sends the events.
+   - **Verify from the outside.** Open their site in the browser, then the dataset in Events Manager: when it shows a PageView received recently, `ads_setup` with `record.tracking.verified` true. After a real ad click, an event's details show a click ID (fbc): that is how Meta ties a signup to the ad.
+2. **The messages.** Two or three ads to compare, each a primary text (under 300 characters, the first line able to stand alone) and a headline (under 40 characters). Offer, in the step 4 way (AskUserQuestion, header "Ads", multi-select): their landing page's headline and subhead as they are; the words of an X post of theirs that did well, when there is one (`boost_results` with history, or `boost_candidates`); one new angle written only from what their site says; the founding offer word for word, when one is live (`offer_plan`). The step 4 rules for a new angle hold: no number, customer, result or claim the site does not make, no quote, no hashtags or emoji. Leave out anything Meta's ad review rejects: personal attributes ("Are you a founder?" addressed to the reader), before-and-after promises, money or health claims. They approve or edit every word.
+3. **Who sees it.** As step 5, with Meta's options: Where (countries); Who (broad, or 3 to 6 detailed targeting interests from their field, named as Meta names them); Language; age and gender only when the product is plainly for one group. No follower look-alikes or keywords: those are X's. The same question asks what it optimises for, from `ads_setup`'s `recommend`.
+4. **Plan.** `boost_plan` with `platform` meta, `posts` (each `text` and `headline`, no `url`), `targeting`, `optimize` as confirmed. Say the five lines of step 5 and ask for the money. When `ads_setup` recorded a currency other than USD, say the amount in both.
+5. **Fill a new campaign in Meta Ads Manager** (adsmanager.facebook.com, the recorded ad account) from `brief.setup`, line by line: the objective and performance goal for the step, Advantage+ campaign budget off and one ad set per ad with its lifetime budget and end date, the audience with Advantage+ audience switched off, Advantage+ placements, and each ad's Page, video (`out/video-1x1.mp4`, the browser's file upload), primary text, headline, call to action, website URL and URL parameters. Switch off Advantage+ creative enhancements. Never Boost on a Page post. Check every line of `brief.review` against the page and fix what differs; never hand over a total bigger than the yes they gave. If the page does not offer what the setup names, stop and say what it offers. Stop before Publish: they press it. Then `boost_record` with status running.
+6. **Read and stop** as steps 8 and 9, in Meta Ads Manager at the ad set level: Amount spent, Impressions and Link clicks, never "Clicks (all)", which counts every tap. An account billing in another currency: convert the spend to USD at today's rate for `boost_record`, and say both amounts. Pausing, stopping and moving budget are their clicks.
+
