@@ -75,6 +75,7 @@ const TOOLS = {
   app_downloads: 0,
   ads_review: 0,
   ads_propose: 0,
+  ads_setup: 0,
   boost_candidates: 0,
   boost_plan: 0,
   boost_record: 0,
