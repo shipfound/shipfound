@@ -2,7 +2,7 @@
 
 Build in public notes: the founder's own posts on X and Reddit about their product. A note starts from something real that happened: a milestone in their analytics, a launch, a free tool that went live, a week of work on the product. You write it in their voice, learned from their own posts, with an image of the real thing, and fill it in for them. They post it.
 
-Input: a source key from grow (`milestone:...`, `launch:...`, `tool:...`, `skill:...`, `repo:...`), `voice` to learn their voice again, or nothing.
+Input: a source key from grow (`milestone:...`, `launch:...`, `tool:...`, `skill:...`, `repo:...`), `voice` to learn their voice again, or nothing (then the first source, or what the founder tells you happened).
 
 ## Hard lines here
 
@@ -15,7 +15,7 @@ Input: a source key from grow (`milestone:...`, `launch:...`, `tool:...`, `skill
 ## Procedure
 
 1. Call `workspace`. Count this week's work on the product, if you are in its repo: read the commit subjects on the default branch (`git log --since="7 days ago" --no-merges --format=%s`) and count the ones that change the product. Leave out Shipfound's own work: commits from its PRs (branches named `shipfound/...`, subjects like `feat(seo)`, `feat(content)`, `chore(tracking)`; see references/pr-conventions.md).
-2. Call `notes_context` (free) with `repoCommits`. It returns the `sources` not written yet, each with its open `platforms`, the founder's `voice` per platform, and the `subreddits` that take these posts. If its `next` says there is nothing to write about or no platform is open, say that in one line and stop. Never make up a note to fill the gap.
+2. Call `notes_context` (free) with `repoCommits`. It returns the `sources` not written yet, each with its open `platforms`, the founder's `voice` per platform, and the `subreddits` that take these posts. If no platform is open, say that in one line and stop. If there is no source on record (the founder picked a note from the full list), ask them in one question what happened with their product that they would post about; their answer is the source (`founder:<YYYY-MM-DD>-<a few words>`, its facts only what they said). Nothing to share: say so and stop. Never make up a note to fill the gap.
 3. **Pick the source:** the one in the input, else the first. Say in one line what the note is about and where it goes ("Your first payment, on X and Reddit").
 4. **Voice**, for each platform the note goes to that has no stored voice, or for every platform when the input is `voice`. Learn it once; after that `notes_context` returns it.
    - **X:** open their own profile in their Chrome (`x.com/<handle>`: `access` has it in the x area's facts, or ask). Read their last 30 to 50 posts of their own, not replies or reposts, scrolling as needed. Note how long they are, casing, punctuation, emoji, hashtags, line breaks, how they open, whether they write threads, whether they link, the words and phrases they come back to, and what they talk about.
