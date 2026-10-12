@@ -1,6 +1,6 @@
 ---
 name: shipfound
-description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, analytics, test, boost, video), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
+description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, notes, analytics, test, boost, video), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
 ---
 
 # Shipfound
@@ -47,6 +47,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
 | [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; review sites on request (launch boards are the launch routine) |
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
+| [notes](routines/notes.md) | `/shipfound:notes [source or voice]` | "Write a build in public post" | Build in public posts on X and Reddit about the founder's product (a milestone, a launch, a tool live, a week of work), in their voice learned from their own posts, with an image of the real thing; filled in for them to post. Free |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
 | [boost](routines/boost.md) | `/shipfound:boost [post link, meta, reddit, read, or stop]` | "Boost this post on X", "Run a Facebook ad", "Run a Reddit ad" | A small paid test of which message makes strangers click, on X (the founder's own posts), Meta or Reddit (ads written for it), each with the product video: ad account and tracking first, then planned, filled in Ads Manager for them to launch, read on clicks and traced to signups |
@@ -155,7 +156,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `access` | none | Read the latest audit |
 | `visibility_run` | none | Start a visibility run (10 questions x 4 engines x 4 runs). Runs in the background |
 | `visibility` | none | Latest full run: pairs with stability labels ("named in 3 of 4 runs"), competitors |
-| `today` | none | What grow shows: `happened` since the last session, `due` (tests with a verdict, work to verify), the one `offer` with its `key`, `after` and `resting`. Logs the offer |
+| `today` | `{ repoCommits? }` (the week's commits to the product, Shipfound's own PRs left out) | What grow shows: `happened` since the last session, `due` (tests with a verdict, work to verify), the one `offer` with its `key`, `after` and `resting`. Logs the offer |
 | `grow_answer` | `{ key, answer: "yes" \| "no" }` | The founder's answer to a move. A no rests it for 7 days |
 | `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]` and the founder's `stage`: the full menu, where grow picks one. At zero (no payment seen yet) it leads with the landing page, a founding offer, a free tool, the launches and a paid test of the offer |
 | `site_fixes` | `{ url? }` | Fix specs `{ id, theme, page, issue, evidence, fix }[]`, minus fixes already shipped |
@@ -201,6 +202,9 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `reach_find` | `{ platform }` | Start a Reddit or X run on Assisted posts (8 credits, only when it finds drafts): threads or live conversations and a reply for each, in the background, about two minutes. Returns the link to the drafts |
 | `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
 | `reach_mark` | `{ platform, id, status, url? }` | Mark a draft posted (with the link to the reply) or skipped when the founder says so, so it is not offered again. Free |
+| `notes_context` | `{ repoCommits? }` | What a build in public note can be about (a milestone, a launch, a tool live, a skill published, the week's commits), each written once; which of X and Reddit are open for a note; the founder's stored voice; the subreddits that take these posts, with their rules. Free |
+| `notes_voice` | `{ platform, handle?, sample, summary, rules?, examples? }` | Store how the founder writes on X or Reddit, learned from their own posts; reused for every note. Free |
+| `notes_save` | `{ source, x?, reddit? }` | Save one note's drafts to Assisted posts for the founder to post, and mark its source written. Returns X's composer and Reddit's submit page filled in. Free |
 
 `record_action` values: `module` is one of FIXES, CONTENT, INDEX, LISTINGS, COMMUNITIES, INBOX, TRACKING, EXPERIMENTS, ASO; `kind` is one of PR, PAGE, LISTING, INDEX_REQUEST, POST, DRAFT, STORE_LISTING; `url` is https. A free tool or a skill is CONTENT with `meta.type` "free_tool" or "skill"; a landing page PR is FIXES with `meta.type` "landing" and its `fixIds`; a founding offer is FIXES with `meta.type` "founding_offer" and its terms as flat keys (`offerKind`, `offerPrice`, `offerCap`, `offerKeptFor`, `offerMoneyBackDays`, `offerEndsAt`); `meta` takes only strings, numbers, booleans and lists of strings; a launch step is recorded with the `recordAs` that `launch_targets` gave it.
 
@@ -235,15 +239,17 @@ Claude cannot open Reddit, in the browser or by fetch, so you never read or chec
 
 When the founder asks why it is not automated, or the first time Reddit comes up in a session, say it plainly: "Reddit bans accounts that post through automation, and Shipfound never posts for you anywhere. Claude cannot open Reddit either. So Shipfound writes it and you press post: about 20 seconds each."
 
-## X: join conversations, never post for the founder
+## X: join conversations, and the founder's own posts only about their product
 
-On X, Shipfound replies to conversations already happening: `reach_find` with platform x finds live posts where the founder's buyers talk about the problem or ask what to use and writes one reply each (8 credits a run, after the founder's yes); they land on Assisted posts in the results app, each opening X's reply box filled in. Never write the founder's own X posts, and never turn a session's results into one ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's own work tells their followers nothing they can use. The one exception is a boost (routines/boost.md): the one message picked for it, their landing page's headline and subhead (or a line they named) or one new angle written only from what their site says, is filled into X's compose box with the product video, for them to edit and post.
+On X, Shipfound replies to conversations already happening: `reach_find` with platform x finds live posts where the founder's buyers talk about the problem or ask what to use and writes one reply each (8 credits a run, after the founder's yes); they land on Assisted posts in the results app, each opening X's reply box filled in.
+
+The founder's own posts, on X and Reddit, are build in public notes (routines/notes.md): about their product, from something real that happened (a milestone, a launch, a tool live, a week of work on the product), in their own voice learned from their own posts, with a real image, filled in for them to post. Never turn Shipfound's own work into a post ("today it wrote 2 answer pages", "named in 0 of 4 ChatGPT runs"): a status report about Shipfound's work tells their followers nothing they can use. The other own post is a boost (routines/boost.md): the one message picked for it, their landing page's headline and subhead (or a line they named) or one new angle written only from what their site says, is filled into X's compose box with the product video, for them to edit and post.
 
 Before the first draft for a sub, ask the founder to check its rules for account age, karma and self-promotion limits. If their account does not meet them yet, suggest a few weeks of genuinely helpful comments they write and post themselves. You never automate karma building and never draft comments whose purpose is karma.
 
 ## Voice
 
-Every word the founder or their readers see (terminal summaries, PR bodies, pages, drafts) is plain, specific and dry, with numbers where you have them. No em dashes. Never use the words: unlock, supercharge, 10x, AI-powered. Say "named in 2 of 4 runs on Perplexity", not "great visibility". Report what you saw, not what you hope.
+Every word the founder or their readers see (terminal summaries, PR bodies, pages, drafts) is plain, specific and dry, with numbers where you have them. The one exception is a build in public note: it is in the founder's own voice (routines/notes.md), and their stored voice wins on casing, emoji, length and tone. No em dashes, anywhere. Never use the words: unlock, supercharge, 10x, AI-powered. Say "named in 2 of 4 runs on Perplexity", not "great visibility". Report what you saw, not what you hope.
 
 ## Ending every routine
 
