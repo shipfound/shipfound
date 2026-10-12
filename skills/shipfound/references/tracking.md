@@ -117,7 +117,7 @@ The founder's own visits are excluded by the server while they are signed in to 
 
 In the code, only where the founder agrees:
 
-- Signup: `sf('signup')` after a successful signup.
+- Signup: `sf('signup')` after a successful signup. A Reddit boost needs it when nothing the browser already sees marks a signup: it optimises for signups at the least, and the pixel sends SignUp only on a signup goal the browser can see (routines/boost.md, Reddit).
 - CTAs: `data-sf="pricing-cta"` on the button.
 - Identify (Attribution mode only): `sf.identify(userId, { plan })` after login; tracking.js hashes the id before sending.
 
