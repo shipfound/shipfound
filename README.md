@@ -79,6 +79,7 @@ You need two: `/shipfound:audit` on day 1, then `/shipfound:grow` every day afte
 | `/shipfound:fix` | "Fix the site" | Tracking first, then site fixes as one pull request per theme |
 | `/shipfound:write <type>` | "Write a glossary page about X" | One glossary, answer, comparison, alternatives or long-form page, gated and opened as a PR |
 | `/shipfound:landing` | "Is our home page clear?" | Your home page read the way a first-time visitor reads it, and what they miss fixed as one PR, with copy from your own words |
+| `/shipfound:convert` | "Can visitors get to signup and pay?" | The way from your home page to signup and payment: every button near the top followed from outside, then the rest walked in your Chrome, on a phone too, stopping before any form or payment. What blocks a visitor fixed as one PR. Free |
 | `/shipfound:offer` | "Make a founding offer" | A founding price, lifetime deal or pre-order for your first customers. You set every number; your agent ships the page and fills the discount in your payment dashboard for you to save. Boosts on X lead with it |
 | `/shipfound:build <tool or skill>` | "Build a free tool for our site" | A free tool your buyers search for (a checker, generator or calculator), no signup, one link to your product, as a PR; or an agent skill for your product that coding agents install with one command, published by you |
 | `/shipfound:index` | "Get us indexed" | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your browser |
