@@ -7,9 +7,11 @@ This is judgment, not a layout checklist. There is no required order of sections
 ## Read it all first
 
 1. **Every line a visitor sees.** Read the page's source and every component and data list it renders: card lists, step lists, plan features, the FAQ, the header and the footer. Copy is spread across files; judge none of it until you have all of it.
-2. **Measure it on a phone.** In the founder's Chrome, open the live page, resize the window to 390 by 844 if you can, and run `read.measure.script` from `funnel_check` (the host's JavaScript tool). It works at any width. It returns the page's height in phone screens, its words, the screen the first button and the product image are on, how far anything sticks out to the side, each section's words and height, and three lists: `smallPrint`, `labels` and `quotedTerms`. Keep the numbers: they are the before. Take screenshots of the first screen and the longest sections, then reload the page (the script changes its styles).
+2. **Measure it on a phone.** In the founder's Chrome, open the live page, resize the window to 390 by 844 if you can, and run `read.measure.script` from `funnel_check` (the host's JavaScript tool). It works at any width. It returns the page's height in phone screens, its words, the screen the first button and the product image are on, how far anything sticks out to the side, each section's words and height, three lists (`smallPrint`, `labels` and `quotedTerms`) and the page's `videos`. Keep the numbers: they are the before. Take screenshots of the first screen and the longest sections, then reload the page (the script changes its styles).
 3. **The small print, the labels and the quoted terms are lines too.** Captions under images, notes under buttons and price tables, eyebrows above headings, badges and chips, definition boxes. A read of the main copy skips them and visitors still see them. Judge every entry in those three lists like any other line.
-4. **What the product gets its customers, in the founder's words.** `read.outcomes` has their list once they have given it. When it is null, ask once: "In a list, what does it get your customers?" and pass the answer as `outcomes`. Never ask again.
+4. **The words inside the video and the images.** A product video or a screenshot carries its own lines, and they are often older than the page: a rewrite of the page leaves the video as it was. For each video in `videos`, pause it and step through it every two or three seconds (set its `currentTime`, hide its controls, take a screenshot of it each time), and read every frame's words, the end card included. Read the words in the large images too.
+5. **What the page says before the visitor arrives.** The page's title and description are what a searcher reads in Google and what the browser tab shows. If they tell a different story from the headline, say so; changing them is the founder's call.
+6. **What the product gets its customers, in the founder's words.** `read.outcomes` has their list once they have given it. When it is null, ask once: "In a list, what does it get your customers?" and pass the answer as `outcomes`. Never ask again.
 
 ## Five questions for every line, card and section
 
@@ -29,6 +31,8 @@ Read as someone who has never heard of the product.
    - anything meant for the team: section numbers ("02", "3b"), internal ids, code names.
 5. **Length** (`copy-length`). Is it as short as it can be and still keep its value? Watch for a line under the headline over about 30 words, cards with more than 3 bullets, grids that stack into one long column on a phone, pricing small print listing every overage and unit, and a page over about 10 phone screens or 900 words.
 
+The video and the images (`copy-visual`): do their words pass the same five questions, and do they show the product the page now sells? Quote the frame's words; they are not in the page's HTML, so the server does not look for them.
+
 Then the page as a whole (`copy-missing`): does it say who it is for, what they get and how it differs from what they do today, and does it show the product (on the first or second phone screen), a price within reach and honest proof? Is every item on the founder's list said somewhere, early (not below about screen 3), as one thing rather than split across cards?
 
 ## Examples from shipfound.co (October 2026)
@@ -41,6 +45,9 @@ Each of these was on the live page after a rewrite and was found by the founder,
 | A "Reddit and X" section after the six-block grid of what the product does, with "Reddit replies." and "X replies." as two cards | copy-cut | One offering split off from the list it belongs to, and two cards that differ only by the channel's name. It also looks out of place next to the grid | One block in the grid: replies where buyers ask, and posts in your voice |
 | "Credit packs: $15 per 100, never expire. Events over the plan: $10 per 500k." under the price table | copy-understood, copy-length | Plan units the visitor has not met, and overage detail no first-time visitor asked about | Cut from the home page; the pricing page's FAQ can carry it |
 | "WITH THE PROMISE", "The 90-day named promise", and a "Definition" box for "Named" | copy-understood | A coined term the page then has to define, and a promise named before the page has made it | Say the plain thing once, or cut |
+| The hero video after the page rewrite: "First, it checks your access.", "It fixes your site for AI search.", "You approve. We verify every result." and the end card "Install it. Run the audit. See what's open." | copy-visual | The page sold six outcomes; the video still sold the old product, in its old words: mechanics, a claim with no object, and a closing line that repeats a mechanism | A new video from the page's own outcomes (the video routine) |
+| "Credits pay for data and checks. Your agent does the thinking." as the pricing section's title | copy-understood, copy-value | A plan unit the visitor has not met, and a title that sells how it is billed instead of what they get | A plain title, or just the plans |
+| Plan cards listing "Access audit", "10k events a month, 30-day history", "All attribution models, 3 concurrent experiments" | copy-understood, copy-length | Units and internal names, where the visitor wanted what each plan gets done for them | What each plan gets them, in a few lines; the limits on the pricing page |
 | "First, it checks your access." | copy-value | How it works inside | Cut, or move to the FAQ |
 | "One AI check lies. We ask four times." as a section | copy-value | Sells a method | Cut the section; its point can answer a FAQ question |
 | "Small tests of which message makes strangers click, on a budget you set." | copy-value | The outcome is lost in caveats | "Test your messages, keep the one that converts." |
@@ -49,6 +56,7 @@ Each of these was on the live page after a rewrite and was found by the founder,
 
 Call `funnel_check` with `record`: one entry per copy check, `verdict` pass or fail.
 
+- A failing `copy-visual` quotes the frame's words, which are stored but not checked against the page; it is not re-checked by verify, so say in the PR what the new video or image shows.
 - A failing `copy-understood`, `copy-value`, `copy-filler` or `copy-cut` passes `quotes`: each line word for word as the live page shows it, at least six characters. The server checks every quote against the live page and refuses the record if one is not there: quote what a visitor sees, not the source and not a change that is not deployed.
 - `evidence` says why the lines fail, in a sentence. `fix` gives, for each line, cut or the new text.
 - `copy-length` gives the numbers as evidence (quotes optional); `copy-missing` says what the page never says (no quotes).
