@@ -8,7 +8,7 @@ Input: `tool` or `skill`, then an optional idea (the name from `build_ideas`). N
 
 ## Procedure
 
-1. Call `workspace` and `access`. For a tool, run the framework gate (SKILL.md); stop for unsupported stacks.
+1. Call `workspace` with `repo` and `access`. For a tool, run the framework gate (SKILL.md); stop for unsupported stacks.
 2. **Ideas.** No idea given: call `build_ideas` with the kind. A tool costs 4 credits, so say "build_ideas: 4 credits" as you call it; a skill is free. Show each idea in one line (for a tool: the name, its monthly searches, and the bridge to the product; for a skill: the name and what it does) and ask which to build, recommending the first. What is built already is left out, so never offer one from memory. For a skill, if `fit.good` is false, say `fit.why` in plain words and recommend a tool instead.
 3. Build it: a tool by step 4, a skill by step 5.
 4. **A free tool.**

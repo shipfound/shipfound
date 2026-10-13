@@ -6,7 +6,7 @@ Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "
 
 ## Procedure
 
-1. Call `workspace`. Not signed in: run the login routine, then carry on. If `pluginUpdate` is there, pass its line on once.
+1. Call `workspace` with `repo`. Not signed in: run the login routine, then carry on. If `pluginUpdate` is there, pass its line on once. If `repo` is not CONFIRMED, settle it first (SKILL.md, "The repo").
 2. Setup comes first, and grow routes to it rather than repeating it:
    - No audit yet (`access` is null): say the plan is built from the audit, then run the audit routine from its first step.
    - Otherwise carry on; `today` puts the baseline and tracking first by itself while they are missing.

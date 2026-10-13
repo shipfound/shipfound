@@ -8,7 +8,7 @@ Input: an optional theme or URL.
 
 ## Procedure
 
-1. Call `workspace` and `access`. If there is no audit, run the repo and hosting checks from access-audit.md first (local, free).
+1. Call `workspace` with `repo` and `access`. If there is no audit, run the repo and hosting checks from access-audit.md first (local, free).
 2. **Framework gate.** Detect the framework (SKILL.md). If it is not Next.js, Astro, Nuxt, SvelteKit, Hugo or plain HTML, say Shipfound does not ship PRs into this stack yet and stop. If `git status` shows uncommitted work, ask before branching.
 3. **Tracking first.** If `workspace` shows tracking not installed and the repo has no Shipfound script:
    1. Call `tracking_install` with `{ domain, framework }` (free). Tell the founder to store the secret now and where to set `SHIPFOUND_SITE_KEY` and `SHIPFOUND_SECRET` for their host. Never commit the secret.

@@ -8,7 +8,7 @@ Input: none, or the kind the founder wants (`founding_price`, `lifetime_deal`, `
 
 ## Procedure
 
-1. Call `workspace` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
+1. Call `workspace` with `repo` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
 2. Call `offer_plan` (free). If `fits.fits` is false (an App Store app, an agency, a shop, a media site), say `fits.why` plainly and stop: offer the next move instead, unless the founder still wants one. If `offer` is there, one is already recorded: say what it is and where, and stop unless the founder asks to change it. Never make a second.
 3. Read the repo first: the pricing page, the plans and prices in code or config, and the payment code (Stripe, Dodo, Paddle, Lemon Squeezy, Polar): how checkout is started and whether it takes a discount or promotion code. A product with no paid plan yet: the offer is the first price, so say so.
 4. **Propose one offer**, from `suggestions`, with numbers for the founder to set: the kind (a founding price for most subscriptions; a lifetime deal only when one customer costs little to serve each month, never for a product that pays AI or API costs per use; a pre-order for what is not built yet), the price or discount, how many customers, how long it is kept, the money-back days, and an end date only if they want a real one. Ask with a question (Claude Code: AskUserQuestion), your pick first with "(Recommended)". Every rule in `rules` holds. Before they choose "kept for as long as they stay" or "for life", say plainly that it is a promise they must keep.

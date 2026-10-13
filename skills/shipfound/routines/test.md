@@ -12,7 +12,7 @@ Input: an optional page, goal, or the key of a running test.
 
 ## Procedure
 
-1. Call `workspace`. If tracking is not installed, point to the fix routine and stop. If the input is a running test's key, go to step 7.
+1. Call `workspace` with `repo`. If tracking is not installed, point to the fix routine and stop. If the input is a running test's key, go to step 7.
 2. Call `experiment_results` with no key. Report any running test's verdict first; one running test per page at a time. If the site is not in its `attributionSites`, make the Attribution offer above now, before proposing anything. On a yes, follow "Switching to Attribution mode" below, then carry on from step 3. On a no, carry on and offer the before-and-after PR in step 5 instead of a test.
 3. Call `goals_list`, then `analytics` up to 3 times over the last 28 days: `conversions`, `landing_pages`, and `pages` or `ai_search` as the question needs.
 4. Propose 3 ranked changes, none already tested: leave out any page and change in the tests `experiment_results` listed (running or stopped) and in `shipped` (module EXPERIMENTS). Each has one evidence line made only of numbers those reports returned ("/pricing: 1,240 entrances, 34% engaged, 1.1% reach Signup"), the change, the goal it should move, and the page. Never write a number the reports did not give you.

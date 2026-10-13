@@ -8,7 +8,7 @@ Input: an optional module, to limit the top 5 moves to that module.
 
 ## Procedure
 
-1. Call `workspace` (credits, plan, tracking state) and `visibility` (the latest full run and its date).
+1. Call `workspace` with `repo` (credits, plan, tracking state) and `visibility` (the latest full run and its date).
 2. If the latest run is 7 or more days old, offer a fresh one: "A new visibility run costs 15 credits; you have N. Run it?" Only on a yes, call `visibility_run`; it runs in the background, so carry on and tell the founder where the result will show.
 3. Call `shipped` with `{}`. List what changed state this week, and the CLAIMED items old enough to check (merged PRs, live listings, index requests from 1+ days ago). Offer `verify` for those at 1 credit each, with the total; ask for an explicit yes when the total is over 5.
 4. Call `analytics` up to 3 times, last 7 days with `compare: true`: `overview`, `ai_search`, `shipped_work` (and `ai_crawlers` if crawler hits are the story). Skip if tracking is not installed and say so.

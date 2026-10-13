@@ -19,7 +19,7 @@ Input, optional:
 
 ## Procedure
 
-1. Call `workspace` for the plan and credits.
+1. Call `workspace` with `repo` for the plan and credits.
 2. The app: if the founder gave an App Store link, or a tool answers that there is no app yet, call `app_add` with the link. Without a link, look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
 3. Go to the part the input names: `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15.
 

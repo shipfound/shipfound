@@ -38,6 +38,7 @@ const fail = (file, msg) => errors.push(`${relative(ROOT, file) || file}: ${msg}
 const TOOLS = {
   sign_in: 0,
   workspace: 0,
+  repo_confirm: 0,
   record_access: 0,
   access: 0,
   visibility_run: 15, // 0 for the first baseline

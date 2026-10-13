@@ -43,7 +43,7 @@ Check each line against the rules above before you show it; rewrite what fails. 
 
 ## Procedure
 
-1. Call `workspace` and `access`. If the x area is red, they need to sign in to x.com in this browser first; stop until they have. If tracking is not verified, say once that visits and signups from the boost cannot be traced yet and X's own numbers still work, then carry on. If the input is `read` or `stop`, go to step 8 or 9.
+1. Call `workspace` with `repo` and `access`. If the x area is red, they need to sign in to x.com in this browser first; stop until they have. If tracking is not verified, say once that visits and signups from the boost cannot be traced yet and X's own numbers still work, then carry on. If the input is `read` or `stop`, go to step 8 or 9.
 
    **The video.** Look in their repo for `.shipfound/video/out/video-1x1.mp4` under 30 days old, made with cuts (its `public/video.json` hook passes the stranger test and frame 0 shows it). If there is none, say in one line that every boost carries a short video of their product, its screens recreated and animated, and that it is free, then run routines/video.md and come back here. If that routine stops, the boost stops too: say why.
    **Ad account, then tracking.** Call `ads_setup` (free) and work its `readiness.next` until it says `launch`. Never plan a boost before; `boost_plan` refuses it anyway.

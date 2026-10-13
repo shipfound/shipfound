@@ -14,7 +14,7 @@ Input: an optional page visitors arrive on (default the home page).
 
 ## Procedure
 
-1. Call `workspace` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
+1. Call `workspace` with `repo` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
 2. Call `funnel_check` (free) with the page, if one was named. The server reads the live site itself and follows every button near the top; never describe the buttons from the repo instead. It returns:
    - `funnel`: the last 28 days of visitors, signups and payments, and `focus`, the step most of them stop at. Null when tracking is not live: say the numbers come once it is, and carry on.
    - `findings`: what it saw from outside, each with `evidence` (the button's words and where it goes), a `fix` and an `id`. An "unsure" one means script decides where a button goes: the walk settles it.

@@ -6,7 +6,7 @@ Input: none needed.
 
 ## Procedure
 
-1. Call `workspace`.
+1. Call `workspace` with `repo` (SKILL.md, "The repo").
    - It answers with a site: the founder is signed in. Go to step 4.
    - It says you are not signed in, and a `sign_in` tool is there: go to step 2.
    - There is no `workspace` tool, or it fails with an auth error: go to step 3.
@@ -21,7 +21,7 @@ Input: none needed.
    - With an API key instead (CI, a machine without a browser): the plugin README, "Sign in with an API key instead".
 
    Then stop and wait for the founder.
-4. Say, in one line, which site the founder works on, the plan and credits, and whether there is an audit yet (from `workspace`). If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
+4. Say, in one line, which site the founder works on, the plan and credits, and whether there is an audit yet (from `workspace`). If `repo` is not CONFIRMED, do what SKILL.md, "The repo", says first. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
 
 If the founder has no Shipfound account yet, the approval page asks them to register first and lets them add their site there. There is nothing to do here for that.
 

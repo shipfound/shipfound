@@ -88,6 +88,14 @@ No routine ends in silence. When a routine finishes (and after you answer a Ship
 
 Start one move at a time, never start one without the founder's pick, and state the price of anything over 5 credits in the option itself.
 
+## The repo
+
+Shipfound checks once per repo that it is the site's code, so nothing ships into the wrong project. Every `workspace` call passes `repo`: the output of `git remote get-url origin` in the founder's project, or the folder name when it has no remote (the server drops any credentials in the URL). Then follow `repo.status`:
+
+- **CONFIRMED**: carry on. Never ask about it again.
+- **UNCONFIRMED** (the first run in this repo): before any repo work, look for the site's domain in the deploy config, `package.json` "homepage", the site or framework config, or env examples. Found it: `repo_confirm` with yes, by agent, and the file and line as evidence, and tell the founder in one line. Not found or unclear: ask once, in one line, "Is <repo> the code for <domain>?", and pass the answer to `repo_confirm` by founder. The founder can also answer in the results app.
+- **NOT_THIS_SITE** or **OTHER_SITE**: no edits, no PRs, no `record_action` for repo work here. Say in one line what `repo.next` says, and carry on only with work that does not touch the repo (the browser, Gmail) if the founder asks.
+
 ## Done is done
 
 Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `launch_targets`, `build_ideas`, `site_fixes`, `funnel_check`, `offer_plan` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`; a launch on a board with the step's `recordAs` from `launch_targets`, or `meta.site` the board's host for all of it), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
@@ -150,7 +158,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | Tool | Input | Use it to |
 |---|---|---|
 | `sign_in` | `{ client? }` | Signed in, says which site the session works on. Signed out, only on plugins up to 0.3.22: returns a link and a code, then waits for the founder's Allow (login routine) |
-| `workspace` | none | Product, credits, plan, access summary, tracking state, results app links, and `pluginUpdate` when a newer plugin is out. Call first in every routine; if `pluginUpdate` is there, pass its line to the founder once, then carry on |
+| `workspace` | `{ repo }` | Product, credits, plan, access summary, tracking state, results app links, whether the repo you are in is this site's code, and `pluginUpdate` when a newer plugin is out. Call first in every routine, with `repo` (The repo, below); if `pluginUpdate` is there, pass its line to the founder once, then carry on |
+| `repo_confirm` | `{ repo, answer, by, evidence? }` | Keep whether this repo is the site's code: by agent, yes only, with the file and line that shows the domain; by founder, their yes or no. Only when `workspace` says the repo is UNCONFIRMED |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |
 | `visibility_run` | none | Start a visibility run (10 questions x 4 engines x 4 runs). Runs in the background |

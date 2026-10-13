@@ -8,7 +8,7 @@ Input: an optional board (`show_hn`, `indie_hackers`, `devhunt`, `product_hunt`)
 
 ## Procedure
 
-1. Call `workspace` and `access`.
+1. Call `workspace` with `repo` and `access`.
 2. If Show HN could be in play (no board named, or `show_hn`), ask the founder for their Hacker News username, once. Then call `launch_targets` with `hnUser` (free). It returns only the boards and steps not recorded yet; never offer one from memory.
 3. **Blockers first.** If `readiness.blockers` is not empty, say each in plain words, offer the fix as the move (tracking: finish the install with the fix routine; assets: what the audit says is missing), and stop. A launch is a one-day spike: without tracking it is lost.
 4. **Pick the board.** Only the boards that fit this product come back (each with `why`); `notOffered` names the others and why they fit poorly. Never offer one from `notOffered`. If the founder asks for one by name, say its `why` in one line, and only if they still want it call `launch_targets` with `all`. Show the boards left with their `timing`, and recommend one, by who the buyers are:

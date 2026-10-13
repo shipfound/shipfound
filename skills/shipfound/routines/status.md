@@ -8,7 +8,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
 
 ## Procedure
 
-1. Call `workspace`: plan, credit balance, access summary, tracking state, links.
+1. Call `workspace` with `repo`: plan, credit balance, access summary, tracking state, links.
 2. Call `shipped` with `{}`, or `{ module }` with the module in upper case if the founder named one. Count by state (VERIFIED, CLAIMED, FAILED) and by module.
 3. If a tracking PR is recorded, or `workspace` shows tracking installed but not confirmed, call `tracking_check` and report what it has and has not seen (events, crawler hits, goals).
 4. Print:

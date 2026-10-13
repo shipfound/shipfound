@@ -8,7 +8,7 @@ Input: optional URLs the founder wants indexed.
 
 ## Procedure
 
-1. Call `workspace` and `access`. Read the gsc and bing areas. If GSC has no verified property or Bing has no site, give the founder the steps to add and verify it (it needs a DNS record or a file only they can approve) and do the rest for whichever one is ready.
+1. Call `workspace` with `repo` and `access`. Read the gsc and bing areas. If GSC has no verified property or Bing has no site, give the founder the steps to add and verify it (it needs a DNS record or a file only they can approve) and do the rest for whichever one is ready.
 2. **Repo (one PR, theme "index").** Framework gate first (SKILL.md).
    - Sitemap: if none is live, add one in the framework's idiom (site-fixes.md).
    - IndexNow: if no key file is live, generate a key with `openssl rand -hex 16`, add `<key>.txt` containing only the key at the public root (`public/`, `static/` or the web root), and note the key in the PR body (it is public by design).

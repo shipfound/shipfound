@@ -6,7 +6,7 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
 
 ## Procedure
 
-1. Call `workspace` for credits and plan. Call `access`. If there is no audit yet, say the plan is built from the audit, name the audit routine the way the founder's host runs it, and stop.
+1. Call `workspace` with `repo` for credits and plan. Call `access`. If there is no audit yet, say the plan is built from the audit, name the audit routine the way the founder's host runs it, and stop.
 2. Call `plan`. It returns `{ rank, module, title, why, command, credits }[]`.
 3. If the founder named a module, show only those items.
 4. Print the top items as a numbered list: title, the one-line why, how to run it, and its credits. `command` is a Claude Code command; in Codex, give the matching phrase from the routines table in SKILL.md instead. Then the total credits for the list against the balance, for example "Top 5 cost 21 credits; you have 18. The first 3 fit."

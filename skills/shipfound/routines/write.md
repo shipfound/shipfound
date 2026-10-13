@@ -8,7 +8,7 @@ Input: the page type, then an optional topic. The Content page of the results ap
 
 ## Procedure
 
-1. Call `workspace` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
+1. Call `workspace` with `repo` and `access`. Run the framework gate (SKILL.md); stop for unsupported stacks.
 2. Type: one of `glossary_term`, `answer_page`, `comparison`, `alternatives`, `article` (the values `content_brief` and `check_content` take). A listicle ("Best X tools") is an `article` written as a ranked list: say so to the founder. If the founder gave no type, ask, or point them to the Content page.
 3. Topic: what the founder gave after the type. If there is none, point them to the Content page in the results app, or call `plan` and take the top CONTENT item, and confirm it with the founder in one line.
    Before anything that costs credits, check it is not written already: `shipped` (module CONTENT), the repo's content folder and the live sitemap. A page on the same topic in other words counts. If one exists, say so and where, `record_action` it if `shipped` does not have it (module CONTENT, kind PAGE, `liveUrl` the page, `meta: { type, topic }`), and stop, so it is not offered again.
