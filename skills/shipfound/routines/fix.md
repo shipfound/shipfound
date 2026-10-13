@@ -4,7 +4,7 @@ Site fixes as themed pull requests. Installs tracking first if it is not live ye
 
 Read [../references/site-fixes.md](../references/site-fixes.md), [../references/tracking.md](../references/tracking.md) and [../references/pr-conventions.md](../references/pr-conventions.md) before changing anything.
 
-Input: an optional theme or URL, or `rankings` (the searches the site almost wins, below).
+Input: an optional theme or URL, `rankings` (the searches the site almost wins, below), or `errors` (the JavaScript errors visitors hit, below).
 
 ## Procedure
 
@@ -30,5 +30,15 @@ Input `rankings`, or a "Lift ..." move from grow: a page that already ranks 4 to
 3. Call `keyword_research` with the search as the topic (4 credits; say so in the same line) for what the top results cover that the page does not.
 4. Open the page in the repo and lift it, on branch `shipfound/rank-<slug>`, without changing its URL: the search in the title and the H1 when it is missing, a direct answer to it in the first 60 words, a section for what the top results cover and this page does not, and two or three links to it from related pages with the search as the link text. No keyword stuffing, and no claim the product or a source cannot back. Build, open one PR with the preview link (pr-conventions.md).
 5. `record_action` with `module` FIXES, `kind` PR, `liveUrl` the page, `meta: { type: "ranking", keyword: <the search>, page: <its path> }`. Say it is claimed, and that its position is read again in about a month. Then the hand-over.
+
+## Errors
+
+Input `errors`, or a "Fix the error ..." move from grow: the JavaScript errors visitors hit on the live site, read from tracking, fixed in one PR. Steps 1 and 2 above first; no tracking step. Free.
+
+1. Call `analytics` with `{ report: "errors", from: <7 days ago> }`. Each row has the scrubbed `message`, the top frames of its `stack`, the `pages` it happened on, the `browsers`, and `funnel` (seen on a signup, login, pricing or checkout page). If it is empty, say no visitor hit an error in the last 7 days, in one line, and the hand-over. A grow move named the error: take that row (its key is the move's key after `ERRORS:`).
+2. Pick at most three errors you can find in the code, `funnel` ones first, then most visitors. Leave out, and say why in one line each: a `message` of null (sent before the tracker kept error text), a cross-origin "Script error." (no stack: the script needs `crossorigin` and CORS headers before it can be read), and a stack that is only third-party code (an analytics or chat widget) the repo does not own.
+3. For each: find it from the stack's file and function names and the page's route. Minified frames (`chunk-3f2a.js:1:48211`): build locally and read the source map, or search the repo for the message's property or function name. Reproduce it when you can (the page, in the founder's Chrome or a local dev server) before changing anything, and say when you could not. Fix the cause, not the symptom: guard the missing value where it is born, handle the failed request, and never swallow the error with an empty catch.
+4. Build, branch `shipfound/fix-errors`, open one PR with the preview link (pr-conventions.md) listing each error, the visitors who hit it, its page, and what caused it.
+5. `record_action` with `module` FIXES, `kind` PR, `liveUrl` the page most of them happened on, `meta: { type: "errors", keys: [<each fixed error's key>] }`. Say it is claimed, and that once it is live the errors report shows whether visitors still hit them. Then the hand-over.
 
 Never merge, never push to the default branch, never add a dependency other than `@shipfound/next` without asking.
