@@ -164,7 +164,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `repo_confirm` | `{ repo, answer, by, evidence? }` | Keep whether this repo is the site's code: by agent, yes only, with the file and line that shows the domain; by founder, their yes or no. Only when `workspace` says the repo is UNCONFIRMED |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |
-| `visibility_run` | none | Start a visibility run (10 questions x 4 engines x 4 runs). Runs in the background |
+| `visibility_run` | none | Start a visibility run (10 questions x 6 AI engines x 4 runs: ChatGPT, Perplexity, Gemini, Claude, Google's AI Mode and AI Overviews). Runs in the background |
 | `visibility` | none | Latest full run: pairs with stability labels ("named in 3 of 4 runs"), competitors |
 | `today` | `{ repoCommits? }` (the week's commits to the product, Shipfound's own PRs left out) | What grow shows: `happened` since the last session, `due` (tests with a verdict, work to verify), the one `offer` with its `key`, `after` and `resting`. Logs the offer |
 | `grow_answer` | `{ key, answer: "yes" \| "no" }` | The founder's answer to a move. A no rests it for 7 days |
