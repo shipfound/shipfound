@@ -1,14 +1,16 @@
 {
   "name": "shipfound-product-video",
   "private": true,
-  "description": "A product video for a boost: the product's screens recreated in HTML and animated, in its own branding, silent, 30 seconds at most. Runs on the founder's machine; see skills/shipfound/routines/video.md.",
+  "description": "A product video for a boost: the product's screens recreated in HTML and animated, in its own branding, no sound, 30 seconds at most, one cut per ad in three formats plus an image of each. Runs on the founder's machine; see skills/shipfound/routines/video.md.",
   "type": "module",
   "scripts": {
     "capture": "node capture.mjs",
     "sheet": "remotion still Sheet out/sheet.png",
-    "render:square": "remotion render Square out/video-1x1.mp4 --codec=h264 --crf=18 --muted",
-    "render:wide": "remotion render Wide out/video-16x9.mp4 --codec=h264 --crf=18 --muted",
-    "render": "npm run render:square && npm run render:wide"
+    "render:square": "remotion render Square out/video-1x1.mp4 --codec=h264 --crf=18 --enforce-audio-track",
+    "render:wide": "remotion render Wide out/video-16x9.mp4 --codec=h264 --crf=18 --enforce-audio-track",
+    "render": "npm run render:square && npm run render:wide",
+    "thumbs": "remotion still Thumbs out/thumbs.png",
+    "ads": "node ads.mjs"
   },
   "dependencies": {
     "@remotion/cli": "4.0.520",

@@ -1,9 +1,19 @@
 {
   "product": "Acme",
-  "hook": "The landing page headline, or the post's first line",
+  "hook": "Your store is open. Nobody visits.",
   "scenes": [
-    { "id": "browser-example", "seconds": 5, "caption": "Paste your store's link" },
-    { "id": "terminal-example", "seconds": 5, "caption": "Each fix lands as a pull request" }
+    { "id": "browser-example", "seconds": 4, "caption": "Shoppers start finding your store" },
+    { "id": "terminal-example", "seconds": 5, "caption": "Paste a link. Acme does the rest." }
   ],
-  "end": { "line": "The landing page subhead, short", "cta": "acme.com" }
+  "image": { "hook": "Your store is open.\nNobody visits.", "scene": "browser-example", "at": 3.5, "line": "Shoppers start finding your store" },
+  "end": { "line": "Free to start. No card.", "cta": "acme.com" },
+  "ads": [
+    {
+      "hook": "Get shoppers while you run the store.",
+      "scenes": [
+        { "id": "terminal-example", "seconds": 5, "caption": "Paste a link. Acme does the rest." },
+        { "id": "browser-example", "seconds": 4, "caption": "Shoppers start finding your store" }
+      ]
+    }
+  ]
 }

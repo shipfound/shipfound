@@ -1,24 +1,39 @@
 import React from "react";
 import { AbsoluteFill, Composition, Freeze, OffthreadVideo, staticFile } from "remotion";
-import { Clip, DURATION } from "./Clip";
+import { CUTS, Clip, DURATION, durationOf } from "./Clip";
 import { FPS } from "./kit";
+import { Static } from "./Static";
 
-// Square (1:1, for the X feed), Wide (16:9), and Sheet: one still with a
-// frame every half second of the square cut, each with the safe zone drawn
-// in, for the quality check before anyone sees the video. It is as long as
-// the clip (a Sequence is cut at its composition's end) and rendered as frame 0.
+// Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
+// Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
+// Vertical-n (9:16, Reels and Stories), and its image twin, Image-n (4:5)
+// and Image-n-square (1:1). `npm run ads` renders every one of them.
+//
+// Sheet: one still with a frame every half second of a cut's square video,
+// each with the safe zone drawn in, for the quality check before anyone sees
+// it (--props='{"cut":"2"}' for ad 2). It is as long as the longest cut (a
+// Sequence is cut at its composition's end) and rendered as frame 0.
+// Thumbs: frame 0 of every cut in every format at 200px wide, the way a
+// scroller sees it before the video plays.
 
+export const FORMATS = [
+  ["Square", 1200, 1200],
+  ["Portrait", 1080, 1350],
+  ["Vertical", 1080, 1920],
+] as const;
+
+const LONGEST = Math.max(...Object.keys(CUTS).map(durationOf));
 const SHEET_COLS = 6;
 const SHEET_CELL = 400;
-const SHEET_FRAMES = Array.from({ length: Math.floor(DURATION / (FPS / 2)) }, (_, i) => Math.round(i * (FPS / 2) + FPS / 4));
+const sheetFrames = (cut: string) => Array.from({ length: Math.floor(durationOf(cut) / (FPS / 2)) }, (_, i) => Math.round(i * (FPS / 2) + FPS / 4));
 
-const Sheet: React.FC = () => (
+const Sheet: React.FC<{ cut: string }> = ({ cut }) => (
   <AbsoluteFill style={{ backgroundColor: "#202020", flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start" }}>
-    {SHEET_FRAMES.map((f) => (
+    {sheetFrames(cut).map((f) => (
       <div key={f} style={{ position: "relative", width: SHEET_CELL, height: SHEET_CELL, overflow: "hidden", outline: "2px solid #202020" }}>
         <div style={{ width: 1200, height: 1200, transform: `scale(${SHEET_CELL / 1200})`, transformOrigin: "0 0" }}>
           <Freeze frame={f}>
-            <Clip w={1200} h={1200} />
+            <Clip w={1200} h={1200} cut={cut} />
           </Freeze>
         </div>
         <div style={{ position: "absolute", inset: SHEET_CELL * 0.05, border: "1px dashed rgba(255,80,80,0.8)" }} />
@@ -27,6 +42,24 @@ const Sheet: React.FC = () => (
     ))}
   </AbsoluteFill>
 );
+
+const THUMB_W = 200;
+const Thumbs: React.FC = () => (
+  <AbsoluteFill style={{ backgroundColor: "#202020", flexDirection: "row", flexWrap: "wrap", alignContent: "flex-start", gap: 16, padding: 16 }}>
+    {Object.keys(CUTS).flatMap((cut) =>
+      FORMATS.map(([name, w, h]) => (
+        <div key={`${cut}-${name}`} style={{ position: "relative", width: THUMB_W, height: (h * THUMB_W) / w, overflow: "hidden" }}>
+          <div style={{ width: w, height: h, transform: `scale(${THUMB_W / w})`, transformOrigin: "0 0" }}>
+            <Freeze frame={0}>
+              <Clip w={w} h={h} cut={cut} />
+            </Freeze>
+          </div>
+        </div>
+      ))
+    )}
+  </AbsoluteFill>
+);
+const THUMBS_H = 16 + Object.keys(CUTS).length * ((1920 * THUMB_W) / 1080 + 16);
 
 // The flicker check, on the rendered file (frames come from several browser
 // tabs, so a flicker only shows there): 12 consecutive frames of
@@ -61,7 +94,22 @@ export const Root: React.FC = () => (
   <>
     <Composition id="Square" component={Clip} durationInFrames={DURATION} fps={FPS} width={1200} height={1200} defaultProps={{ w: 1200, h: 1200 }} />
     <Composition id="Wide" component={Clip} durationInFrames={DURATION} fps={FPS} width={1920} height={1080} defaultProps={{ w: 1920, h: 1080 }} />
-    <Composition id="Sheet" component={Sheet} durationInFrames={DURATION} fps={FPS} width={SHEET_COLS * SHEET_CELL} height={Math.ceil(SHEET_FRAMES.length / SHEET_COLS) * SHEET_CELL} />
+    {Object.keys(CUTS).flatMap((cut) => [
+      ...FORMATS.map(([name, w, h]) => <Composition key={`${name}-${cut}`} id={`${name}-${cut}`} component={Clip} durationInFrames={durationOf(cut)} fps={FPS} width={w} height={h} defaultProps={{ w, h, cut }} />),
+      <Composition key={`Image-${cut}`} id={`Image-${cut}`} component={Static} durationInFrames={durationOf(cut)} fps={FPS} width={1080} height={1350} defaultProps={{ w: 1080, h: 1350, cut }} />,
+      <Composition key={`Image-${cut}-square`} id={`Image-${cut}-square`} component={Static} durationInFrames={durationOf(cut)} fps={FPS} width={1200} height={1200} defaultProps={{ w: 1200, h: 1200, cut }} />,
+    ])}
+    <Composition
+      id="Sheet"
+      component={Sheet}
+      durationInFrames={LONGEST}
+      fps={FPS}
+      width={SHEET_COLS * SHEET_CELL}
+      height={SHEET_CELL}
+      defaultProps={{ cut: "1" }}
+      calculateMetadata={({ props }) => ({ height: Math.ceil(sheetFrames(props.cut).length / SHEET_COLS) * SHEET_CELL })}
+    />
+    <Composition id="Thumbs" component={Thumbs} durationInFrames={1} fps={FPS} width={16 + FORMATS.length * (THUMB_W + 16)} height={Math.round(THUMBS_H)} />
     <Composition
       id="Frames"
       component={Frames}
