@@ -48,6 +48,8 @@ const TOOLS = {
   grow_answer: 0,
   site_fixes: 6,
   keyword_research: 4,
+  search_positions: 2,
+  outreach_targets: 4,
   content_brief: 5,
   check_content: 2,
   record_action: 0,

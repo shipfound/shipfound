@@ -36,7 +36,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [login](routines/login.md) | `/shipfound:login` | "Sign in to Shipfound" | Sign in once per machine; the host keeps it. Other routines do it for you when needed |
 | [audit](routines/audit.md) | `/shipfound:audit [domain]` | "Run the Shipfound audit" | Access audit of 11 areas plus the first baseline visibility run. Start here |
 | [plan](routines/plan.md) | `/shipfound:plan [module]` | "What should I do next?" | The ranked queue for this week. Runs nothing |
-| [fix](routines/fix.md) | `/shipfound:fix [theme or url]` | "Fix the site" | Tracking first, then site fixes as one PR per theme |
+| [fix](routines/fix.md) | `/shipfound:fix [theme, url or rankings]` | "Fix the site" | Tracking first, then site fixes as one PR per theme; `rankings` lifts a page that already ranks 4 to 20 on Google |
 | [write](routines/write.md) | `/shipfound:write <type> [topic]` | "Write a glossary page about X" | One content page, gated, as a PR |
 | [convert](routines/convert.md) | `/shipfound:convert [page]` | "Is our home page clear?", "Can visitors get to signup and pay?" | The home page read line by line as a first-time visitor reads it (what they cannot follow, what gives them nothing, what can go, what is too long, small print and labels included), and the way from it to signup and payment: every button near the top followed from outside, the rest walked in the founder's Chrome at phone and desktop width (stopping before any form or payment). What loses a visitor fixed as one PR, copy from the founder's words. Free |
 | [offer](routines/offer.md) | `/shipfound:offer [kind]` | "Make a founding offer" | A founding price, lifetime deal or pre-order for the first customers: the founder sets every number, the page ships as a PR, the discount is filled in the payment dashboard for them to save. Boosts lead with it |
@@ -46,7 +46,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [status](routines/status.md) | `/shipfound:status [module]` | "Shipfound status" | Credits, verified vs claimed, tracking, then the next moves to start |
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
 | [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; review sites on request (launch boards are the launch routine) |
-| [reach](routines/reach.md) | `/shipfound:reach [thread url, signups or network]` | "Draft a reply to this thread" | Community replies and Gmail drafts. Partly built |
+| [reach](routines/reach.md) | `/shipfound:reach [thread url, signups, network or cited]` | "Draft a reply to this thread" | Community replies and Gmail drafts; `cited` asks to join the lists AI answers read. Partly built |
 | [notes](routines/notes.md) | `/shipfound:notes [source or voice]` | "Write a build in public post" | Build in public posts on X and Reddit about the founder's product (a milestone, a launch, a tool live, a week of work), in their voice learned from their own posts, with an image of the real thing; filled in for them to post. Free |
 | [analytics](routines/analytics.md) | `/shipfound:analytics <question>` | Any analytics question | Plain words with numbers. Free |
 | [test](routines/test.md) | `/shipfound:test [page, goal or key]` | "What should we A/B test?" | A/B tests: propose with evidence, size, ship the variant, read, ship what won |
@@ -138,6 +138,8 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 |---|---|
 | `site_fixes` | 6 (nothing when it finds nothing to fix) |
 | `keyword_research` | 4 |
+| `search_positions` | 2 (nothing when the site ranks for nothing yet) |
+| `outreach_targets` | 4 per batch with new pages to look up (pages looked up before are free) |
 | `build_ideas` (tool) | 4 (a skill's ideas are free) |
 | `content_brief` | 5 |
 | `check_content` | 2 |
@@ -168,7 +170,9 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `grow_answer` | `{ key, answer: "yes" \| "no" }` | The founder's answer to a move. A no rests it for 7 days |
 | `plan` | none | Ranked queue `{ rank, module, title, why, command, credits }[]` and the founder's `stage`: the full menu, where grow picks one. At zero (no payment seen yet) it leads with the home page and its way to paying (convert), a founding offer, a free tool, the launches and a paid test of the offer |
 | `site_fixes` | `{ url? }` | Fix specs `{ id, theme, page, issue, evidence, fix }[]`, minus fixes already shipped |
-| `keyword_research` | `{ topic }` | Keywords, difficulty, SERP and AI-cited pages for one topic |
+| `keyword_research` | `{ topic }` | Keywords, difficulty, SERP and AI-cited pages for one topic, plus `ideas`: more searches around it, `winnable` when a young site can reach the top 10 |
+| `search_positions` | none | The Google searches the site ranks in the top 20 for, from an index refreshed every few weeks: `targets` at 4 to 20 with page, searches and difficulty, and `changes` since the last check (fix routine, `rankings`) |
+| `outreach_targets` | `{ count?, skip? }` | The "best X" lists AI answers cite, without this product: the questions each is cited for, its author and their verified work email, or why there is none (reach routine, `cited`) |
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
 | `check_content` | `{ type, markdown, facts? }` | Gate a local draft: fabrication, unsupported claims, disparagement, duplication, placeholders |
 | `record_action` | `{ module, kind, title, url, liveUrl?, meta? }` | Report a shipped thing. Returns an action id in state CLAIMED |

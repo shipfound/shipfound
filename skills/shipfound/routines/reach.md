@@ -8,7 +8,7 @@ Every hard line applies here more than anywhere: never post, never send, no karm
 
 **Here, X is replies.** This routine joins conversations that are already happening. The founder's own posts about their product, on X and Reddit, are build in public notes and live in their own routine (notes.md); a boost lives in boost.md. Never turn Shipfound's own work into a post: no "today it wrote 2 pages" status reports, no numbers from Shipfound's own runs or visibility checks. A post like that tells the founder's followers nothing they can use.
 
-Input: a thread URL, `signups`, or `network`.
+Input: a thread URL, `signups`, `network`, or `cited`.
 
 ## Procedure
 
@@ -20,6 +20,7 @@ Input: a thread URL, `signups`, or `network`.
    Drafts from a run: when the founder says which they posted or skipped and has not marked them on the page, call `reach_mark` for each (ids from `reach_drafts`), with the link to their reply when they have it. A draft left unmarked stays waiting and is offered again.
 5. **signups**: with a Gmail connector, find new-signup notification emails from the last 7 days, leave out anyone already written to (search Gmail for `to:<address>` in Sent and Drafts first), and draft one personal note per signup left (from the founder, plain, one question about what they are trying to do). At most 20 drafts today, counting any made earlier today. Call `record_action` with `module` INBOX, `kind` DRAFT for the batch, `url` https://mail.google.com/mail/u/0/#drafts, `meta: { count }`.
 6. **network**: propose up to 20 people from the founder's sent mail who would plausibly care, with one line on why each. The founder approves names before any draft exists. Then draft as in step 5.
-7. Without a Gmail connector that can create drafts, say so and skip inbox work. Without browser tools, give the founder the draft text to paste. Then the hand-over (SKILL.md), once the founder says they have posted or sent what this routine handed them: offer the next move.
+7. **cited**: the "best X" and "X alternatives" lists AI answers cite for the founder's buyers, without them on it. Call `outreach_targets` (4 credits for a batch with new pages to look up, free when every page was looked up before; say so in the same line). Skip, with `skip`, every page whose site sells a product like the founder's: its own list of its rivals will not add them; say which in one line. For the rest, one at a time: open the page in the browser, then draft one short personal note from the founder to the `author` at `email`: what their list covers, the one line on why this product belongs on it, a link. No attachments, no follow-up sequence, nothing that reads like a template, at most 20 drafts today counting any made earlier. With no `email`, find the site's contact page or form and fill it for the founder to send. After each, `record_action` with `module` INBOX, `kind` DRAFT, `title` "Asked to join <the list's title>", `url` the list page itself (one action per page), `meta: { type: "outreach", url: <the same page url> }`. Never write to a page the founder skipped, and never ask twice.
+8. Without a Gmail connector that can create drafts, say so and skip inbox work. Without browser tools, give the founder the draft text to paste. Then the hand-over (SKILL.md), once the founder says they have posted or sent what this routine handed them: offer the next move.
 
 Never draft from an account the founder does not own, never ask anyone to upvote, never write a review or testimonial.
