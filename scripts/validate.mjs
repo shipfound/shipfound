@@ -91,6 +91,7 @@ const TOOLS = {
   notes_save: 0,
   listing_skip: 0,
   launch_targets: 0,
+  launch_prep: 0,
   build_ideas: 4, // a skill's ideas are free
   funnel_check: 0,
   landing_check: 0, // retired: points to /shipfound:convert, reads nothing; removed the release after
