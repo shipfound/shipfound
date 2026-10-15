@@ -56,7 +56,7 @@ For CI or a machine without a browser, make a key in the Shipfound app (Settings
 
 ### Point at another server
 
-- **Claude Code:** the MCP server defaults to `https://api.shipfound.co/mcp`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp`.
+- **Claude Code:** the MCP server defaults to `https://api.shipfound.co/mcp`. Set `SHIPFOUND_API_URL` to use another API origin (staging, or `http://localhost:4000` when developing Shipfound itself); the plugin appends `/mcp/plugin`.
 - **Codex:** the plugin's server URL is fixed (Codex does not expand variables in plugin config). For staging or local work, add your server by hand (`codex mcp add shipfound-dev --url http://localhost:4000/mcp`) and turn the plugin's server off in `~/.codex/config.toml`:
 
   ```toml
@@ -125,7 +125,7 @@ Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound cre
 .claude-plugin/marketplace.json   the "shipfound" marketplace for Claude Code
 .codex-plugin/plugin.json         Codex plugin manifest (skills, MCP server, listing)
 .agents/plugins/marketplace.json  the "shipfound" marketplace for Codex
-.mcp.json                         the remote MCP server for Claude Code (HTTP, OAuth sign-in once)
+.mcp.json                         the remote MCP server for Claude Code (HTTP, signed in once per machine from the chat)
 skills/shipfound/SKILL.md         the growth engineer skill, shared by both hosts
 skills/shipfound/routines/        one procedure per routine (audit, fix, write, ...)
 skills/shipfound/references/      audit, fixes, content, tracking, verification, PR playbooks

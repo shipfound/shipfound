@@ -159,7 +159,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 
 | Tool | Input | Use it to |
 |---|---|---|
-| `sign_in` | `{ client? }` | Signed in, says which site the session works on. Signed out, only on plugins up to 0.3.22: returns a link and a code, then waits for the founder's Allow (login routine) |
+| `sign_in` | `{ client?, device? }` | Signed in, says which site the session works on. Signed out: returns a link and a code (it lasts 30 minutes), then each call waits for the founder's Allow; with `device`, the Allow signs in this machine for every later session (login routine) |
 | `workspace` | `{ repo }` | Product, credits, plan, access summary, tracking state, results app links, whether the repo you are in is this site's code, and `pluginUpdate` when a newer plugin is out. Call first in every routine, with `repo` (The repo, below); if `pluginUpdate` is there, pass its line to the founder once, then carry on |
 | `repo_confirm` | `{ repo, answer, by, evidence? }` | Keep whether this repo is the site's code: by agent, yes only, with the file and line that shows the domain; by founder, their yes or no. Only when `workspace` says the repo is UNCONFIRMED |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
