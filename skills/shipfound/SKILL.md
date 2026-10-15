@@ -96,6 +96,14 @@ Shipfound checks once per repo that it is the site's code, so nothing ships into
 - **UNCONFIRMED** (the first run in this repo): before any repo work, look for the site's domain in the deploy config, `package.json` "homepage", the site or framework config, or env examples. Found it: `repo_confirm` with yes, by agent, and the file and line as evidence, and tell the founder in one line. Not found or unclear: ask once, in one line, "Is <repo> the code for <domain>?", and pass the answer to `repo_confirm` by founder. The founder can also answer in the results app.
 - **NOT_THIS_SITE** or **OTHER_SITE**: no edits, no PRs, no `record_action` for repo work here. Say in one line what `repo.next` says, and carry on only with work that does not touch the repo (the browser, Gmail) if the founder asks.
 
+## Sites and apps
+
+A product is a website or an iOS app (`workspace` `product.kind`, "site" or "app"). An account has one plan and one credit balance across all its products.
+
+- **An app as its own product** (kind "app"): an iOS app with no website of its own, addressed by its Shipfound site, `<slug>.shipfound.site`. Its repo is the Xcode project, checked by its bundle id (`repo.next` says where to look). Its work is the aso routine, visibility, listings, launches, posts and reach. Website work does not apply: fix, convert, write, index, build a tool, test, analytics, offer and boost. The tools answer so, and the plan never offers them; do not try them.
+- **An app that is the same product as a website** stays on that site's App Store page (`app_add` there), and the site's plan carries its App Store work next to the website's.
+- Which one is the founder's to say, the first time an app comes up (aso routine, step 2). An app that is already its own product cannot be added to a site too.
+
 ## Done is done
 
 Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `launch_targets`, `build_ideas`, `site_fixes`, `funnel_check`, `offer_plan` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`; a launch on a board with the step's `recordAs` from `launch_targets`, or `meta.site` the board's host for all of it), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
@@ -235,7 +243,7 @@ Shipfound ships PRs into **Next.js, Astro, Nuxt, SvelteKit, Hugo and plain HTML*
 - Hugo: `hugo.toml`, `hugo.yaml`, `hugo.json`, or a `config.*` plus `layouts/` and `content/`.
 - Plain HTML: `.html` files at the root or in `public/` with no framework config and no build step, or a build step that only copies files.
 
-Anything else (Remix, Gatsby, Webflow, Framer, WordPress, Rails views, a mobile app, a monorepo where you cannot find the site) is **refused for code changes**: say what you found, say Shipfound does not ship PRs into that stack yet, record it in `record_access` (`repo.framework` "remix", "gatsby", "webflow", "framer", "wordpress" or "other"), and carry on with the parts that need no code (audit, indexing in the browser, analytics questions). Never guess at a stack you have not identified.
+Anything else (Remix, Gatsby, Webflow, Framer, WordPress, Rails views, a mobile app's code, a monorepo where you cannot find the site) is **refused for website code changes**; an app's own repo still takes its App Store metadata PRs (aso routine), nothing else: say what you found, say Shipfound does not ship PRs into that stack yet, record it in `record_access` (`repo.framework` "remix", "gatsby", "webflow", "framer", "wordpress" or "other"), and carry on with the parts that need no code (audit, indexing in the browser, analytics questions). Never guess at a stack you have not identified.
 
 ## Working in the browser and Gmail
 
