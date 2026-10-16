@@ -22,7 +22,7 @@ Input, optional:
 1. Call `workspace` with `repo` for the plan and credits.
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
-   - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link) or on the approval page when signing in, and the work happens from that product. To switch this machine to it: run `sh <plugin root>/scripts/device.sh forget`, start a new session in the app's repo, and sign in again, picking the app. Stop here and say so in one line.
+   - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
 3. Go to the part the input names: `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15.
 
 ### The listing

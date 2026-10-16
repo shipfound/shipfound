@@ -19,7 +19,7 @@ claude plugin install shipfound@shipfound
 
 Then open a new Claude Code session in your site's repo and run `/shipfound:audit`. From then on, start each day with `/shipfound:grow`: it checks what changed and what is still failing, then offers one move. The shell commands work for every Claude Code surface (terminal, VS Code, Cursor, desktop). In the terminal CLI you can also install from inside a session with `/plugin marketplace add shipfound/shipfound` and `/plugin install shipfound@shipfound`.
 
-Sign in once: the first Shipfound command opens a sign-in page on shipfound.co in your browser. Pick your site and choose Allow; that session carries on, and every later session on this machine starts signed in. The plugin keeps a random secret for this machine in the macOS Keychain (elsewhere in `~/.config/shipfound/device`, readable only by you) and sends it with each call; Shipfound keeps only its hash. To sign out on this machine, run `sh scripts/device.sh forget` from the plugin folder; to sign out everywhere, revoke the key in the results app (Settings, MCP connection).
+Sign in once: the first Shipfound command opens a sign-in page on shipfound.co in your browser. Pick your site and choose Allow; that session carries on, and every later session on this machine starts signed in. One sign-in covers all your products: each session works on the product whose repo it is in. The plugin keeps a random secret for this machine in the macOS Keychain (elsewhere in `~/.config/shipfound/device`, readable only by you) and sends it with each call; Shipfound keeps only its hash. To sign out on this machine, run `sh scripts/device.sh forget` from the plugin folder; to sign out everywhere, revoke the key in the results app (Settings, MCP connection).
 
 ### Codex
 

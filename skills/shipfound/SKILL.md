@@ -95,6 +95,8 @@ Shipfound checks once per repo that it is the site's code, so nothing ships into
 - **CONFIRMED**: carry on. Never ask about it again.
 - **UNCONFIRMED** (the first run in this repo): before any repo work, look for the site's domain in the deploy config, `package.json` "homepage", the site or framework config, or env examples. Found it: `repo_confirm` with yes, by agent, and the file and line as evidence, and tell the founder in one line. Not found or unclear: ask once, in one line, "Is <repo> the code for <domain>?", and pass the answer to `repo_confirm` by founder. The founder can also answer in the results app.
 - **NOT_THIS_SITE** or **OTHER_SITE**: no edits, no PRs, no `record_action` for repo work here. Say in one line what `repo.next` says, and carry on only with work that does not touch the repo (the browser, Gmail) if the founder asks.
+- **SWITCHED** (the whole answer, instead of a product): this repo is another of the account's products, and this session now works on it. One sign-in covers every product. Call `workspace` again with the same `repo` and carry on there; never ask the founder to sign in again.
+- While the repo is not settled and the account has more than one product, `workspace` lists them in `products`. If the repo might be another one's, ask once which, with the products as choices, and pass the answer to `repo_confirm` with that product's id as `product`: the session moves to it.
 
 ## Sites and apps
 
@@ -169,7 +171,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 |---|---|---|
 | `sign_in` | `{ client?, device? }` | Signed in, says which site the session works on. Signed out: returns a link and a code (it lasts 30 minutes), then each call waits for the founder's Allow; with `device`, the Allow signs in this machine for every later session (login routine) |
 | `workspace` | `{ repo }` | Product, credits, plan, access summary, tracking state, results app links, whether the repo you are in is this site's code, and `pluginUpdate` when a newer plugin is out. Call first in every routine, with `repo` (The repo, below); if `pluginUpdate` is there, pass its line to the founder once, then carry on |
-| `repo_confirm` | `{ repo, answer, by, evidence? }` | Keep whether this repo is the site's code: by agent, yes only, with the file and line that shows the domain; by founder, their yes or no. Only when `workspace` says the repo is UNCONFIRMED |
+| `repo_confirm` | `{ repo, answer, by, evidence?, product? }` | Keep whether this repo is the product's code: by agent, yes only, with the file and line that shows the domain; by founder, their yes or no. With `product` (an id from `workspace`'s `products`), it is kept for that product and this session moves to it (SWITCHED). Only when `workspace` says the repo is UNCONFIRMED |
 | `record_access` | `{ areas: [{ id, status, detail, fix?, facts? }], repo?: { framework, contentDir?, hasSitemap?, hasRobots?, hasStructuredData?, hasLlmsTxt?, canPush?, branchProtected?, otherAnalytics? }, client? }` | Store the access audit |
 | `access` | none | Read the latest audit |
 | `visibility_run` | none | Start a visibility run (10 questions x 6 AI engines x 4 runs: ChatGPT, Perplexity, Gemini, Claude, Google's AI Mode and AI Overviews). Runs in the background |
