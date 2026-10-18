@@ -59,6 +59,8 @@ Most apps have no website, so a search on Google, and an AI answer, has nothing 
 - structured data for the app and the FAQs;
 - the sitemap and llms.txt.
 
+Shipfound submits the sitemap to Google and pings Bing (IndexNow) each time the founder publishes. The domain is Shipfound's, so the founder cannot add it to Search Console or Bing Webmaster Tools: never offer that for a shipfound.site address.
+
 **The home page** (`path: ""`): what the app does and for whom in the headline, the intro, then sections on the main uses and an FAQ from what reviewers ask.
 
 **One page per search**:

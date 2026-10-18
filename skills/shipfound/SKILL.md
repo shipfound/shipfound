@@ -102,7 +102,7 @@ Shipfound checks once per repo that it is the site's code, so nothing ships into
 
 A product is a website or an iOS app (`workspace` `product.kind`, "site" or "app"). An account has one plan and one credit balance across all its products.
 
-- **An app as its own product** (kind "app"): an iOS app with no website of its own, addressed by its Shipfound site, `<slug>.shipfound.site`. Its repo is the Xcode project, checked by its bundle id (`repo.next` says where to look). Its work is the aso routine, visibility, listings, launches, posts and reach. Website work does not apply: fix, convert, write, index, build a tool, test, analytics, offer and boost. The tools answer so, and the plan never offers them; do not try them.
+- **An app as its own product** (kind "app"): an iOS app with no website of its own, addressed by its Shipfound site, `<slug>.shipfound.site`. Its repo is the Xcode project, checked by its bundle id (`repo.next` says where to look). Its work is the aso routine, visibility, listings, launches, posts and reach. Website work does not apply: fix, convert, write, index, build a tool, test, analytics, offer and boost. Its site is indexed by Shipfound on every publish; never offer Search Console or Bing for it. The tools answer so, and the plan never offers them; do not try them.
 - **An app that is the same product as a website** stays on that site's App Store page (`app_add` there), and the site's plan carries its App Store work next to the website's.
 - Which one is the founder's to say, the first time an app comes up (aso routine, step 2). An app that is already its own product cannot be added to a site too.
 

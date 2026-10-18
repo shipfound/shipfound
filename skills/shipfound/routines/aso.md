@@ -56,6 +56,7 @@ Input, optional:
     3. Save the whole site with `app_site` and fix every issue it returns.
     4. Tell the founder the draft is ready: they preview it and press Publish on the App Store page of the results app (Builder). Never say it is live before they do.
     5. Once they publish it, it is recorded as shipped work; `verify` checks it is live.
+    6. Shipfound tells Google and Bing about the site each time it is published. shipfound.site is Shipfound's domain, so the founder cannot verify it in Search Console or Bing Webmaster Tools: never offer to submit its sitemap or request indexing for its pages.
 
 ### Connecting App Store Connect
 
