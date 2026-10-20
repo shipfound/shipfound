@@ -44,8 +44,11 @@ const TOOLS = {
   visibility_run: 15, // 0 for the first baseline
   visibility: 0,
   research: 0,
-  research_run: 8, // 0 for the week's study on Builder and Growth
+  research_run: 12, // 0 for the week's study on Builder and Growth
   research_skip: 0,
+  ideas: 0,
+  ideas_run: 12, // 0 for the week's study on Builder and Growth
+  ideas_skip: 0,
   plan: 0,
   today: 0,
   grow_answer: 0,
@@ -162,7 +165,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "notes", "research", "analytics", "test", "aso", "boost", "video"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

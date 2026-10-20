@@ -2,7 +2,7 @@
 
 The daily front door. The founder runs it whenever they sit down to work on growth, without having to know which routine comes next. It looks first, then offers one move.
 
-Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "build", "launch", "notes", "research") means the founder wants a move from that area today.
+Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "build", "launch", "notes", "research", "ideas") means the founder wants a move from that area today.
 
 ## Procedure
 
@@ -16,6 +16,7 @@ Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "
    - `offer`: the one move for today (the real work; it is a due item only on a day with nothing else), with `key`, `title`, `why`, `command`, `credits`. Only moves with concrete work behind them: the checks still failing on the live site, the directories not listed yet, the page worth writing with its search volume. Never the same move as yesterday.
    - `after`: the next two, for a no. `more`: every other move with work behind it, for a founder who wants to look further. `catalog`: every other kind of move Shipfound makes (a build in public post, a product video, a boost, a question about the numbers...), so the founder can find what exists without knowing to ask; `ready: false` means it needs something first, and its `why` starts with what. `resting`: moves held back because they were declined lately.
    - `research`, on Builder and Growth when this run started the week's free study of products a step ahead of the founder: say it in one plain line after the brief, as `next` says (it is running, free, and what it finds comes in a few minutes). Nothing to ask; carry on. What a study finds comes back as moves keyed `RESEARCH:...`: what two or more of those products do that this site does not, at most one among the choices.
+   - `ideas`, the same way, when this run started the week's free feature ideas study: one plain line after the brief, as `next` says. Its ideas come back as moves keyed `IDEA:...`, at most one among the choices.
    If the founder named a module, use the first move of that module among `offer`, `after`, `more` and `catalog`; if there is none, say so in one line and offer `offer`.
 4. Print the brief in under 10 lines:
    - First run (`firstRun`): one line on what grow is: "Run this whenever you sit down to work on growth. It checks what changed and what is still failing, then offers one move."
@@ -36,6 +37,7 @@ Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "
    - A move picked (or a yes): start it. A `catalog` move with `ready: false`: say in one line what it needs and offer to set that up first (most need the audit for that area; tracking goes through the fix routine).
      - A routine (`command` is a routine's command, with its arguments): read that routine and run it from its first step, with those arguments. The price rule applies as usual (over 5 credits: the price and the balance, then wait for a yes; this yes counts when it named the price).
      - A move from the study of products a step ahead (its key starts with `RESEARCH:`) routes the same way, through the routine its `command` names; its `why` is what those products do. Every `record_action` for it carries `meta.research` with the move's key, so it is never offered again (routines/research.md, step 6).
+     - A feature idea (its key starts with `IDEA:`) runs the ideas routine with that key as its input; its `why` is who asks and where. Its record carries `meta.idea` (routines/ideas.md, steps 6 to 8).
      - `verify`: call `verify` once for each id in `actionIds`, then report each state. Never say done for anything that is not VERIFIED.
      - `visibility_run`: call it (15 credits, the yes named the price) and say where the result will show.
    - Codex no: offer the first of `after` the same way. Two noes: stop and say how many other moves there are in `more` and `catalog`, and what is `resting`, so the founder knows they can ask for any of it. Asked to see more: list `after`, `more` and `catalog`, numbered, and let them pick.
