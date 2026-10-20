@@ -82,9 +82,9 @@ Never upvote, comment or post during the audit.
 
 ## 7. X (`x`)
 
-In the browser, open https://x.com/home. If logged in, read the profile: joined date, followers, date of the last post.
+In the browser, open https://x.com/home. If logged in, read the profile: joined date, followers, date of the last post. Then open https://x.com/compose/articles: the Articles editor (a Write button, or your drafts) means the account has X Premium, which Articles need; an offer to subscribe means it does not.
 
-Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ handle, accountAgeDays, followers, daysSinceLastPost }`, with `handle` without the @ (boost reads it).
+Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ handle, accountAgeDays, followers, daysSinceLastPost, premium }`, with `handle` without the @ (boost reads it) and `premium` true or false (the notes routine writes an X Article with it, a thread without; leave it out when the page did not say).
 
 ## 8. GitHub (`github`)
 

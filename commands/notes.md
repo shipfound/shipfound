@@ -1,7 +1,7 @@
 ---
-description: Build in public posts on X and Reddit, about your product, in your own voice, with an image of the real thing. Your agent fills them in; you post. Free.
-argument-hint: "[source key | voice]"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), Bash(git log *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__notes_context, mcp__plugin_shipfound_shipfound__notes_voice, mcp__plugin_shipfound_shipfound__notes_save, mcp__plugin_shipfound_shipfound__reach_mark
+description: Build in public posts on X and Reddit about your product, features you shipped told from the problem they solve, and a flagship X Article every 14 days, in your own voice with real images. Your agent fills them in; you post. Free.
+argument-hint: "[source key | article [source key] | voice]"
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), Bash(git log *), Bash(gh pr list *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__notes_context, mcp__plugin_shipfound_shipfound__notes_voice, mcp__plugin_shipfound_shipfound__notes_save, mcp__plugin_shipfound_shipfound__reach_mark
 ---
 
 # /shipfound:notes

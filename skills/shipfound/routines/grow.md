@@ -10,7 +10,7 @@ Input: optional. A module ("content", "listings", "fixes", "convert", "offer", "
 2. Setup comes first, and grow routes to it rather than repeating it:
    - No audit yet (`access` is null): say the plan is built from the audit, then run the audit routine from its first step.
    - Otherwise carry on; `today` puts the baseline and tracking first by itself while they are missing.
-3. If you are in the founder's repo, count this week's commits to the product the way routines/notes.md, step 1, says (Shipfound's own PRs left out) and pass it as `repoCommits`, so `today` can offer a build in public note on the week's work. Then call `today` (free). It returns:
+3. If you are in the founder's repo, count this week's commits to the product and read the features shipped the way routines/notes.md, step 1, says (Shipfound's own PRs left out) and pass them as `repoCommits` and `features`, so `today` can offer a build in public note on the week's work or a feature, and the 14-day X Article. Then call `today` (free). It returns:
    - `happened`: facts since the founder's last session (AI visits, AI crawler hits, conversions, what got verified or failed, a new visibility run).
    - `due`: a test that reached a verdict, shipped work old enough to verify (`actionIds`, 1 credit each). Quick things, each with its own short ask.
    - `offer`: the one move for today (the real work; it is a due item only on a day with nothing else), with `key`, `title`, `why`, `command`, `credits`. Only moves with concrete work behind them: the checks still failing on the live site, the directories not listed yet, the page worth writing with its search volume. Never the same move as yesterday.
