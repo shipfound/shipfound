@@ -49,6 +49,8 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 12, // 0 for the week's study on Builder and Growth
   ideas_skip: 0,
+  ideas_replies: 0,
+  ideas_replies_save: 0,
   plan: 0,
   today: 0,
   grow_answer: 0,

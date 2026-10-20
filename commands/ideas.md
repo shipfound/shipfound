@@ -1,7 +1,7 @@
 ---
 description: Features people ask for on Reddit and X, found for you and grouped by the problem they solve, each with the posts behind it and the smallest version to ship first. Free once a week on Builder and Growth.
 argument-hint: "[idea key | run]"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__ideas, mcp__plugin_shipfound_shipfound__ideas_skip, mcp__plugin_shipfound_shipfound__grow_answer, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__ideas, mcp__plugin_shipfound_shipfound__ideas_skip, mcp__plugin_shipfound_shipfound__ideas_replies, mcp__plugin_shipfound_shipfound__ideas_replies_save, mcp__plugin_shipfound_shipfound__reach_mark, Bash(gh pr view *), mcp__plugin_shipfound_shipfound__grow_answer, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
 ---
 
 # /shipfound:ideas

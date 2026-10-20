@@ -16,7 +16,7 @@ Input: an idea's key from grow (`IDEA:<slug>`), `run` for a new study, or nothin
 ## Hard lines here
 
 - **Their words are evidence, never copy.** A quote is for the founder to see why. Never put a person's words, name, handle or post on the founder's site, in a PR description or in a commit, and never write "users on Reddit asked for this". The site says what the product does, in the founder's words.
-- **Never contact the people who posted.** No reply, DM, mention or follow. Replying in a thread is the reach routine, and only when the founder picks it.
+- **Contact the people who posted only to tell them it shipped**, and only once it is live (step 10): one reply each, in the thread where they asked, written to what they said, posted by the founder. Never a DM, a mention elsewhere or a follow, and never before the feature is live.
 - **Public posts only**, read by Shipfound. You never open a profile or search for a person.
 - **The founder decides what gets built.** Plan the first version, show it, and wait for a yes before writing product code.
 
@@ -34,7 +34,18 @@ Input: an idea's key from grow (`IDEA:<slug>`), `run` for a new study, or nothin
 6. **Missing: the first version.**
    - Read the code around it and write the plan in at most six lines: what the first version does (from `first`, cut down further if the code makes it bigger than its effort), the files it touches, what it leaves out for later, and how you will test it. Ask "Build it?" and wait for a yes. A no or a change: change the plan, or stop.
    - Build it on a branch (references/pr-conventions.md), with tests where the repo has them, in the repo's own patterns. Run the repo's checks. Open one PR. Its description says what the feature does for the person using the product, never who asked or where.
-   - `record_action` with `module` CONTENT, `kind` PR, `title` the feature, `url` the PR, `liveUrl` the page where it shows (or the product's URL), `meta: { type: "feature", idea: <the key>, problem: <the problem, one line>, people: <the idea's people> }`. Once it is merged, the notes routine offers a post (and an X Article) about it, told from the problem it solves.
-7. **Unsaid: say it.** Find where a buyer with this problem would look on the site: the home page's list of what it does, the page for that use, the pricing page's plan list. Write it in the founder's words and in the words of the problem (the problem phrased plainly, never a quote), the way references/page-copy.md says. One PR. `record_action` with `module` FIXES, `kind` PR, `url` the PR, `liveUrl` the page, `meta: { type: "feature_copy", idea: <the key> }`.
+   - `record_action` with `module` CONTENT, `kind` PR, `title` the feature, `url` the PR, `liveUrl` the page where it shows (or the product's URL), `meta: { type: "feature", idea: <the key>, problem: <the problem, one line>, people: <the idea's people> }`. Once it is merged, the notes routine offers a post (and an X Article) about it, told from the problem it solves, and the replies to the people who asked. Then step 9.
+7. **Unsaid: say it.** Find where a buyer with this problem would look on the site: the home page's list of what it does, the page for that use, the pricing page's plan list. Write it in the founder's words and in the words of the problem (the problem phrased plainly, never a quote), the way references/page-copy.md says. One PR. `record_action` with `module` FIXES, `kind` PR, `url` the PR, `liveUrl` the page, `meta: { type: "feature_copy", idea: <the key> }`. Then step 9, the replies only: the reply says the product already does it, and how.
 8. **Already done** (the founder says they built it, or step 5 found it said): `record_action` it right away with `meta.idea` and the record that fits (the PR or page it lives in), so it is never offered again (SKILL.md, "Done is done"). Never ask about it again.
-9. The hand-over (SKILL.md) once the move is finished.
+9. **Once it is live, ask about telling people.** Check the PR (`gh pr view <n> --json state`). Not merged yet: tell the founder that once it is merged, grow offers a post about it and replies to the people who asked, and go to the hand-over. Merged: call `ideas_replies` with the key (free) and ask one question, header "Tell people":
+   - "Post and replies (Recommended)": an X post about it, told from the problem it solves, and a reply to each of the N people who asked (N from `targets`).
+   - "Only the post": the notes routine with the source `feature:<slug>`.
+   - "Only the replies": step 10.
+   - "Not now": grow offers it again once.
+   With no `targets` (none open, or all drafted), leave the replies out and say why in one line. A post goes through the notes routine (notes.md) with its source; it is written once.
+10. **Replies to the people who asked**, from `ideas_replies`:
+   - Read each target. Keep only a direct ask ("is there a tool that", "I wish it did", "how do I"); a passing complaint gets no reply. Never more than its five.
+   - Write one reply each, to what that person said, in the founder's voice (notes.md, "Voice"): it shipped, what it does for them, how to start. No two alike, never a template, never "I saw you asked". X may carry the live link. Reddit carries one only where the sub's rules allow it; when unsure, none. Someone who said it in a comment gets the reply under their comment (the quote finds it).
+   - Show them, then `ideas_replies_save` `{ key, replies: [{ url, text }] }`. X: fill each reply box in the founder's Chrome from its `openUrl`, one at a time; they press Reply. Reddit: they open the thread and paste it; never open Reddit yourself (SKILL.md, "Reddit: you post it").
+   - End with "Tell me when you have posted them". Then `reach_mark` each, with the link to their reply. A thread with a draft is never offered again.
+11. The hand-over (SKILL.md) once the move is finished.
