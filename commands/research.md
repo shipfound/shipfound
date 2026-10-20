@@ -1,5 +1,5 @@
 ---
-description: Study 3 to 5 products a step ahead of you that sell to your buyers, what they show in public, and what two or more of them do that you do not, each as a move. Free once a week on Builder and Growth.
+description: Study up to 8 products a step ahead of you (the same job, the same buyers, sold the same way), what they do today and how they started, each lesson as a move. Free once a week on Builder and Growth.
 argument-hint: "[move key | run]"
 allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__research, mcp__plugin_shipfound_shipfound__research_skip, mcp__plugin_shipfound_shipfound__grow_answer, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
 ---
