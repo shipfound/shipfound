@@ -30,7 +30,7 @@ Record right after the thing exists (the PR is open, the request was sent), once
 
 | kind | When to call verify | What the server checks |
 |---|---|---|
-| PR | After the founder says it is merged and deployed | PR state on GitHub (open, merged, closed), then the live page at `liveUrl` (status, the change present) |
+| PR | After the founder says it is merged and deployed. Read it with `gh pr view <n> --json state,mergedAt` first, and record it again with `meta.mergedAt` once merged: GitHub's API cannot see a private repo | PR state on GitHub (open, merged, closed), or for a private repo the merge in `meta.mergedAt`, then the live page at `liveUrl` (status, the change present) |
 | PAGE | After deploy | The live URL returns 200 and carries the product's name or domain |
 | INDEX_REQUEST | A day or more after the request | Index state for the URL, where the APIs allow |
 | LISTING | After the founder submits and the listing is live | The listing page is live, links to `liveUrl`, and the link's rel attribute |
