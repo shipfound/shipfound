@@ -111,7 +111,7 @@ Supported stacks for pull requests: Next.js, Astro, Nuxt, SvelteKit, Hugo and pl
 
 ## Pricing
 
-Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound credits pay for search data, AI visibility runs and verification; tracking and analytics never cost credits. Free includes the audit, one baseline visibility check and 20 credits. The agent states the price before any step over 5 credits and waits for your yes. Plans and prices: https://www.shipfound.co. Our own numbers, every answer included: https://www.shipfound.co/proof/shipfound.
+Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound credits pay for search data, AI visibility runs and verification; tracking and analytics never cost credits. Free includes the audit, one baseline visibility check, 20 credits to start and 20 more every month. The agent states the price before any step over 5 credits and waits for your yes. Plans and prices: https://www.shipfound.co. Our own numbers, every answer included: https://www.shipfound.co/proof/shipfound.
 
 ## Privacy
 
