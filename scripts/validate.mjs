@@ -50,6 +50,7 @@ const TOOLS = {
   ideas_run: 12, // 0 for the week's study on Builder and Growth
   ideas_skip: 0,
   ideas_replies: 0,
+  ideas_replies_find: 8, // nothing when the run writes no drafts
   ideas_replies_save: 0,
   plan: 0,
   today: 0,

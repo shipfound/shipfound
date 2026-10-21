@@ -8,7 +8,7 @@ Every hard line applies here more than anywhere: never post, never send, no karm
 
 **Here, X is replies.** This routine joins conversations that are already happening. The founder's own posts about their product, on X and Reddit, are build in public notes and live in their own routine (notes.md); a boost lives in boost.md. Never turn Shipfound's own work into a post: no "today it wrote 2 pages" status reports, no numbers from Shipfound's own runs or visibility checks. A post like that tells the founder's followers nothing they can use.
 
-**The people who asked for a feature** are told it shipped from the ideas routine (ideas.md, step 10): `ideas_replies` and `ideas_replies_save`. Those drafts land on Assisted posts with the rest and are marked with `reach_mark` the same way.
+**The people who asked for a feature** are told it shipped from the ideas routine (ideas.md, step 10): `ideas_replies_find` is this routine's run aimed at one feature that shipped, with the same search, checks, price and drafts. Those drafts land on Assisted posts with the rest, marked as a feature the founder shipped, and are read with `reach_drafts` and marked with `reach_mark` the same way.
 
 Input: a thread URL, `signups`, `network`, or `cited`.
 
