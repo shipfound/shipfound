@@ -33,7 +33,7 @@ Read as someone who has never heard of the product.
 
 The video and the images (`copy-visual`): do their words pass the same five questions, and do they show the product the page now sells? Quote the frame's words; they are not in the page's HTML, so the server does not look for them.
 
-Then the page as a whole (`copy-missing`): does it say who it is for, what they get and how it differs from what they do today, and does it show the product (on the first or second phone screen), a price within reach and honest proof? Is every item on the founder's list said somewhere, early (not below about screen 3), as one thing rather than split across cards?
+Then the page as a whole (`copy-missing`): does it say who it is for, what they get and how it differs from what they do today, and does it show the product (on the first or second phone screen) and a price within reach? Never ask for proof the business does not have yet: testimonials, customer logos, user counts and case studies are not a miss on a new product's page, and are never invented. Is every item on the founder's list said somewhere, early (not below about screen 3), as one thing rather than split across cards?
 
 ## Examples from shipfound.co (October 2026)
 
