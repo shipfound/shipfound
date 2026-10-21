@@ -10,6 +10,7 @@ Input: the question.
 2. Call `workspace` with `repo`. If tracking is not installed, say so, point to the fix routine, and stop.
 3. Turn the question into at most 3 `analytics` calls, each `{ report, from?, to?, compare?, filters? }`:
    - Reports: overview, realtime, channels, ai_search, sources, landing_pages, pages, shipped_work, ai_crawlers, conversions, errors, timeseries. `errors` is the JavaScript errors visitors hit: message, top frames, pages, and whether it was on a signup or payment page.
+   - `funnels`: each mapped funnel, visitors at every step, the share that went on, and `leak`, the move between two steps that loses the most of them, split by channel and device. `page_flow`: the most visited pages, where visitors went next and what they clicked. A question about where visitors drop off is a `funnels` question; if `goals_list` shows only the install funnel, map the real ones first (references/tracking.md, "Funnels, mapped from the code") and then answer.
    - Dates as ISO dates. "Last week" is the last 7 full days; "September" is 2026-09-01 to 2026-09-30 unless the year is clear otherwise. Set `compare: true` when the question is about change.
    - Filters: `[{ field, op, value }]`, `op` one of is, is_not, contains; fields channel, ai_engine, path, landing_page, referrer_host, utm_source, utm_medium, utm_campaign, country, device, browser, os.
    - Goals: call `goals_list` when the question names a conversion.

@@ -207,6 +207,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `analytics` | `{ report, from?, to?, compare?, filters? }` | Any report: overview, realtime, channels, ai_search, sources, landing_pages, pages, shipped_work, ai_crawlers, conversions, errors (JavaScript errors visitors hit), timeseries |
 | `goals_list` | `{ siteId? }` | Goals and funnels |
 | `goals_save` | `{ siteId?, name, type, match?, valueCents?, note? }` | Create a goal, or redefine one with the same name. Yours are soft; only the founder converts one to hard (references/tracking.md, section 6) |
+| `funnels_save` | `{ siteId?, name, steps?, strict?, windowDays?, remove? }` | Save a funnel mapped from the code (the path most visitors take from a top page to signup or payment), with its last 28 days at once (references/tracking.md, "Funnels, mapped from the code") |
 | `experiment_create` | `{ key, name, hypothesis, path, goal, variants?, mde?, site? }` | Size and start an A/B test; returns the sizing and the page code, or a refusal with the numbers |
 | `experiment_results` | `{ key?, site? }` | Every test, or one test's table and verdict |
 | `experiment_close` | `{ key, keep, note?, site? }` | Stop a test and record the variant kept |

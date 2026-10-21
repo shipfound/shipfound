@@ -113,6 +113,23 @@ The defaults are guesses: `signup` waits for an `sf('signup')` most sites never 
 
 Prefer goals that read data the site already sends (a `PAGEVIEW` on a path, `CHECKOUT`) over new code. Ask the founder for the one event that means a user got value (for example `first_project_created`) and create it with `goals_save` `{ ... }` only if nothing already sent shows it.
 
+### Funnels, mapped from the code
+
+The funnel made at install (visit, engaged, CTA click, signup, activated, trial, paid) is a guess. Once the signup and payment goals are read from the code, map the few paths most visitors really take toward signing up or paying, and save each with `funnels_save`. The report leaves the install funnel out once there is a mapped one. Funnels count from the events already stored, so a funnel saved today shows its last 28 days at once.
+
+1. **Which paths matter comes from the numbers.** Call `analytics` with `report: "page_flow"` (free): the most visited pages, how many visitors each had, where they went next, what they clicked (`cta` with the element's `data-sf`, `form_start` and `form_submit` with the form's id, `outbound` with the host) and how many left from it. Take the pages that most visitors see or arrive on: usually the home page, pricing, a free tool, the top articles or answers, the signup page. A page with a handful of visitors is not a funnel yet.
+2. **What each step is comes from the code.** For each of those pages, read its source: where its main buttons go, which form it sends and on which path, the `data-sf` on each button, where a new account lands (the signup goal above), where a buyer comes back from checkout (the payment goal above). Never guess a path or an id that page_flow and the code do not both show.
+3. **Save each path** with `funnels_save` `{ name, steps, strict?, windowDays? }`, two to eight steps, ending at the signup or the payment:
+   - Name it by where it starts and ends: "Home to signup", "Pricing to payment", "Free tool to signup", "Articles to signup".
+   - A step is a goal's definition: `PAGEVIEW` on a path (`/tools/*` with a wildcard), `EVENT` (`form_submit@/register`), `CTA` (the button's `data-sf`), `CHECKOUT` for a payment.
+   - Put other ways that count as the same step in `any`: signing up with the form or with GitHub or Google (the page a new social account lands on), two buttons that both start a signup.
+   - Put where you found each step in `evidence`: `app/register/page.tsx:39`.
+   - Keep the steps a visitor really passes in order, and the window as short as the path: a day for a signup that happens in one visit, longer for a trial that ends in a payment.
+   - A path that goes through two ways at its start (a button that opens the signup page, a line to paste into a coding agent) is two funnels, so each way's loss shows.
+4. **Read what comes back.** Each save returns the funnel's last 28 days. A step no visitor reached is usually a wrong pattern: check it against page_flow and the code, and save it again. Then say each funnel in one line: how many entered, how many reached the end, and the step that loses the most of them.
+
+Map three to five funnels. Map again when the site gets a new signup path, a new main page or a new way to pay. Never add code to the site for a funnel: if a step cannot be seen from what the site already sends (a button with no `data-sf`, a signup only an API call shows), say so and leave it out, or ask the founder for a `data-sf` in the next site PR.
+
 The founder's own visits are excluded by the server while they are signed in to the results app; never add code to the site to filter them.
 
 In the code, only where the founder agrees:
