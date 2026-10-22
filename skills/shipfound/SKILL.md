@@ -1,6 +1,6 @@
 ---
 name: shipfound
-description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, notes, research, ideas, analytics, test, boost, video), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
+description: Work as the founder's growth engineer with the Shipfound MCP server, in Claude Code or Codex. Use for any /shipfound command or Shipfound request (audit, plan, fix, write, index, status, week, list, reach, outbound, notes, research, ideas, analytics, test, boost, video), and whenever the founder asks to get their product found or named in Google, Bing, ChatGPT, Perplexity or Claude; to fix SEO or AEO on their site (metadata, structured data, sitemap, robots, llms.txt); to write blog, glossary, answer, comparison or alternatives pages; to get pages indexed in Google Search Console or Bing Webmaster Tools; to install analytics or the AI crawler beacon; or to ask what shipped, what was verified, or which channel brought signups.
 ---
 
 # Shipfound
@@ -47,6 +47,7 @@ The founder needs two of them: **audit on day 1, then grow every day after.** Gr
 | [week](routines/week.md) | `/shipfound:week [module]` | "Run the Shipfound week" | The Monday routine |
 | [list](routines/list.md) | `/shipfound:list [site]` | "List us on directories" | Directories AI answers cite, picked for your product and filled in your browser one after another; review sites on request (launch boards are the launch routine) |
 | [reach](routines/reach.md) | `/shipfound:reach [thread url, signups, network or cited]` | "Draft a reply to this thread" | Community replies and Gmail drafts; `cited` asks to join the lists AI answers read. Partly built |
+| [outbound](routines/outbound.md) | `/shipfound:outbound [fresh]` | "Write to people who have the problem we solve" | People who said on X or Hacker News in the last two weeks that they have the problem, each with the email they published or a verified work email; one short Gmail draft each for the founder to send |
 | [notes](routines/notes.md) | `/shipfound:notes [source, article or voice]` | "Write a build in public post", "Write an X Article" | Build in public posts on X and Reddit about the founder's product (a milestone, a launch, a feature shipped told from the problem it solves, a tool live, a week of work), in their voice learned from their own posts, with an image of the real thing; and a flagship X Article with a designed cover and images every 14 days (an X thread without Premium); filled in for them to post. Free |
 | [research](routines/research.md) | `/shipfound:research [move key or run]` | "What do products a step ahead of us do that we don't?" | A study of up to 8 products a step ahead, found through three lenses (the same job, the same buyers, sold the same way): what each shows in public today (home page and signup, free tools, pricing, launches, best X posts) and how it started (its first archived home pages, launches, early posts), and what to learn from them (today: what two or more do that this site does not; early: their early moves), each a move carried out by the routine for that work. A product that is not like the founder is removed for good. Free once a week on Builder and Growth (grow starts it), otherwise 12 credits |
 | [ideas](routines/ideas.md) | `/shipfound:ideas [idea key or run]` | "What features do people ask for?" | What people on Reddit and X say about the problem the product solves, grouped into features at least two of them ask for, each with their posts, the smallest version to ship first and the effort. Missing ones are built as a PR once the founder says yes; ones the product already does are said on the site. Free once a week on Builder and Growth (grow starts it), otherwise 12 credits |
@@ -152,6 +153,7 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 | `keyword_research` | 4 |
 | `search_positions` | 2 (nothing when the site ranks for nothing yet) |
 | `outreach_targets` | 4 per batch with new pages to look up (pages looked up before are free) |
+| `outbound_targets` | 8 per new batch (nothing when it finds nobody new; last week's batch is free) |
 | `build_ideas` (tool) | 4 (a skill's ideas are free) |
 | `content_brief` | 5 |
 | `check_content` | 2 |
@@ -162,7 +164,7 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 | `reach_find`, `ideas_replies_find` | 8 a platform (nothing when the run writes no drafts) |
 | everything else | 0 |
 
-- **Over 5 credits** (`site_fixes`, a repeat `visibility_run`, a paid `research_run` or `ideas_run`, `reach_find`, `ideas_replies_find`): before the call, state the price and the balance from `workspace`, for example "site_fixes costs 6 credits; you have 18. Run it?", and wait for a yes. No yes, no call.
+- **Over 5 credits** (`site_fixes`, a repeat `visibility_run`, a paid `research_run` or `ideas_run`, `reach_find`, `ideas_replies_find`, a new `outbound_targets` batch): before the call, state the price and the balance from `workspace`, for example "site_fixes costs 6 credits; you have 18. Run it?", and wait for a yes. No yes, no call.
 - **1 to 5 credits**: say the price in the same line as what you are about to do. No need to wait.
 - **Never loop over tools.** One call per decision. Do not call a paid tool once per page, per keyword or per URL in a loop; do not retry a failed paid call more than once; do not run every play in the plan in one go. Batch work into one call where the input allows it, and stop to report after each routine.
 - If a tool says the daily credit cap or the balance is reached, stop and tell the founder. Do not work around it.
@@ -197,6 +199,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `keyword_research` | `{ topic }` | Keywords, difficulty, SERP and AI-cited pages for one topic, plus `ideas`: more searches around it, `winnable` when a young site can reach the top 10 |
 | `search_positions` | none | The Google searches the site ranks in the top 20 for, from an index refreshed every few weeks: `targets` at 4 to 20 with page, searches and difficulty, and `changes` since the last check (fix routine, `rankings`) |
 | `outreach_targets` | `{ count?, skip? }` | The "best X" lists AI answers cite, without this product: the questions each is cited for, its author and their verified work email, or why there is none (reach routine, `cited`) |
+| `outbound_targets` | `{ count?, fresh?, skip? }` | People who said in public in the last two weeks that they have the problem this product solves (X and Hacker News, never Reddit): the post, why, an angle, and the email they published or a verified work email, else the thread to answer in (outbound routine) |
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
 | `check_content` | `{ type, markdown, facts? }` | Gate a local draft: fabrication, unsupported claims, disparagement, duplication, placeholders |
 | `record_action` | `{ module, kind, title, url, liveUrl?, meta? }` | Report a shipped thing. Returns an action id in state CLAIMED |

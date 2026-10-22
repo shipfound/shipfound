@@ -51,6 +51,7 @@ const TOOLS = {
   ideas_skip: 0,
   ideas_replies: 0,
   ideas_replies_find: 8, // nothing when the run writes no drafts
+  outbound_targets: 8, // nothing when it finds nobody new; last week's batch is free
   ideas_replies_save: 0,
   plan: 0,
   today: 0,
@@ -171,7 +172,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
