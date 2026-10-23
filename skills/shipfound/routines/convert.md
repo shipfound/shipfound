@@ -10,7 +10,9 @@ It starts from the site's funnels: the paths most visitors take toward signing u
 
 Follow [../references/page-copy.md](../references/page-copy.md), [../references/pr-conventions.md](../references/pr-conventions.md) and [../references/verification.md](../references/verification.md).
 
-Input: an optional page visitors arrive on (default the home page).
+Input: an optional page visitors arrive on (default the home page), or `play:<id>`: a play the founder picked in grow for one step of the funnel (its key was `PLAY:<id>`).
+
+**A play picked in grow** (`play:<id>`): the founder already chose what to do, so this run carries out that play, on the page its step is about (the signup page for a signup-page play, the pricing page for a pricing one, the first screen after signup for one right after signup, the home page for a home page one). Steps 1 and 2 as usual, with that page; the play is among `plays` when it is still open (shipped or skipped: say so in one line and stop). Say the step's numbers and the play in two lines, then go to step 5 with only that play and the misses on the same page and step: recommend the play, and the misses on that step if any. Its PR and `record_action` (steps 8 and 9) are for that step: `meta.plays` has the play's id, and `meta.step`, `meta.funnel`, `meta.from` and `meta.to` are its step's, not the leak's, so a change being read on another step is not blurred and this one is read on its own step.
 
 ## Procedure
 
