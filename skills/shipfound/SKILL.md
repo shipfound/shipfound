@@ -203,6 +203,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
 | `check_content` | `{ type, markdown, facts? }` | Gate a local draft: fabrication, unsupported claims, disparagement, duplication, placeholders |
 | `record_action` | `{ module, kind, title, url, liveUrl?, meta? }` | Report a shipped thing. Returns an action id in state CLAIMED |
+| `record_merges` | `{ prs: [{ url, state, mergedAt? }] }` | Report what gh read for PRs Shipfound cannot see (a private repo); merged ones are checked at once |
 | `verify` | `{ actionId }` | Server-side check of a recorded action |
 | `shipped` | `{ module?, state? }` | List shipped actions |
 | `tracking_install` | `{ domain, framework, identityMode? }` | Site key, secret (first time only), script tag, crawler snippet for the stack |

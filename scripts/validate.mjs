@@ -63,6 +63,7 @@ const TOOLS = {
   content_brief: 5,
   check_content: 2,
   record_action: 0,
+  record_merges: 0,
   verify: 1,
   shipped: 0,
   tracking_install: 0,

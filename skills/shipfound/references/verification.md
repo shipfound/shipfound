@@ -30,11 +30,11 @@ Record right after the thing exists (the PR is open, the request was sent), once
 
 | kind | When to call verify | What the server checks |
 |---|---|---|
-| PR | After the founder says it is merged and deployed. Read it with `gh pr view <n> --json state,mergedAt` first, and record it again with `meta.mergedAt` once merged: GitHub's API cannot see a private repo | PR state on GitHub (open, merged, closed), or for a private repo the merge in `meta.mergedAt`, then the live page at `liveUrl` (status, the change present) |
+| PR | After the founder says it is merged and deployed. In a private repo, GitHub's API cannot see it: grow reads every unseen PR with `gh pr list` and reports them with `record_merges` (today's `confirm.prs`), which checks each merged one at once | PR state on GitHub (open, merged, closed), or for a private repo what gh read, then the live page at `liveUrl` (status, the change present) |
 | PAGE | After deploy | The live URL returns 200 and carries the product's name or domain |
-| INDEX_REQUEST | A day or more after the request | Index state for the URL, where the APIs allow |
-| LISTING | After the founder submits and the listing is live | The listing page is live, links to `liveUrl`, and the link's rel attribute |
-| POST | After the founder posts | The post is live; it is checked again at 7 days for removal |
+| INDEX_REQUEST | Never: shown as Requested, since Search Console and Bing do not show their queues | n/a |
+| LISTING | After the founder submits; record the listing's own page once the directory approves (the approval email in Gmail usually links it). Recorded on the submit or account page, it waits as submitted, and the listing page recorded later replaces it | The listing page is live, links to `liveUrl`, and the link's rel attribute |
+| POST | After the founder posts, with the post's own link | The post is live: Reddit through its .json view (removed or deleted fails; when Reddit refuses the check, the recorded link counts), X through its public embed endpoint (a deleted or protected post fails), Hacker News through its API |
 | DRAFT | Not verified by the server; the founder sends it | n/a |
 
 States: CLAIMED (recorded, not yet seen), VERIFIED (the server saw it), FAILED (the server looked and did not find it; the note says why).
