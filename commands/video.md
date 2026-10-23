@@ -1,7 +1,7 @@
 ---
-description: A short video of your product for a boost, one cut per ad in the feed shapes plus an image of each, saved to your Desktop. Your agent recreates its screens and animates them, in your branding, no sound, 30 seconds at most. No screen recording. Free.
-argument-hint: "[redo | ads]"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), Bash(npm install), Bash(npx playwright install chromium), Bash(npm run sheet), Bash(npm run render), Bash(npm run render:square), Bash(npm run ads), Bash(npm run ads -- *), Bash(npm run thumbs), Bash(cp out/*), Bash(cp public/*), Bash(npx remotion still *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace
+description: A short video of your product for a boost or a post on X, one cut per ad in the feed shapes plus an image of each, saved to your Desktop. Your agent recreates its screens and animates them, in your branding, no sound, 30 seconds at most. No screen recording. Free.
+argument-hint: "[redo | ads | post]"
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), Bash(npm install), Bash(npx playwright install chromium), Bash(npm run sheet), Bash(npm run render), Bash(npm run render:square), Bash(npm run ads), Bash(npm run ads -- *), Bash(npm run thumbs), Bash(cp out/*), Bash(cp public/*), Bash(npx remotion still *), Bash(git log *), Bash(gh pr list *), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__notes_context, mcp__plugin_shipfound_shipfound__notes_voice, mcp__plugin_shipfound_shipfound__notes_save, mcp__plugin_shipfound_shipfound__reach_mark
 ---
 
 # /shipfound:video
