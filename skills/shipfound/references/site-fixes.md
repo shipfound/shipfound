@@ -1,12 +1,12 @@
 # Site fixes
 
-`site_fixes` (6 credits, so state the price and wait for a yes) runs the AEO audit plus a DataForSEO on-page audit and returns fix specs:
+`site_fixes` (6 credits, so state the price and wait for a yes) runs the AEO audit plus on-page checks (titles and descriptions, internal links, share images) and returns fix specs grouped by theme:
 
 ```json
-[{ "id": "fx_12", "theme": "structured-data", "page": "https://example.com/", "issue": "No Organization or SoftwareApplication markup", "evidence": "No application/ld+json on the page", "fix": "Add Organization and SoftwareApplication JSON-LD with name, url, logo, offers" }]
+[{ "id": "structured_data:/", "theme": "structured-data", "page": "/", "issue": "No Organization or SoftwareApplication markup", "evidence": "No application/ld+json on the page", "fix": { "summary": "Add Organization and SoftwareApplication JSON-LD", "code": "<script type=\"application/ld+json\">...</script>", "language": "html" } }]
 ```
 
-Fixes already shipped are left out by the server, so never re-apply one from an older run. Input is `{ url? }`: omit it for the whole site, pass one URL to audit a single page. Call it once per command, not once per page.
+Fixes already shipped are left out by the server, so never re-apply one from an older run. Input is `{ url?, training? }`: omit `url` for the whole site, pass one URL to audit a single page; `training` is the founder's answer on training crawlers (below). Call it once per command, not once per page.
 
 ## Order
 
@@ -78,7 +78,7 @@ Before you open a PR:
 
 ## Content rules for fixes
 
-- **Robots and AI crawlers**: allow the search and user-fetch crawlers that decide whether the product gets cited (OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User, Googlebot, Bingbot). Training crawlers (GPTBot, ClaudeBot, CCBot, Bytespider, Meta-ExternalAgent) are the founder's call: state the trade-off in one line and ask.
+- **Robots and AI crawlers**: the robots fix's `code` is the whole corrected robots.txt: replace the file with it, in the framework's idiom (a static file, or the framework's robots route returning the same rules). It lets in the search and user-fetch crawlers that decide whether the product gets cited (OAI-SearchBot, ChatGPT-User, PerplexityBot, Perplexity-User, Claude-SearchBot, Claude-User, Googlebot, Bingbot), keeps the private paths the `*` group closes, and leaves every other rule as it was. Put its `note` (one line per crawler it changes) in the PR description. Training crawlers (GPTBot, ClaudeBot, Google-Extended, Applebot-Extended, meta-externalagent, CCBot, Bytespider) are the founder's call. While they have not answered, the fix carries `choices` (the whole file for `allow`, `block` and `keep`): ask as routines/fix.md step 5 says, use the file for their answer, and record the PR with `meta.training` set to it, so later checks follow it.
 - **Structured data**: only facts that are true and on the page. Never add `AggregateRating`, `Review` or review counts unless the founder has real ones on the page. Prices must match the pricing page.
 - **Titles and descriptions**: titles under 60 characters, descriptions under 160, written from what the page says. No keyword stuffing.
 - **llms.txt**: a short Markdown file: product name, one-line description, then links to the key pages (docs, pricing, comparisons) with one line each. Only real URLs.
