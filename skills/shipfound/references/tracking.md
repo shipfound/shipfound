@@ -77,9 +77,9 @@ The proxy must pass the visitor's IP in `X-Forwarded-For`; cookieless mode deriv
 | Mode | Stores in the browser | Gives | Needs |
 |---|---|---|---|
 | Cookieless (default) | Nothing | Same-day sessions, channels, landing pages, same-session conversions | Nothing |
-| Attribution | A first-party id for 13 months | Multi-day journeys, first-touch attribution, cohorts, A/B tests, identify | A consent signal where the law requires one |
+| Attribution | A first-party id for 13 months | Multi-day journeys, first-touch attribution, cohorts, identify, and a test that follows a visitor across days | A consent signal where the law requires one |
 
-- Stay cookieless unless the founder asks for journeys, multi-day attribution, cohorts or A/B tests. Then explain the trade-off in two lines and switch with `data-mode="attribution"` on the tag.
+- Stay cookieless unless the founder asks for journeys, multi-day attribution or cohorts. A/B tests do not need Attribution mode: every visit is tested, cookieless visits by the visit. Then explain the trade-off in two lines and switch with `data-mode="attribution"` on the tag.
 - Attribution mode reads the site's consent manager (TCF or Google Consent Mode). With a hand-made banner, call `sf('consent', true)` when the visitor accepts.
 - Never say "no cookie banner needed": whether one is needed depends on where the founder and their visitors are. Say that plainly if asked.
 - Never add a consent banner the founder did not ask for.
