@@ -125,6 +125,8 @@ const NOT_YET = [
 const NOT_TOOLS = new Set([
   // fields in tool results
   "credits_ask",
+  // boost_results verdict kinds
+  "lost_after_click",
   // launch_targets board ids, and the free tool's t.js event (build.md)
   "show_hn",
   "indie_hackers",
