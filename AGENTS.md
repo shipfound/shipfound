@@ -44,7 +44,7 @@ Codex has no `/shipfound:*` commands. The founder asks in words; map the request
 | "Make a video of my product" | video | The product's screens recreated in HTML from its source and animated with Remotion (the plugin's `video/` kit), in their site's logo, fonts and colors, no sound, 30 seconds at most, on their machine. The hook whole on frame 0, then outcome before how; one cut per ad in 1:1, 4:5 and 9:16 and an image of each, saved to a folder on the Desktop. Never a screen recording. Check every scene against the real screen before showing it. Free |
 | "What should we A/B test?" | test | Propose 3 changes with evidence, size the chosen one with `experiment_create`, ship the variant as a PR, read it with `experiment_results`, close it and ship what won |
 
-Not built yet, so say so and use what exists: the weekly digest, `discover` (community threads), and `index_status`.
+Not built yet, so say so and use what exists: the weekly digest and `discover` (community threads).
 
 ## Hard lines
 

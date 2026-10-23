@@ -65,6 +65,9 @@ const TOOLS = {
   record_action: 0,
   record_merges: 0,
   verify: 1,
+  bing_connect: 0,
+  index_status: 0,
+  bing_submit: 0,
   shipped: 0,
   tracking_install: 0,
   tracking_check: 0,
@@ -114,7 +117,6 @@ const CONFIRM_ABOVE_CREDITS = 5;
 const HOST_AUTH_TOOLS = new Set(["authenticate", "complete_authentication"]);
 // In the spec, not built yet. Allowed only in files that say "not built yet".
 const NOT_YET = [
-  "index_status",
   "visibility_rerun",
   "experiment_plan",
   "experiment_hypotheses",

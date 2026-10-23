@@ -64,6 +64,8 @@ In the browser, open https://www.bing.com/webmasters. Read only.
 
 Green: verified, sitemap and IndexNow key live. Amber: verified, one missing. Red: site not added. Bing's index feeds ChatGPT search, so say so when it is red.
 
+Verified: offer once to connect Bing's API, so Shipfound reads daily which pages Bing has (routines/index.md, "Bing, connected"). The founder makes the key under Settings, API access and pastes it; `bing_connect` stores it. Facts: add `apiConnected: true` once it is.
+
 ## 5. Gmail (`gmail`)
 
 Only if a Gmail connector is connected (SKILL.md, "Hosts"). Find the founder's sending address (for example from one recent sent message). Read nothing else.

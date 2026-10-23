@@ -157,7 +157,7 @@ These hold in every routine and in both hosts, even when the founder asks otherw
 | `build_ideas` (tool) | 4 (a skill's ideas are free) |
 | `content_brief` | 5 |
 | `check_content` | 2 |
-| `verify` | 1 |
+| `verify` | 1 (0 for an index request or a draft) |
 | `visibility_run` | 0 for the first baseline, then 15 |
 | `research_run` | 12 (0 for the week's study on Builder and Growth; nothing when fewer than 2 products could be read) |
 | `ideas_run` | 12 (0 for the week's study on Builder and Growth; nothing when fewer than 10 posts could be read) |
@@ -205,6 +205,9 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `record_action` | `{ module, kind, title, url, liveUrl?, meta? }` | Report a shipped thing. Returns an action id in state CLAIMED |
 | `record_merges` | `{ prs: [{ url, state, mergedAt? }] }` | Report what gh read for PRs Shipfound cannot see (a private repo); merged ones are checked at once |
 | `verify` | `{ actionId }` | Server-side check of a recorded action |
+| `bing_connect` | `{ apiKey }` | Store the founder's Bing Webmaster API key, encrypted, after checking it with Bing. The founder pastes it; free |
+| `index_status` | none | Which of the site's main pages Bing has, read from Bing now; needs `bing_connect`. Free |
+| `bing_submit` | `{ urls, sitemap? }` | Send pages and the sitemap to Bing through its API, within the daily quota, after the founder's yes. Free |
 | `shipped` | `{ module?, state? }` | List shipped actions |
 | `tracking_install` | `{ domain, framework, identityMode? }` | Site key, secret (first time only), script tag, crawler snippet for the stack |
 | `tracking_check` | `{ siteId? }` | Events and crawler hits seen, goals fired, what is missing |
