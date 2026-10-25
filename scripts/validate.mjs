@@ -101,6 +101,7 @@ const TOOLS = {
   reach_find: 8,
   reach_drafts: 0,
   reach_mark: 0,
+  reddit_notices: 0,
   notes_context: 0,
   notes_voice: 0,
   notes_save: 0,
