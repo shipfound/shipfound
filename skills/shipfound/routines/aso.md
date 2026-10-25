@@ -5,7 +5,8 @@ The founder's iOS app on the App Store:
 - turn the reviews into a to-do list;
 - write the app's own site on shipfound.site;
 - with App Store Connect connected, stage fixes in the next version and set up screenshot A/B tests and custom product pages as drafts;
-- with Apple Ads connected, propose changes the founder approves.
+- with Apple Ads connected, propose changes the founder approves;
+- find where people stop between the download and a trial, and ship one change to that step.
 
 Verify every change once it is live.
 
@@ -14,7 +15,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `reviews`, `site`, `connect`, `test`, `cpp` or `ads`.
+- One word picks the part: `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -23,7 +24,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15.
+3. Go to the part the input names: `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -95,9 +96,27 @@ Input, optional:
     5. Add your own keyword ideas with `ads_propose`, each with why.
     6. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
 
+### From download to trial
+
+16. Downloads only pay once someone starts a trial or a subscription. This part finds where a new user stops before that, in the app's own code, and ships one change to that step.
+    1. Call `app_downloads`. If `trials` is not ready (no vendor number saved), walk the founder through step 12's vendor number and stop. Otherwise say the numbers in one line: first-time downloads and starts over the days both reports cover (`startRateOver`).
+    2. This needs the app's code: the repo confirmed for this app (SKILL.md, "The repo"). Without it, say so and stop.
+    3. Walk the first session in the code as a new user meets it, from the first launch: onboarding, any sign-in or setup, the first screens, and every place the subscription offer can appear (a paywall, a lock on content, a settings screen). For each, the condition that must be true before it shows. Follow the code; never guess. Write the path as numbered lines, one per screen, each with its file and line. If the app builds and runs in the simulator, check the path there too.
+    4. Read `app_reviews` for what people say about their first minutes.
+    5. Name where the offer is lost, with file and line: an offer most new users never reach (only after a lock they may never hit, behind a step they skip), a plan shown without its trial, a trial whose length or price is never said, a paywall with no way back to the app, a gate the person who pays never sees. Apple reports no screens, so never put a number on a screen.
+    6. Pick one change for this app, by the case: the one that puts the trial in front of the person who decides, sooner or more clearly. Say it in one line with why, and wait for the founder's yes.
+       - A Kids category app: the offer is for the parent, behind a parental gate; no purchase screen the child can act on, and no third-party analytics or ads SDK (Apple's Kids rules).
+    7. Ship it as a split against today's flow, never as a straight swap:
+       - Through the app's subscription service when it runs experiments (RevenueCat Experiments, Superwall, Adapty placements): the new flow is the treatment there.
+       - Otherwise, a split the app makes at first launch, kept on the device, with each half reported where starts can be told apart: a subscriber attribute in the subscription service, or a separate introductory offer per half so Apple's report counts them apart.
+       - With neither possible, say so: the change goes to everyone and is read before and after.
+       Branch `shipfound/aso-trial-<theme>`, open the PR with the walk (step 3), the change and how it is split.
+    8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split }`. Grow holds the next change to this step while this one is read.
+    9. The founder merges, builds and submits the release; only they do. Once Apple releases it, `app_downloads` reads the starts against the downloads again after two weeks.
+
 ### Close
 
-16. Summarise:
+17. Summarise:
     - findings fixed and left;
     - what was staged or opened as a PR (claimed);
     - what the founder submits, publishes, starts or approves;
