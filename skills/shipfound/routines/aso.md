@@ -64,6 +64,7 @@ Input, optional:
     - Walk them through it: App Store Connect, Users and Access, Integrations, App Store Connect API, Team Keys. Make a key with the App Manager role (Admin also gives downloads by source), download the .p8, and paste it with the issuer id and key id.
     - Never ask for the key in chat.
     - Once connected, `app_metadata` reads everything and `app_downloads` gives downloads by source.
+    - For trial and subscription starts, the founder also pastes the account's vendor number on the same page (App Store Connect shows it on Payments and Financial Reports). Then `app_downloads` says how many people started a free trial or a subscription after the download, and how many became paid, whatever the app uses for subscriptions.
 
 ### A screenshot A/B test (Growth)
 
@@ -87,11 +88,12 @@ Input, optional:
 ### Apple Ads (Growth)
 
 15. Connecting is the founder's, on the App Store page of the results app. It is two steps: they paste the public key Shipfound shows into Apple Ads, then type back three ids.
-    1. Ask the founder for their target cost per install if they have one.
+    1. Ask the founder for their target cost per trial (or per subscription, when the app has no trial) if they have one, and pass it as `targetCostPerStart`; a target cost per install goes in `targetCpi`.
     2. Call `ads_review`.
-    3. Say what it found and each new proposal in one line: the change, the numbers behind it, and what it can add to daily spend.
-    4. Add your own keyword ideas with `ads_propose`, each with why.
-    5. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
+    3. If `afterInstall.hold` is true, say that first: not one trial or subscription started after the installs the ads bought, so no bid goes up and no budget grows, and buying more installs will not fix it. Otherwise give the share of downloads that start one and the estimated cost per start, and say it is an estimate: Apple does not tie a trial to an ad.
+    4. Say each new proposal in one line: the change, the numbers behind it, and what it can add to daily spend.
+    5. Add your own keyword ideas with `ads_propose`, each with why.
+    6. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
 
 ### Close
 

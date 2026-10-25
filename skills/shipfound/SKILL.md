@@ -237,8 +237,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_cpp_create` | `{ appId?, name, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | Make a custom product page as a draft with its keywords and screenshots (Growth); the founder submits it |
 | `app_experiment_list` | `{ appId? }` | The app's App Store A/B tests |
 | `app_experiment_create` | `{ appId?, name, trafficProportion?, locale?, treatments }` | Set up an App Store A/B test with new screenshots as a draft (Growth); the founder starts it |
-| `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect |
-| `ads_review` | `{ days?, targetCpi? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval |
+| `app_downloads` | `{ appId?, days? }` | First-time downloads and redownloads by source and by campaign, from App Store Connect; with the vendor number saved, also free trials, paid offers and subscriptions started and trials that became paid, with the share of downloads that start one |
+| `ads_review` | `{ days?, targetCpi?, targetCostPerStart? }` | Read Apple Ads and propose changes with their numbers (Growth); each waits for the founder's approval. With the vendor number saved, the estimated cost per trial, and no raise at all while not one trial or subscription started |
 | `ads_propose` | `{ items }` | Propose new exact keywords or negatives for the founder to approve (Growth) |
 | `ads_setup` | `{ platform?, record? }` | Where the ad platform (x, meta or reddit) stands, in order: ad account (on Meta: business portfolio, Page, ad account), tracking (the platform's pixel, loaded on the site by Shipfound's script: nothing to deploy), launch. What the campaign can optimise for and the recommended step (landing page view, signup, payment) for them to confirm. With `record`, stores what you read in their browser first. Before every boost plan |
 | `boost_candidates` | `{ handle? }` | The founder's recent X posts ranked for a boost, minus any boosted before, only when they ask which to boost |
