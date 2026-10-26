@@ -2,7 +2,7 @@
   "mcpServers": {
     "shipfound": {
       "type": "http",
-      "url": "${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin?v=0.3.86&host=claude",
+      "url": "${SHIPFOUND_API_URL:-https://api.shipfound.co}/mcp/plugin?v=0.3.88&host=claude",
       "headersHelper": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/device.sh\" header"
     }
   }

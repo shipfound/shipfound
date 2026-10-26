@@ -10,7 +10,7 @@ It starts from the site's funnels: the paths most visitors take toward signing u
 
 Follow [../references/page-copy.md](../references/page-copy.md), [../references/pr-conventions.md](../references/pr-conventions.md) and [../references/verification.md](../references/verification.md).
 
-Input: an optional page visitors arrive on (default the home page), or `play:<id>`: a play the founder picked in grow for one step of the funnel (its key was `PLAY:<id>`).
+Input: an optional page visitors arrive on (default the home page), `pages` (the pages that bring visitors, steps 11 to 15 only), or `play:<id>`: a play the founder picked in grow for one step of the funnel (its key was `PLAY:<id>`).
 
 **A play picked in grow** (`play:<id>`): the founder already chose what to do, so this run carries out that play, on the page its step is about (the signup page for a signup-page play, the pricing page for a pricing one, the first screen after signup for one right after signup, the home page for a home page one). Steps 1 and 2 as usual, with that page; the play is among `plays` when it is still open (shipped or skipped: say so in one line and stop). Say the step's numbers and the play in two lines, then go to step 5 with only that play and the misses on the same page and step: recommend the play, and the misses on that step if any. Its PR and `record_action` (steps 8 and 9) are for that step: `meta.plays` has the play's id, and `meta.step`, `meta.funnel`, `meta.from` and `meta.to` are its step's, not the leak's, so a change being read on another step is not blurred and this one is read on its own step.
 
@@ -48,5 +48,23 @@ Input: an optional page visitors arrive on (default the home page), or `play:<id
    `record_action` with `module` FIXES, `kind` PR, `title` "Home page: <the misses fixed and plays carried out, in a few words>", `url` the PR, `liveUrl` the page visitors arrive on, `meta: { type: "convert", fixIds: [the ids shipped, exactly as funnel_check gave them], plays: [the play ids carried out], funnel: leak.funnel, step: leak.kind, from: leak.from, to: leak.to, experiment: <the key, for a test>, screensBefore, screensAfter, wordsBefore, wordsAfter }`. The plays and the step are what Shipfound reads later to learn which plays move this founder's funnel. `verify` follows the buttons on the live site again and looks for every line a copy fix changed: a fix that did not ship stays Claimed.
 9. Tell the founder how it will be judged: an A/B test read with `experiment_results` until it gives a verdict, slow on a quiet page ("not enough yet" is an answer, not a failure). Never call a winner the verdict does not.
 10. Summarise: what changed, the PR (claimed, not verified), credits spent (none). Then the hand-over (SKILL.md): offer the next move.
+
+## The pages that bring visitors
+
+Visitors from search and AI answers land on articles, answer pages and comparisons more than on the home page. With input `pages`, do only this part.
+
+11. Call `convert_pages`. It reads the pages people landed on most in 28 days (beyond the home page, pricing and signup), each with its visits and signups, and calls each:
+    - `no_way_on`: no link to signup, pricing, checkout or the app anywhere on it;
+    - `only_in_nav`: those links sit only in the header or footer, not where the reader is;
+    - `converts_less`: 50 visits or more, signing up at under half the pages' average.
+    It also counts the visible fields on the signup form.
+12. For each flagged page, the change, in the page's own words and the site's components:
+    - a call to sign up where the reader finishes: one line on what they get, one button to signup (or pricing when there is no free start);
+    - a slim bar that stays in view after the first screen, with the same button, closable, never covering the content;
+    - on a page that answers a search, the call names that answer ("Make this invoice in Acme, free").
+    Never a pop-up on arrival, never a fake countdown or number.
+13. A form over 4 fields: a version that asks only what the first session needs (often just an email, or sign in with Google or GitHub), the rest asked later in the app.
+14. Ship each as an A/B test, never a straight change: `experiment_create` on those paths (the page as it is against the version with the call and the bar; the form as it is against the short one), then the PR with the variant behind the experiment's split. Branch `shipfound/convert-pages`, one PR. Record it with `record_action` (`meta.type` "convert", `meta.pages` the paths).
+15. Tell the founder it is read with `experiment_results` until it gives a verdict; on a quiet page that is slow, and "not enough yet" is an answer.
 
 One page per run.

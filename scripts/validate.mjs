@@ -93,6 +93,7 @@ const TOOLS = {
   app_purchases: 0,
   app_purchases_stage: 0,
   app_events: 0,
+  convert_pages: 0,
   app_prices: 0,
   app_event_create: 0,
   app_nomination_create: 0,
@@ -134,6 +135,10 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // convert_pages findings
+  "no_way_on",
+  "only_in_nav",
+  "converts_less",
   // packages the aso routine names for rating prompts
   "in_app_review",
   // fields in tool results
