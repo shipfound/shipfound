@@ -82,6 +82,7 @@ const TOOLS = {
   app_audit: 0,
   app_keywords: 0,
   app_ranks: 0,
+  app_countries: 0,
   app_reviews: 0,
   listing_targets: 4,
   app_site: 0,

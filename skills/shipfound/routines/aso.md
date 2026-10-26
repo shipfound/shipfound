@@ -2,6 +2,7 @@
 
 The founder's iOS app on the App Store:
 - find the App Store searches it can win, country by country, and follow its rank for them week by week;
+- open it in another country's language, aimed at what people there search;
 - audit the listing and ship the fixes, aimed at those searches;
 - turn the reviews into a to-do list;
 - write the app's own site on shipfound.site;
@@ -16,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `keywords`, `ranks`, `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -25,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `countries` step 19, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -142,11 +143,23 @@ Input, optional:
        - A listing change with two weeks since its release and no move says the next change should aim at other searches (step 17), not repeat the words.
     4. Never put a rank on a search outside the first page, and never call a move caused by one change when several shipped together.
 
+### Another country
+
+19. Open the app in another country's language: a listing there is its own name, subtitle and keyword field, so a new set of searches to rank for.
+    1. Call `app_countries`. When App Store Connect is not connected, pass `locales` from the repo's `fastlane/metadata/` folder names. Show the options as a table: country, language, and why (first-time downloads from there without that language, open searches found there, or a large store to check first). With a country code after `countries`, go straight to that country.
+    2. The founder picks one or two.
+    3. The searches, in that language. Write 5 to 10 searches people there type, in their words; never translate the English ones word for word. Check them with `app_keywords` for that country: Apple's suggestions show what people there actually type, so prefer them.
+    4. Write the locale's name, subtitle, keyword field, promotional text and description, aimed at that check's open and gap searches, by the rules in the reference. Keep the brand name as it is.
+    5. Show the founder every field with an English translation beside it, and say the agent wrote it. If they do not read the language, a native speaker checks it before it ships. Nothing ships before their yes.
+    6. Ship it as in step 8: `app_metadata_stage` with the new locale (App Store Connect connected, Builder), or `fastlane/metadata/<locale>/` in a PR. Call `record_action` with `module` ASO and `meta` `{ appStoreId, step: "country", country, locale }`: kind PR for the PR, or STORE_LISTING with `expect.<field>.<locale>` once Apple has released it. Grow stops offering that country.
+    7. The check in sub-step 3 started that country's ranks (step 18). Read them two weeks after the release.
+    8. Screenshot captions in that language and the app's own text are separate changes, each offered on its own.
+
 ### Close
 
-19. Summarise:
+20. Summarise:
     - findings fixed and left;
-    - the searches aimed at, with their verdicts;
+    - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
     - what the founder submits, publishes, starts or approves;
     - the review themes;
