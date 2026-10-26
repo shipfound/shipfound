@@ -1,7 +1,7 @@
 # Routine: aso
 
 The founder's iOS app on the App Store:
-- find the App Store searches it can win, country by country;
+- find the App Store searches it can win, country by country, and follow its rank for them week by week;
 - audit the listing and ship the fixes, aimed at those searches;
 - turn the reviews into a to-do list;
 - write the app's own site on shipfound.site;
@@ -16,7 +16,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `keywords`, `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `keywords`, `ranks`, `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -25,7 +25,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `keywords` step 17, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -44,7 +44,7 @@ Input, optional:
    - `url` is the App Store link plus `#` and today's date;
    - `meta` holds `appStoreId` and one `expect.<field>.<locale>` per field changed. That is the keyword field and promotional text too when App Store Connect is connected; for the description, its first 300 characters.
 
-   Then `verify` (1 credit), or leave it to the free daily re-check.
+   Then `verify` (1 credit), or leave it to the free daily re-check. Two weeks after the release, read the ranks for the searches the change aimed at (step 18) before changing the same words again.
 
 ### Reviews
 
@@ -132,9 +132,19 @@ Input, optional:
     5. Another country is a new check in its own language. Research the searches again there; never translate them.
     6. Unless the founder asked only for the check, go on with the listing (step 7), aimed at these searches.
 
+### Ranks
+
+18. Where the app ranks for the searches its keyword checks track (open, gap, weak, and the ones it holds), per country. Shipfound reads them every Monday from the check onwards.
+    1. Call `app_ranks`. Pass `refresh` only when the founder wants today's ranks and the last read is a day old or more.
+    2. Show a table per country, best rank first: the search, the rank now, at the first read and the best so far. A rank past the first page (about 11 apps) shows as "not on the first page".
+    3. Say what moved and what it means:
+       - A search the app came onto the first page for is one to build on: a custom product page for it (step 14), and its words stay where they are.
+       - A listing change with two weeks since its release and no move says the next change should aim at other searches (step 17), not repeat the words.
+    4. Never put a rank on a search outside the first page, and never call a move caused by one change when several shipped together.
+
 ### Close
 
-18. Summarise:
+19. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts;
     - what was staged or opened as a PR (claimed);
