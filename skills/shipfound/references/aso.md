@@ -67,6 +67,7 @@ Each storefront reads keywords from its main locale and some others, and words a
 - Add those locales as new `fastlane/metadata/<locale>/` folders with keyword fields of new words, not repeats.
 - Put a whole phrase in one locale ("metro bus" needs both words in the same locale).
 - Translate the name, subtitle and description properly where the founder wants that language's users; never ship machine translation the founder has not seen.
+- The app's own text follows the listing into each language it opens (the aso routine, "The app's own text in another language"): the same words as that listing, the app's own names kept, read by the founder or a native speaker. The App Store lists the languages the app itself supports beside the listing.
 
 ## The description, for AI answers
 

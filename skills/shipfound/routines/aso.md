@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `purchases`, `featuring`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `purchases`, `featuring`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -214,9 +214,30 @@ Input, optional:
        - Show the founder. On their yes, `app_event_create` drafts it. The founder adds the card image (1920x1080) and page image (1080x1920) in App Store Connect and submits it, then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "event", eventId }`.
        - A Kids category app's event says nothing that sends the child out of the app or to a purchase.
 
+### The app's own text in another language
+
+24. A listing in a language (step 19) brings people who read that language into an app that may only speak English. This translates the app's own text, as a PR to the app. It needs the app's repo (SKILL.md, "The repo").
+    1. The locale is the one named, or the first opened language whose app text is not translated.
+    2. Find where the app keeps its text, by stack:
+       - iOS: a String Catalog (`Localizable.xcstrings`), or `Localizable.strings` per `.lproj`; `InfoPlist.strings` for permission prompts and the app's name on the home screen.
+       - Expo and React Native: an i18n library (`i18next`, `react-intl`, `expo-localization` with JSON files).
+       - Flutter: ARB files (`lib/l10n/app_<locale>.arb`).
+       - Android, when the app ships there: `res/values-<locale>/strings.xml`.
+    3. If the text is written into the code, not in string files, say so with how many screens it touches. Moving it into the stack's string files comes first, as its own PR, with no wording changed. Offer it, and wait for the founder's yes: it touches many files.
+    4. Translate every string into that language:
+       - Keep the app's own names (the app, its characters, features with names) as they are, unless the founder has names for that language.
+       - Keep placeholders, plurals and formatting exactly; use the stack's plural rules for that language.
+       - Keep it short where the English is short: buttons and labels have no room to grow.
+       - Use the same words as that language's listing (step 19), so the app says what the store promised.
+       - A Kids category app: words a child of the app's age reads.
+    5. Build the app and, where the simulator runs, open it in that language. Check that no text is cut off or left in English. Screens from that run are the raw screens for that language's screenshots (step 20).
+    6. Show the founder a table of the main strings with an English translation beside each. If they do not read the language, a native speaker checks it before it ships. Branch `shipfound/aso-strings-<locale>`, open the PR.
+    7. Call `record_action` with `module` ASO, kind PR, `url` the PR, `meta` `{ appStoreId, step: "app_strings", locale }`.
+    8. The founder merges, builds and submits the release; only they do. The App Store then lists that language under the app's languages.
+
 ### Close
 
-24. Summarise:
+25. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
