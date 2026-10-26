@@ -93,6 +93,10 @@ const TOOLS = {
   app_purchases: 0,
   app_purchases_stage: 0,
   app_events: 0,
+  seo_read: 0,
+  seo_crawl: 0,
+  seo_set: 0,
+  seo_programmatic_check: 0,
   app_prices: 0,
   app_event_create: 0,
   app_nomination_create: 0,
@@ -134,6 +138,10 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // the seo routine's action steps (seo_set actions[].step)
+  "new_page",
+  "aeo_pages",
+  "lost_prompts",
   // packages the aso routine names for rating prompts
   "in_app_review",
   // fields in tool results
@@ -190,7 +198,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
