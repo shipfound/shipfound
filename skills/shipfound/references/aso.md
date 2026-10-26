@@ -66,6 +66,7 @@ App Store search ignores it; ChatGPT, Perplexity and Google's AI read it on the 
 ## Screenshot captions
 
 The first three screenshots show in search results. Since mid-2025, ASO tools have seen caption text on screenshots affect App Store search ranking (Apple has not documented it).
+- The first three captions each carry one search to win (the open and gap searches from `app_keywords`), as a benefit.
 - Each caption says one benefit in the words people search with, in at most 40 characters.
 - The first caption matches the subtitle's promise.
 - The optional second line adds the proof.
@@ -73,6 +74,9 @@ The first three screenshots show in search results. Since mid-2025, ASO tools ha
 Edit captions where the repo generates screenshots (fastlane frameit `title.strings`, or the generator's config). Otherwise `app_screenshots` renders new ones: each caption over a raw screen, at the size App Store Connect takes (1290 x 2796 for iPhone).
 - Use raw screens, not screenshots that already carry captions.
 - Use the app's colours.
+- Proof: `proof: "rating"` puts the app's own App Store rating under a caption ("★★★★★ 4.8 · 1.2K ratings"), read from the listing. It is refused under 4.5 stars or 20 ratings. Never any other proof on a screenshot: no made-up awards, laurels, user counts or quotes.
+- Captions render in any script (Japanese, Korean, Chinese, Arabic, Hebrew, Thai). A language's own set is written in its words, not translated from the English captions.
+- Changes to the screenshots everyone sees are tested first (A/B tests, below). A language with no screenshots of its own gets its set directly, with `app_screenshots_apply`.
 
 ## Apple's AI tags
 
@@ -115,7 +119,8 @@ Up to 70 per app. Each has its own promotional text, screenshots and deep link, 
 - Up to 3 treatments, up to 90 days, on a share of visitors.
 - Test one idea per treatment, for example "the outcome first" against "the feature first", so the result says something.
 - Results take weeks at small traffic; Apple shows the confidence in App Store Connect. Never call a winner Apple does not.
-- When a treatment wins, the founder applies it to the default page in App Store Connect.
+- Apple's reports do not split a test's treatments: read the results in App Store Connect, Product Page Optimization, in the founder's Chrome.
+- When a treatment wins, `app_screenshots_apply` puts it in the next version, in order; the founder submits it.
 
 ## Apple Ads
 

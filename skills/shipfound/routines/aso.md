@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `countries` step 19, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -71,13 +71,18 @@ Input, optional:
 
 ### A screenshot A/B test (Growth)
 
-13. Apple tests screenshots, the icon and previews, never text.
-    1. Read the current screenshots (`app_add` lists them).
-    2. Write 1 to 3 treatments, each a new set of captions over the raw screens (see the reference).
-    3. Render them with `app_screenshots` and show the founder.
-    4. On a yes, call `app_experiment_create`. Most tests send 50% of visitors.
-    5. The founder starts it on the App Store page of the results app. Never say it is running before then.
-    6. `app_experiment_list` shows its state; the results are in App Store Connect.
+13. Apple tests screenshots, the icon and previews, never text. Every change to the screenshots everyone sees goes through a test first.
+    1. Read the current screenshots: open the images `app_add` lists and read their captions. Call `app_downloads` for `productPage` (seen, opened, Get): it says whether the page is where people stop.
+    2. Take the raw screens from the repo (simulator captures or the screenshot generator's input), never screenshots that already carry captions.
+    3. Write 1 to 3 treatments, each a new set of captions (the reference, "Screenshot captions"):
+       - the first three captions each carry one open or gap search from the latest `app_keywords` check for this storefront, as a benefit;
+       - `proof: "rating"` on the first one when the rating is strong enough (4.5 stars from 20 ratings; the tool refuses otherwise). Never another proof: no made-up awards, numbers or quotes;
+       - one idea per treatment, so the result says something.
+    4. Render them with `app_screenshots` and show the founder.
+    5. On a yes, call `app_experiment_create`. Most tests send 50% of visitors.
+    6. The founder starts it on the App Store page of the results app. Never say it is running before then.
+    7. The results. Apple's reports do not split a test's treatments, so read them in App Store Connect (the app, Product Page Optimization) in the founder's Chrome: each treatment's conversion and Apple's confidence. Never call a winner Apple does not.
+    8. A winner goes to everyone with `app_screenshots_apply` (`why` test_winner, the test's locale and size, the winning set in order) into the next version. Then `record_action` with `module` ASO, kind STORE_LISTING once released, `meta` `{ appStoreId, step: "screenshots", locale }`.
 
 ### A custom product page (Growth)
 
@@ -155,9 +160,19 @@ Input, optional:
     7. The check in sub-step 3 started that country's ranks (step 18). Read them two weeks after the release.
     8. Screenshot captions in that language and the app's own text are separate changes, each offered on its own.
 
+### A language's own screenshots
+
+20. A language opened in step 19 shows the English screenshots until it has its own. This gives it its own, in its words and script.
+    1. The locale is the one named, or the first opened language without screenshots of its own.
+    2. The captions: the open and gap searches from that country's `app_keywords` check, as benefits in that language. The same raw screens as the main set, unless the app's screens are localized too.
+    3. Render them with `app_screenshots`; any script renders (Japanese, Korean, Arabic...). Show the founder every caption with its English translation; a native speaker checks it when they do not read the language.
+    4. On their yes, `app_screenshots_apply` with `why` new_language puts them in the next version for that locale (Builder). The language's text must be staged first (step 19).
+    5. Once Apple releases it, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "screenshots", locale }`.
+    6. A later change to these screenshots is tested like any other (step 13).
+
 ### Close
 
-20. Summarise:
+21. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
