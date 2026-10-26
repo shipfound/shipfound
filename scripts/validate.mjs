@@ -93,6 +93,7 @@ const TOOLS = {
   app_purchases: 0,
   app_purchases_stage: 0,
   app_events: 0,
+  app_prices: 0,
   app_event_create: 0,
   app_nomination_create: 0,
   app_cpp_list: 0,

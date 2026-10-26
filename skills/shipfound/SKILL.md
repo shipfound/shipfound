@@ -240,6 +240,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_purchases` | `{ appId? }` | Every in-app purchase and subscription with its names per language, and what to change: names made only of plan words, names missing the searches the app aims at, languages without a name |
 | `app_purchases_stage` | `{ appId?, changes }` | Writes purchase names (2 to 30) and descriptions (up to 45) per language (Builder); Apple reviews them with the next version |
 | `app_events` | `{ appId? }` | The app's in-app events: name, badge, state, dates |
+| `app_prices` | `{ appId? }` | Lower subscription prices per country from purchasing power, as proposals the founder approves in the results app (Growth) |
 | `app_event_create` | `{ appId?, referenceName, badge, purpose, primaryLocale, publishStart, eventStart, eventEnd, localizations, ... }` | An in-app event as a draft with its text per language (Growth); the founder adds its images and submits it |
 | `app_nomination_create` | `{ appId?, name, type, description, publishStartDate, ... }` | A featuring nomination as a draft, never submitted (Growth); the founder submits it |
 | `app_cpp_list` | `{ appId? }` | The app's custom product pages with their ppid |

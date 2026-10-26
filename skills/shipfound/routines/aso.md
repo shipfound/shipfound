@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `purchases`, `featuring`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `purchases`, `featuring`, `prices`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `prices` step 25, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -235,9 +235,21 @@ Input, optional:
     7. Call `record_action` with `module` ASO, kind PR, `url` the PR, `meta` `{ appStoreId, step: "app_strings", locale }`.
     8. The founder merges, builds and submits the release; only they do. The App Store then lists that language under the app's languages.
 
+### Prices by country (Growth)
+
+25. At Apple's exchange-rate prices, the same subscription weighs about twice as much in Brazil as in the US. This proposes a lower price per country; the founder approves each.
+    1. First `app_downloads`: with no trial or subscription started anywhere, the step after the download comes first (step 16), not prices.
+    2. Call `app_prices`. It proposes for each subscription, in the countries first-time downloads come from and those whose listing opened:
+       - today's price times the World Bank's price level there (local prices against US prices for the same things);
+       - never below 40% of today's price, only decreases, snapped to Apple's price points;
+       - never where the price is already under the US price at the exchange rate.
+    3. Show a table: country, subscription, today's price, the proposal, the price level, the downloads from there. Say plainly: a lower price means less per subscriber there, worth it only if more people pay.
+    4. The founder approves or rejects each on the App Store page of the results app (Prices by country). Never say a price changed before they approve it. An approved price is recorded as shipped work and `verify` reads it back from App Store Connect.
+    5. Apple has no price A/B test, so each change is read per country before and after: two to four weeks later, `app_downloads` for that country's first-time downloads and the starts, against the weeks before.
+
 ### Close
 
-25. Summarise:
+26. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);

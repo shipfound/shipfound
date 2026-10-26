@@ -60,6 +60,13 @@ Each in-app purchase and subscription has a display name (2 to 30 characters) an
 - **Nominations:** Apple's editors choose what to feature partly from nominations (App Store Connect, Featuring). Send one weeks before a launch, an update or new content, with the release date. Say what is new and why it matters, plainly.
 - **In-app events:** a card in search results and on the product page, for something time-bound in the app. Name 30 characters, short description 50, long description 120. It runs at most 31 days and shows from up to 14 days before. It needs a card image (1920x1080) and a page image (1080x1920). Events can be found in search by their own words, so write the name in the words people search.
 
+## Prices by country
+
+- Apple sets each country's price from its price points, at exchange rates; it does not adjust for what people earn.
+- `app_prices` proposes lower subscription prices from the World Bank's price level (the PPP conversion factor over the exchange rate): only decreases, at least 40% of today's price, only where people already come from or a listing opened, never where the price is already localized.
+- The founder approves each in the results app; the agent never sets a price.
+- Read each change before and after in that country: downloads and starts. A cut that brings no more paying people is reversed the same way.
+
 ## Locales a storefront reads
 
 Each storefront reads keywords from its main locale and some others, and words are not combined across locales. The US store reads English (US) plus Spanish (Mexico), Russian, Chinese (Simplified and Traditional), Arabic, French, Portuguese (Brazil), Vietnamese and Korean. The UK reads English (Australia), Canada reads French (Canada), Germany, France, Mexico and Brazil read English (UK), Japan reads English (US). `app_audit` names the locales for the storefront it checks.
