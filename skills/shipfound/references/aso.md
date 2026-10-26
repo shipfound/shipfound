@@ -46,6 +46,15 @@ Each search gets a verdict:
 - Fill all 100 characters.
 - Never a competitor's name or another trademark: App Review rejects it, and it is the founder's name on the listing.
 
+## In-app purchase names
+
+Each in-app purchase and subscription has a display name (2 to 30 characters) and a description (up to 45) per language. They show on the product page, and ASO tools see App Store search read the names (Apple has not documented it).
+
+- Name a purchase for what it gives, then the plan: "Robot Coding Games: Full Year", not "Premium Yearly".
+- Use the words of a search the app aims at when they fit; never another app's name.
+- The person must still know what they buy and for how long.
+- Give every language the listing has its own names.
+
 ## Locales a storefront reads
 
 Each storefront reads keywords from its main locale and some others, and words are not combined across locales. The US store reads English (US) plus Spanish (Mexico), Russian, Chinese (Simplified and Traditional), Arabic, French, Portuguese (Brazil), Vietnamese and Korean. The UK reads English (Australia), Canada reads French (Canada), Germany, France, Mexico and Brazil read English (UK), Japan reads English (US). `app_audit` names the locales for the storefront it checks.

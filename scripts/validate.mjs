@@ -90,6 +90,8 @@ const TOOLS = {
   app_metadata_stage: 0,
   app_screenshots: 0,
   app_screenshots_apply: 0,
+  app_purchases: 0,
+  app_purchases_stage: 0,
   app_cpp_list: 0,
   app_cpp_create: 0,
   app_experiment_list: 0,

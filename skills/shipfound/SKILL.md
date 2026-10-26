@@ -237,6 +237,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_metadata_stage` | `{ appId?, changes }` | Write listing changes into the version the founder will submit (Builder); never the live listing |
 | `app_screenshots` | `{ appId?, screenshots, size? }` | New screenshots: a caption over each raw screen, at App Store size, in any script; `proof: "rating"` adds the app's own rating when it is 4.5 stars from 20 ratings or more; links to show or download |
 | `app_screenshots_apply` | `{ appId?, locale, screenshots, size?, why }` | Puts a set, in order, into the version being prepared for one language (Builder): an A/B test's winner, or a new language's own set |
+| `app_purchases` | `{ appId? }` | Every in-app purchase and subscription with its names per language, and what to change: names made only of plan words, names missing the searches the app aims at, languages without a name |
+| `app_purchases_stage` | `{ appId?, changes }` | Writes purchase names (2 to 30) and descriptions (up to 45) per language (Builder); Apple reviews them with the next version |
 | `app_cpp_list` | `{ appId? }` | The app's custom product pages with their ppid |
 | `app_cpp_create` | `{ appId?, name, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | Make a custom product page as a draft with its keywords and screenshots (Growth); the founder submits it |
 | `app_experiment_list` | `{ appId? }` | The app's App Store A/B tests |

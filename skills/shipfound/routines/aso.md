@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `purchases`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `purchases` step 22, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -189,9 +189,18 @@ Input, optional:
     8. Call `record_action` with `module` ASO, kind PR, `url` the PR, and `meta` `{ appStoreId, step: "rating_prompt", ratingsAt: <rating count now>, moment }`. Grow holds the move while the ratings are read.
     9. The founder merges, builds and submits the release; only they do. Two weeks after Apple releases it, compare the rating count with `ratingsAt`.
 
+### In-app purchase names
+
+22. Each in-app purchase and subscription has a display name per language. It shows on the product page, and ASO tools see App Store search read it. "Premium" or "Pro Yearly" says nothing people search for. Needs App Store Connect connected.
+    1. Call `app_purchases`. Show each purchase with its names per language and the findings, plan-word names first.
+    2. Write new names: what the purchase gives, in the words people search (the latest `app_keywords` check), then the plan: "Robot Coding Games: Full Year". At most 30 characters, description at most 45. Never another app's name. Keep the price and period clear: a person must still know what they buy.
+    3. For a language the listing has and a purchase does not, write its name and description in that language (step 19's rules: written, not translated word for word, shown with an English translation).
+    4. Show the founder every name before and after. On their yes, `app_purchases_stage` (Builder).
+    5. Apple reviews them with the next version the founder submits. Once released, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "purchases" }`.
+
 ### Close
 
-22. Summarise:
+23. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
