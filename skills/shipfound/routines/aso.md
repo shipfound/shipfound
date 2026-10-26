@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -49,7 +49,7 @@ Input, optional:
 
 ### Reviews
 
-10. Call `app_reviews`. Group the 1 and 2 star reviews into themes, the most costly first (how many, how recent, which version). For each theme, give what to fix in the app, plus one reply to a representative review for the founder to post in App Store Connect. If the app never asks for ratings, offer a PR that asks at a good moment (see the reference).
+10. Call `app_reviews`. Group the 1 and 2 star reviews into themes, the most costly first (how many, how recent, which version). For each theme, give what to fix in the app, plus one reply to a representative review for the founder to post in App Store Connect. If the app never asks for ratings, offer the rating prompt (step 21).
 
 ### The app's own site
 
@@ -170,9 +170,28 @@ Input, optional:
     5. Once Apple releases it, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "screenshots", locale }`.
     6. A later change to these screenshots is tested like any other (step 13).
 
+### Asking for a rating
+
+21. A rating shows beside the app in every search result, and from 4.5 stars and 20 ratings it can go on the screenshots. This adds Apple's rating prompt right after the app's first win, as a PR to the app. It needs the app's repo (SKILL.md, "The repo"); without it, say so and stop.
+    1. Read the rating now (`app_add` or `app_audit`) and say it in one line. Under 4 stars, the low reviews come first (step 10): a prompt then asks unhappy people.
+    2. Find what the app does today: search the code for `requestReview`, `SKStoreReviewController`, `AppStore.requestReview`, `StoreReview`, `InAppReview`, `in_app_review`. If it already asks, say where and when, and stop unless the moment is wrong (first launch, onboarding, after an error).
+    3. Find the first win in the code: the first time the app's core job succeeds for the person (a lesson finished, a task done, a first result shown, a streak kept). Name it with file and line. Never during onboarding, on first launch, right after an error, or on the paywall: Apple rejects prompts in onboarding.
+    4. Add the prompt right after that moment, with the stack's own API:
+       - SwiftUI: `@Environment(\.requestReview)`, then `requestReview()`.
+       - UIKit: `AppStore.requestReview(in: windowScene)` (iOS 16+), else `SKStoreReviewController.requestReview(in:)`.
+       - Expo: `expo-store-review` (`StoreReview.isAvailableAsync()`, then `StoreReview.requestReview()`).
+       - React Native: `react-native-in-app-review`. Flutter: `in_app_review`. Capacitor: `@capacitor-community/in-app-review`.
+       - The same call asks on Google Play when the app ships there too.
+       Keep a flag on the device so it asks at most once per app version; Apple shows it at most three times a year anyway.
+    5. A Kids category app asks only in the parent area, after the parental gate (after the parent sees the child's progress), never where the child plays.
+    6. Never ask only happy users, never offer anything for a rating, never put a custom "rate us" screen before Apple's prompt.
+    7. Ratings cannot be told apart by who saw the prompt, so this is read before and after: say so in the PR. Branch `shipfound/aso-rating-prompt`, open the PR with the moment (file and line) and why.
+    8. Call `record_action` with `module` ASO, kind PR, `url` the PR, and `meta` `{ appStoreId, step: "rating_prompt", ratingsAt: <rating count now>, moment }`. Grow holds the move while the ratings are read.
+    9. The founder merges, builds and submits the release; only they do. Two weeks after Apple releases it, compare the rating count with `ratingsAt`.
+
 ### Close
 
-21. Summarise:
+22. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);

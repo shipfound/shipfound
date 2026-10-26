@@ -128,6 +128,8 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // packages the aso routine names for rating prompts
+  "in_app_review",
   // fields in tool results
   "credits_ask",
   // boost_results verdict kinds

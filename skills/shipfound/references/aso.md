@@ -140,7 +140,7 @@ Say each proposal in one line with its numbers and what it can add to daily spen
 
 - `app_reviews` gives the latest reviews from Apple's public feed. Group the 1 and 2 star ones into themes and rank by how many, how recent and which version.
 - Replies: draft one per theme for the founder to post in App Store Connect. Thank, say what changed or when it will, never argue.
-- Asking for ratings: a PR that calls `requestReview` (StoreKit) after a success moment (a streak kept, a task done), never after an error or on first launch. Apple shows it at most three times a year.
+- Asking for ratings: a PR that calls the stack's rating prompt (StoreKit `requestReview`, `expo-store-review`, `in_app_review`...) right after the app's first win (a lesson finished, a task done, a streak kept), never in onboarding, on first launch, after an error or on the paywall. Apple shows it at most three times a year and rejects prompts in onboarding. Kids category apps ask only in the parent area, behind the parental gate.
 - Never write reviews, offer anything for a review, or ask only happy users to review.
 
 ## Verifying
