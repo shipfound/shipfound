@@ -4,6 +4,8 @@ A short video of the product for a boost: its screens recreated in HTML and anim
 
 Input: `redo`, `ads`, `post`, or nothing. A boost (routines/boost.md) starts this routine when it has no video, and with `ads` once its ads are written, to make a cut for each. Grow offers it with `post`: the video, then a post on X with it, so it reaches the founder's own followers (step 11).
 
+An App Store app preview is not this video: Apple requires a preview to be captured from the app itself. That is the aso routine's `preview` part, from simulator recordings.
+
 ## What it is
 
 - **Recreated, then animated.** Each scene is one screen of the product rebuilt in HTML and CSS from its own source: the same layout, labels, copy and states. Then it moves the way the product does: what the user does (typing, a click) and what the product does in answer (results coming in, a number counting up), with the camera moving in on the part that matters. Built with Remotion from the kit in the plugin's [video/](../../../video/) folder.

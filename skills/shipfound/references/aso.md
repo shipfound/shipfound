@@ -60,6 +60,13 @@ Each in-app purchase and subscription has a display name (2 to 30 characters) an
 - **Nominations:** Apple's editors choose what to feature partly from nominations (App Store Connect, Featuring). Send one weeks before a launch, an update or new content, with the release date. Say what is new and why it matters, plainly.
 - **In-app events:** a card in search results and on the product page, for something time-bound in the app. Name 30 characters, short description 50, long description 120. It runs at most 31 days and shows from up to 14 days before. It needs a card image (1920x1080) and a page image (1080x1920). Events can be found in search by their own words, so write the name in the words people search.
 
+## App preview video
+
+- Up to 3 per language, autoplaying muted at the top of the product page, before the screenshots.
+- Captured from the app itself (Apple rejects recreated or AI footage). 15 to 30 seconds, 886x1920 for iPhone (1200x1600 iPad), 30 fps.
+- Captions carry it, because it plays muted: what the viewer gets, in the words of the searches the app aims at.
+- A change everyone sees: tested in a product page test first.
+
 ## Prices by country
 
 - Apple sets each country's price from its price points, at exchange rates; it does not adjust for what people earn.

@@ -3,6 +3,7 @@ import { AbsoluteFill, Composition, Freeze, OffthreadVideo, staticFile } from "r
 import { CUTS, Clip, DURATION, durationOf } from "./Clip";
 import { FPS } from "./kit";
 import { Static } from "./Static";
+import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
 // Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
@@ -109,6 +110,20 @@ export const Root: React.FC = () => (
       defaultProps={{ cut: "1" }}
       calculateMetadata={({ props }) => ({ height: Math.ceil(sheetFrames(props.cut).length / SHEET_COLS) * SHEET_CELL })}
     />
+    {/* The App Store app preview, from the simulator's recordings: --props=public/preview.json (preview.mjs). */}
+    {(Object.keys(PREVIEW_SIZES) as (keyof typeof PREVIEW_SIZES)[]).map((size) => (
+      <Composition
+        key={`Preview-${size}`}
+        id={`Preview-${size}`}
+        component={Preview}
+        fps={FPS}
+        width={PREVIEW_SIZES[size].w}
+        height={PREVIEW_SIZES[size].h}
+        durationInFrames={FPS * 15}
+        defaultProps={{ clips: [] } as PreviewSpec}
+        calculateMetadata={({ props }) => ({ durationInFrames: Math.max(1, previewFrames(props)) })}
+      />
+    ))}
     <Composition id="Thumbs" component={Thumbs} durationInFrames={1} fps={FPS} width={16 + FORMATS.length * (THUMB_W + 16)} height={Math.round(THUMBS_H)} />
     <Composition
       id="Frames"

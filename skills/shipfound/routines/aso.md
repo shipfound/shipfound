@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `purchases`, `featuring`, `prices`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `purchases`, `featuring`, `prices`, `preview`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `prices` step 25, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `prices` step 25, `preview` step 26, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -247,9 +247,21 @@ Input, optional:
     4. The founder approves or rejects each on the App Store page of the results app (Prices by country). Never say a price changed before they approve it. An approved price is recorded as shipped work and `verify` reads it back from App Store Connect.
     5. Apple has no price A/B test, so each change is read per country before and after: two to four weeks later, `app_downloads` for that country's first-time downloads and the starts, against the weeks before.
 
+### An app preview video
+
+26. A preview autoplays muted at the top of the product page, before any screenshot. Apple requires it to be captured from the app itself: never the boost video (routines/video.md), whose screens are recreated, and never AI footage. It needs the app's repo and a Mac with Xcode.
+    1. Pick the moment: the first win (step 21) and the one or two things the open searches promise. 15 to 30 seconds in all; the first 3 seconds carry it.
+    2. Set up the kit as the video routine does (step 2 there), in `.shipfound/video/`.
+    3. Boot the largest iPhone simulator (6.9 inch) with the app, clean the status bar (`xcrun simctl status_bar booted override --time 9:41 --batteryLevel 100 --cellularBars 4 --wifiBars 3`), and record: `xcrun simctl io booted recordVideo --codec=h264 .shipfound/video/public/rec1.mp4`. The founder taps through the moment while it records; stop it with Ctrl-C. One recording per part is fine.
+    4. Write `public/preview.json`: `product`, and the clips, each a recording with `from` and `to` in seconds and a caption: what the viewer gets, in the words of the searches the app aims at, 7 words or fewer, in the listing's language.
+    5. `npm run preview` (add `-- --ipad` when the app runs on iPad). It checks Apple's 15 to 30 seconds and renders 886x1920 at 30 fps with a silent audio track into `~/Desktop/<product>-preview-<date>/`.
+    6. Show the founder the file. It is a change everyone sees, so it is tested first: the founder adds it to a treatment of a product page test in App Store Connect (step 13), or makes one there with the current screenshots plus the preview. Once Apple calls a winner, it goes into the next version.
+    7. `record_action` with `module` ASO, kind STORE_LISTING once it is live, `meta` `{ appStoreId, step: "preview" }`.
+    8. A Kids category app's preview shows no purchase screen and nothing that sends the child out of the app.
+
 ### Close
 
-26. Summarise:
+27. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
