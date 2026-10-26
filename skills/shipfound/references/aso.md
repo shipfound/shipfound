@@ -12,6 +12,32 @@ What the `app_audit` findings mean and how to write the fixes. `app_audit` check
 | Promotional text | 170 | No | Changes without App Review: the place to test wording |
 | Description | 4,000 | No | Read by AI engines on the public page (below) |
 
+## Which searches to target
+
+Apple publishes no search volumes. `app_keywords` reads App Store search in one country as the App Store shows it:
+- where the app ranks on the first page;
+- whether Apple suggests the search as people type it (a suggested search is one people make; first suggested is the most searched of those);
+- how many of the top 10 put the search's words in their name or subtitle;
+- how many ratings the top 5 have.
+
+Each search gets a verdict:
+
+| Verdict | Means | What to do |
+|---|---|---|
+| open | Few of the top 10 name it, and the top apps are small | Aim here first |
+| gap | Few name it, but the top apps are big | Next: naming it still beats apps that do not |
+| weak | Many name it, but the top apps are small | Worth a place in the keyword field |
+| yours | The app is in the top 10 already | Keep its words where they are |
+| crowded | Many name it, big apps hold it | Leave it, unless it is the app's whole category |
+| thin | Under 5 apps answer it | Few people search it |
+| brand | One app's name | Never target it |
+
+- Put the main open search whole in the name or subtitle. Apple weighs those most.
+- Spread the next searches' words through the keyword field. Apple combines the words, so `robot` in the subtitle plus `game` in the keyword field matches "robot game".
+- The same search is popular in one country and not another. Check each storefront the app sells in on its own.
+- Never translate keywords. Research them again in the language people search with: Germans search "Pflanzen bestimmen", not "Pflanzen Identifikator".
+- Smaller storefronts often have the same searches with smaller apps on top. Check them when the app speaks that language, or will.
+
 ## The keyword field
 
 - Commas only, no spaces: `adhd,planner,routine`. Every space is a wasted character.

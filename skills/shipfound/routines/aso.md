@@ -1,7 +1,8 @@
 # Routine: aso
 
 The founder's iOS app on the App Store:
-- audit the listing and ship the fixes;
+- find the App Store searches it can win, country by country;
+- audit the listing and ship the fixes, aimed at those searches;
 - turn the reviews into a to-do list;
 - write the app's own site on shipfound.site;
 - with App Store Connect connected, stage fixes in the next version and set up screenshot A/B tests and custom product pages as drafts;
@@ -15,7 +16,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `keywords`, `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -24,7 +25,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `keywords` step 17, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -34,7 +35,7 @@ Input, optional:
    - With neither, say so: the audit checks the public listing only. Offer `connect`.
 5. Call `app_audit`. Show the findings, high first, one line each.
 6. On Free, stop here. The audit and the review to-do list are free; the fixes are on Builder and Growth. Say so in one line with the results app link from `workspace`, and offer the review to-do list.
-7. Write the fixes by the rules in the reference: limits first, then the keyword field, the subtitle, the description for AI answers, screenshot captions, and the locales the storefront also indexes. Never put a competitor's name or a trademark in any field. Call `app_audit` again with the new text and fix until no high finding is left.
+7. Aim the fixes at the searches the app can win: the latest `app_keywords` check for this storefront. When there is none from the last 30 days, run step 17 first. Then write the fixes by the rules in the reference: limits first, then the keyword field, the subtitle, the description for AI answers, screenshot captions, and the locales the storefront also indexes. Never put a competitor's name or a trademark in any field. Call `app_audit` again with the new text and fix until no high finding is left.
 8. Ship them one of two ways:
    - **App Store Connect connected.** Show the founder every field changed (before, after, characters), then call `app_metadata_stage`. It writes into the version they will submit and never touches what is live. If it answers that no version is open, the founder creates the next version in App Store Connect first.
    - **Through the repo.** Branch `shipfound/aso-<theme>` and open the PR with that table. Call `record_action` with `module` ASO, `kind` PR, `meta: { appStoreId }`.
@@ -114,10 +115,28 @@ Input, optional:
     8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split }`. Grow holds the next change to this step while this one is read.
     9. The founder merges, builds and submits the release; only they do. Once Apple releases it, `app_downloads` reads the starts against the downloads again after two weeks.
 
+### The searches to target
+
+17. Which App Store searches the app can win, in one country: the app's storefront, unless the founder names another.
+    1. Pick 5 to 10 searches people would type, in that country's language:
+       - what the app does, in plain words ("robot game", "coding for kids"), from the listing and the repo;
+       - the reviews' own words (`app_reviews`);
+       - with Apple Ads connected, the search terms that brought installs (`ads_review`).
+       Never another app's name.
+    2. Call `app_keywords` with them. Apple's longer suggestions for each are added, up to 20 in all.
+    3. Show a table, open searches first: the search, its verdict, the app's rank, where Apple suggests it, how many of the top 10 name it, and the top apps' ratings.
+    4. Say which searches to aim at and where:
+       - the main open search in the name or subtitle;
+       - its other words, and the next searches, in the keyword field (the reference, "Which searches to target");
+       - a search the app already ranks for keeps its words where they are.
+    5. Another country is a new check in its own language. Research the searches again there; never translate them.
+    6. Unless the founder asked only for the check, go on with the listing (step 7), aimed at these searches.
+
 ### Close
 
-17. Summarise:
+18. Summarise:
     - findings fixed and left;
+    - the searches aimed at, with their verdicts;
     - what was staged or opened as a PR (claimed);
     - what the founder submits, publishes, starts or approves;
     - the review themes;
