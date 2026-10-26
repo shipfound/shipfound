@@ -55,6 +55,11 @@ Each in-app purchase and subscription has a display name (2 to 30 characters) an
 - The person must still know what they buy and for how long.
 - Give every language the listing has its own names.
 
+## Featuring and in-app events
+
+- **Nominations:** Apple's editors choose what to feature partly from nominations (App Store Connect, Featuring). Send one weeks before a launch, an update or new content, with the release date. Say what is new and why it matters, plainly.
+- **In-app events:** a card in search results and on the product page, for something time-bound in the app. Name 30 characters, short description 50, long description 120. It runs at most 31 days and shows from up to 14 days before. It needs a card image (1920x1080) and a page image (1080x1920). Events can be found in search by their own words, so write the name in the words people search.
+
 ## Locales a storefront reads
 
 Each storefront reads keywords from its main locale and some others, and words are not combined across locales. The US store reads English (US) plus Spanish (Mexico), Russian, Chinese (Simplified and Traditional), Arabic, French, Portuguese (Brazil), Vietnamese and Korean. The UK reads English (Australia), Canada reads French (Canada), Germany, France, Mexico and Brazil read English (UK), Japan reads English (US). `app_audit` names the locales for the storefront it checks.

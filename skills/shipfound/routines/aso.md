@@ -17,7 +17,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `purchases`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `rating`, `purchases`, `featuring`, `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +26,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `purchases` step 22, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -198,9 +198,25 @@ Input, optional:
     4. Show the founder every name before and after. On their yes, `app_purchases_stage` (Builder).
     5. Apple reviews them with the next version the founder submits. Once released, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "purchases" }`.
 
+### Featuring and events (Growth)
+
+23. Two ways to be seen beyond search, both drafted in App Store Connect for the founder to submit. Both need something real and new in the app: read the repo's recent commits and the release being prepared. With nothing new, say so and stop.
+    1. **A featuring nomination** asks Apple's editors to consider the app around a date: a launch, an update (APP_ENHANCEMENTS) or new content (NEW_CONTENT).
+       - Set the date to the release date, weeks ahead; editors need the notice.
+       - Write the description plainly: what is new, for whom, and why it matters to them. No superlatives, no claims about other apps.
+       - Add the app's site or a short video as supplemental material when there is one.
+       - Show the founder the text. On their yes, `app_nomination_create` drafts it. The founder submits it (App Store Connect, Featuring, Nominations), then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "nomination", nominationId }`.
+    2. **An in-app event** is a card in search results and on the product page, for at most 31 days, shown from up to 14 days before it starts. It is for something time-bound that people can do in the app: a challenge, a new season, a big update. Never an ad for the app itself.
+       - Call `app_events` for what ran before.
+       - Pick the badge and purpose that fit (a challenge to bring new people: CHALLENGE, ATTRACT_NEW_USERS).
+       - Write the name (30), short description (50) and long description (120) for the primary language, and for each language the listing has, in that language.
+       - Give the deep link that opens the event in the app, when the app has one.
+       - Show the founder. On their yes, `app_event_create` drafts it. The founder adds the card image (1920x1080) and page image (1080x1920) in App Store Connect and submits it, then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "event", eventId }`.
+       - A Kids category app's event says nothing that sends the child out of the app or to a purchase.
+
 ### Close
 
-23. Summarise:
+24. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
