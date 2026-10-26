@@ -112,9 +112,9 @@ Green: all six. Amber: three to five. Red: fewer than three. Facts: `{ logo: tru
 
 ## 11. Marketplace fit (`marketplace`)
 
-Repo scan for: a public API (`openapi.*`, documented `/api/` routes), an MCP server (`@modelcontextprotocol/sdk` or an `/mcp` route), integrations (Slack, Zapier or HubSpot app manifests), a Chrome extension (`manifest.json` with `manifest_version`), a VS Code extension (`engines.vscode` in a package.json).
+Repo scan for: a public API (`openapi.*`, documented `/api/` routes), an MCP server (`@modelcontextprotocol/sdk` or an `/mcp` route; "remote-mcp" when it is hosted at a URL users connect to), integrations (Slack, Zapier, HubSpot, Shopify (`shopify.app.toml`), WordPress (a plugin header `Plugin Name:`), Webflow, Framer, Notion (a public OAuth integration), Figma (`manifest.json` with `api` and `editorType`), Raycast (`package.json` with the Raycast schema), Atlassian (`manifest.yml` for Forge), n8n (an `n8n-nodes-*` package)), a Chrome extension (`manifest.json` with `manifest_version`), a VS Code extension (`engines.vscode` in a package.json).
 
-Green: at least one fits; list which. Amber: none fit; the fix is "Nothing to do unless you ship an API, an MCP server or an extension", and the plan will skip marketplaces. Facts: `{ fits: ["mcp", "chrome"] }`.
+Green: at least one fits; list which. Amber: none fit; the fix is "Nothing to do unless you ship an API, an MCP server or an extension", and the plan will skip marketplaces. Facts: `{ fits: ["mcp", "remote-mcp", "chrome", "shopify"] }`. Only what the repo really has: a store is listed where the integration exists.
 
 ## Calling record_access
 
