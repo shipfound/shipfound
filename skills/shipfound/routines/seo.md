@@ -4,7 +4,7 @@ SEO and AI search as one set a week. Grow picks it from what Google and Bing alr
 
 Follow [../references/pr-conventions.md](../references/pr-conventions.md) for branches and PRs, and [../references/content.md](../references/content.md) for any page you write.
 
-Input, optional: `connect` (step 2 only), `crawl` (step 3 only), `programmatic` (step 12).
+Input, optional: `read` (step 2 only), `crawl` (step 3 only), `programmatic` (step 12).
 
 ## Procedure
 
@@ -12,17 +12,13 @@ Input, optional: `connect` (step 2 only), `crawl` (step 3 only), `programmatic` 
 
 ### Reading what search shows
 
-2. Call `seo_read`.
-   - **Google, through the API.** When it answers with `serviceAccount` and a note, the service account cannot see the site yet. Tell the founder, in one message:
-     1. Search Console, the site's property, Settings, Users and permissions, Add user.
-     2. The email `serviceAccount` names, permission Restricted (it only reads).
-     3. Say when done; then call `seo_read` again.
-   - **Google, in the founder's browser**, when they would rather not add it:
-     1. Search Console, Performance, Search results, last 28 days, Pages.
-     2. For each of the top 15 pages by impressions, open it and read its Queries: each search with its clicks, impressions, CTR and position.
-     3. Compare with the previous period for each page's clicks.
-     4. Pass them as `rows` and `prev`. This read is not refreshed by itself: read it again in their browser each month.
-   - **Bing**: read with the key when Bing is connected. When it is not, offer `bing_connect` once (Bing Webmaster Tools, Settings, API access): ChatGPT search reads Bing's results.
+2. Read Search Console in the founder's browser, where they are already signed in, once a week: the changes shipped before are read against it at 28 and 56 days. When the last read is under 6 days old, skip to step 3.
+   1. Search Console, the site's property, Performance, Search results, last 28 days, Pages.
+   2. For each of the top 15 pages by impressions, open it and read its Queries: each search with its clicks, impressions, CTR and position.
+   3. Compare with the previous period for each page's clicks.
+   4. Call `seo_read` with them as `rows` and `prev`.
+   - When the site has no Search Console property, or the founder's Google account has no access to it, say so and carry on with steps 3 and 4: the crawl and the AI answers still make a set.
+   - **Bing**: read with the key when Bing is connected. When it is not connected, offer `bing_connect` once (Bing Webmaster Tools, Settings, API access): ChatGPT search reads Bing's results.
 3. Call `seo_crawl`. It reads every page in the sitemap, the most shown first.
 
 ### This week's set
@@ -66,7 +62,7 @@ Input, optional: `connect` (step 2 only), `crawl` (step 3 only), `programmatic` 
     - A title or snippet change shows on Google, not on the site, so it cannot be split by visitor. It is read before and after against the whole site's change; that is its control.
 16. Summarise:
     - what was changed, as PRs (claimed until merged and live);
-    - what waits for the founder (adding the service account, a thin page's fate);
+    - what waits for the founder (a thin page's fate);
     - the reads of earlier changes.
 
 Never buy links, trade links, or write pages that only swap a name. Never call a change done before `verify` says VERIFIED.
