@@ -31,6 +31,12 @@ Read as someone who has never heard of the product.
    - anything meant for the team: section numbers ("02", "3b"), internal ids, code names.
 5. **Length** (`copy-length`). Is it as short as it can be and still keep its value? Watch for a line under the headline over about 30 words, cards with more than 3 bullets, grids that stack into one long column on a phone, pricing small print listing every overage and unit, and a page over about 10 phone screens or 900 words.
 
+**Past the home page** (the signup page, the first screen after signup, a trial or checkout step), the visitor has already decided to go on. Judge each line by whether they need it to take this step, not by its length:
+- keep, in a few words, what they need here: the price after a free trial before they give a card, what the account gets when nothing before said it;
+- cut what only the product needs them to know: that a check or an audit is free, internal step names, credits and other plan units, what happens three steps from now;
+- cut what the button or the line above already says, and make the button say the action ("Start your free trial", not "Create account" with a line explaining the trial under it).
+A short line they do not need is still a cut; a line they need stays, shortened.
+
 The video and the images (`copy-visual`): do their words pass the same five questions, and do they show the product the page now sells? Quote the frame's words; they are not in the page's HTML, so the server does not look for them.
 
 Then the page as a whole (`copy-missing`): does it say who it is for, what they get and how it differs from what they do today, and does it show the product (on the first or second phone screen) and a price within reach? Never ask for proof the business does not have yet: testimonials, customer logos, user counts and case studies are not a miss on a new product's page, and are never invented. Is every item on the founder's list said somewhere, early (not below about screen 3), as one thing rather than split across cards?
@@ -49,6 +55,9 @@ Each of these was on the live page after a rewrite and was found by the founder,
 | "Credits pay for data and checks. Your agent does the thinking." as the pricing section's title | copy-understood, copy-value | A plan unit the visitor has not met, and a title that sells how it is billed instead of what they get | A plain title, or just the plans |
 | Plan cards listing "Access audit", "10k events a month, 30-day history", "All attribution models, 3 concurrent experiments" | copy-understood, copy-length | Units and internal names, where the visitor wanted what each plan gets done for them | What each plan gets them, in a few lines; the limits on the pricing page |
 | "First, it checks your access." | copy-value | How it works inside | Cut, or move to the FAQ |
+| On the signup page: "Free. The access audit and the baseline visibility check cost nothing." | copy-understood, copy-cut | A visitor about to sign up has not met the audit or the baseline, and the line answers nothing they asked | Cut |
+| On the signup page: "You picked Builder, first month free. Create your account and add your site, then starting it is one click." | copy-cut | Explains the steps the button and the next screen already take them through | Cut; the button says "Start your free trial" |
+| After signup: "Builder, free for 30 days, then $59/mo. Your card is needed to start; cancel before day 30 and you pay nothing." | copy-length | Only the price after the trial is needed before the card; the checkout states the rest | "Builder: 30 days free, then $59/mo." |
 | "One AI check lies. We ask four times." as a section | copy-value | Sells a method | Cut the section; its point can answer a FAQ question |
 | "Small tests of which message makes strangers click, on a budget you set." | copy-value | The outcome is lost in caveats | "Test your messages, keep the one that converts." |
 
