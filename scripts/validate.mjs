@@ -57,6 +57,8 @@ const TOOLS = {
   plan: 0,
   today: 0,
   grow_answer: 0,
+  grow_notes: 0,
+  grow_notes_save: 0,
   site_fixes: 6,
   keyword_research: 4,
   search_positions: 2,
