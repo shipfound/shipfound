@@ -1,10 +1,10 @@
 # Routine: seo
 
-SEO and AI search as one set a week. Grow picks it from what Google and Bing already show for the site, a crawl of every page, and the AI answers the product loses; the founder does not choose item by item. You do the set in order, one pull request per theme, and every change is read again at 28 and 56 days against the whole site.
+SEO and AI search as one set a week. Grow picks it from what Google and Bing already show for the site, a crawl of every page, the AI answers the product loses, and the week's studies (what people ask for, what products a step ahead do); the founder does not choose item by item. Grow offers it first until the week's set ships. You do the set in order, one pull request per theme, and every change is read again at 28 and 56 days against the whole site.
 
 Follow [../references/pr-conventions.md](../references/pr-conventions.md) for branches and PRs, and [../references/content.md](../references/content.md) for any page you write.
 
-Input, optional: `read` (step 2 only), `crawl` (step 3 only), `programmatic` (step 12).
+Input, optional: `read` (step 2 only), `crawl` (step 3 only), `programmatic` (step 14).
 
 ## Procedure
 
@@ -48,19 +48,23 @@ Input, optional: `read` (step 2 only), `crawl` (step 3 only), `programmatic` (st
     - evidence: an answer page with the product's own facts for that question;
     - entity: the pages in step 10, and the entity checks in `site_fixes`.
 12. **Bing** (`bing`): the same rewrite as step 5, for Bing's search.
-13. **Programmatic pages**, only when the founder has a data set to build pages from:
+13. **From this week's studies** (`study`): at most two, each with its `key`, `command` and `link`.
+    - An idea (`IDEA:...`): run the ideas routine with its key (routines/ideas.md, from step 5). A feature people ask for is planned and built only after the founder's yes; one the product already does is said on the site.
+    - A pattern from products a step ahead (`RESEARCH:...`): the routine its `command` names, with `meta.research` set to its key on every record (routines/research.md, step 6).
+    - Say each in a line with its link, so the founder can read the whole study: "4 people on r/SEO and X ask for this. All the ideas: <link>."
+14. **Programmatic pages**, only when the founder has a data set to build pages from:
     1. Call `seo_programmatic_check` with the pattern, the pages and the fields that carry each page's own data.
     2. Ship only when it passes: the first batch, then at most one page a day.
     3. Never a set that only swaps a name: Google's 2026 updates removed sites for that.
 
 ### Recording and reading
 
-14. Record every change with `record_action`. Use the action's `record` as `meta`: it holds the page's numbers now and the site's clicks, which the 28- and 56-day reads compare against.
+15. Record every change with `record_action`. Use the action's `record` as `meta`: it holds the page's numbers now and the site's clicks, which the 28- and 56-day reads compare against, and the week (`set`), so grow knows this week's set shipped.
     - `module`: FIXES for site fixes, CONTENT for pages, FIXES for the rest. `kind`: PR.
     - When one PR changes several pages, record one action per page, with `url` the PR's URL plus `#` and the page's path.
-15. `seo_set` also returns `reads`: the changes shipped before, read at 28 and 56 days against the whole site. Say them plainly: "up", "down" or "flat" against the site. When several changes shipped on one page in the same 28 days, say none of them alone moved it.
+16. `seo_set` also returns `reads`: the changes shipped before, read at 28 and 56 days against the whole site. Say them plainly: "up", "down" or "flat" against the site. When several changes shipped on one page in the same 28 days, say none of them alone moved it.
     - A title or snippet change shows on Google, not on the site, so it cannot be split by visitor. It is read before and after against the whole site's change; that is its control.
-16. Summarise:
+17. Summarise:
     - what was changed, as PRs (claimed until merged and live);
     - what waits for the founder (a thin page's fate);
     - the reads of earlier changes.

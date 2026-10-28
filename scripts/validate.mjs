@@ -49,6 +49,7 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 12, // 0 for the week's study on Builder and Growth
   ideas_skip: 0,
+  ideas_check: 0,
   ideas_replies: 0,
   ideas_replies_find: 8, // nothing when the run writes no drafts
   outbound_targets: 8, // nothing when it finds nobody new; last week's batch is free
@@ -97,6 +98,7 @@ const TOOLS = {
   seo_read: 0,
   seo_crawl: 0,
   seo_set: 0,
+  aso_set: 0,
   seo_programmatic_check: 0,
   app_prices: 0,
   app_event_create: 0,

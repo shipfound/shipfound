@@ -1,6 +1,7 @@
 # Routine: aso
 
 The founder's iOS app on the App Store:
+- each week, one set grow offers first: the listing fixes, the name, subtitle and keyword field aimed at the searches it can win in every language it has, and the next language to open;
 - find the App Store searches it can win, country by country, and follow its rank for them week by week;
 - open it in another country's language, aimed at what people there search;
 - audit the listing and ship the fixes, aimed at those searches;
@@ -17,7 +18,7 @@ Follow [../references/aso.md](../references/aso.md) and [../references/pr-conven
 Input, optional:
 - An App Store link adds that app.
 - A two-letter country code (`de`, `gb`) checks that storefront.
-- One word picks the part: `rating`, `purchases`, `featuring`, `prices`, `preview`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
+- One word picks the part: `set` (the week's set, from grow), `rating`, `purchases`, `featuring`, `prices`, `preview`, `strings` (optionally with a locale: `strings pt-BR`), `keywords`, `ranks`, `countries` (optionally with a country code: `countries br`), `screenshots` (optionally with a locale: `screenshots pt-BR`), `reviews`, `site`, `connect`, `test`, `cpp`, `ads` or `trial`.
 - Without a word, run the listing (steps 4 to 9).
 
 ## Procedure
@@ -26,7 +27,7 @@ Input, optional:
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
-3. Go to the part the input names: `rating` step 21, `purchases` step 22, `featuring` step 23, `prices` step 25, `preview` step 26, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
+3. Go to the part the input names: `set` step 27, `rating` step 21, `purchases` step 22, `featuring` step 23, `prices` step 25, `preview` step 26, `strings` step 24, `keywords` step 17, `ranks` step 18, `countries` step 19, `screenshots` step 20, `reviews` step 10, `site` step 11, `connect` step 12, `test` step 13, `cpp` step 14, `ads` step 15, `trial` step 16.
 
 ### The listing
 
@@ -259,9 +260,24 @@ Input, optional:
     7. `record_action` with `module` ASO, kind STORE_LISTING once it is live, `meta` `{ appStoreId, step: "preview" }`.
     8. A Kids category app's preview shows no purchase screen and nothing that sends the child out of the app.
 
+### This week's set
+
+27. The week's listing work, as grow offers it first until it ships (founder, Oct 28): call `aso_set`.
+    1. On Free, only the listing check and the search check run here; the fixes, the aimed words and a new language are on Builder and Growth (step 6): say so in one line with the results app link.
+    2. Say the set in a few lines: each action and why, with its numbers. Then `held`, one line each (a language whose listing changed in the last two weeks waits until its ranks are read), and `reads` (what moved in App Store search).
+    3. Do the actions in order. Skip one only when it cannot be done here, and say why.
+       - `audit` or `fixes`: steps 4 to 7, the fixes aimed at the latest search checks.
+       - `keywords`: step 17 for that country. Then aim the listing at what it found (the next bullet) in the same sitting.
+       - `aim`: for that country's language (`locale`, or the main listing when there is none), write the name, subtitle and keyword field for the action's `searches` by the rules in the reference ("Which searches to target"): the main open search in the name or subtitle, its other words and the next searches in the keyword field, a search the app already ranks for kept where it is. Never put a competitor's name or a trademark in any field. Call `app_audit` with the new text and fix until no high finding is left.
+       - `countries`: step 19, sub-step 1, and the founder picks. `country`: step 19 from sub-step 3, for that country.
+    4. Show the founder every field changed in one table: locale, field, before, after, characters, and an English translation beside another language's lines. Say the agent wrote them. Nothing ships before their yes.
+    5. Ship it as one change, as step 8 says: `app_metadata_stage` with every locale changed (App Store Connect connected), or one PR on `shipfound/aso-<week>`.
+    6. `record_action` once for each action shipped, `module` ASO, `kind` PR (or STORE_LISTING once Apple released it), `meta` the action's `record` plus `appStoreId` (a new language keeps `step` "country", `country` and `locale`). The week's set then counts as done, and grow offers the next one on Monday.
+    7. The founder submits the version; only they do. Two weeks after Apple releases it, read the ranks (step 18) before the same words change again; the set holds that language until then by itself.
+
 ### Close
 
-27. Summarise:
+28. Summarise:
     - findings fixed and left;
     - the searches aimed at, with their verdicts, and any country opened;
     - what was staged or opened as a PR (claimed);
