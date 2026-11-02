@@ -68,9 +68,9 @@ Verified: offer once to connect Bing's API, so Shipfound reads daily which pages
 
 ## 5. Gmail (`gmail`)
 
-Only if a Gmail connector is connected (SKILL.md, "Hosts"). Find the founder's sending address (for example from one recent sent message). Read nothing else.
+Call `mail_setup`: it holds the address outreach goes from, which may not be the Gmail the connector reads. With none set and a Gmail connector connected, find the founder's sending address (for example from one recent sent message), read nothing else, and ask whether outreach should go from it or from another address on the product's domain; pass the answer to `mail_setup` as `address`.
 
-Green: connected on a custom domain. Amber: connected on @gmail.com (many directories reject it). Red: not connected; the fix is "Connect Gmail: a Gmail connector in Claude, or a Gmail plugin in Codex".
+Green: the sending address is on a custom domain and `mail_setup` says `ready`. Amber: a mailbox the founder uses, but on @gmail.com (many directories reject it) or not ready (no mailbox that can send, or SPF, DKIM or DMARC missing); the fix is "Set up your company address" (references/mail-setup.md). Red: no connector and no sending address; the fix is "Connect Gmail: a Gmail connector in Claude, or a Gmail plugin in Codex, or set a company address". Facts: `sender`, `provider`, `ready`.
 
 ## 6. Reddit (`reddit`)
 
