@@ -154,7 +154,7 @@ Everything is open to every account, with no plans. Paid jobs come out of the ac
 | `keyword_research` | $0.04 |
 | `search_positions` | $0.07 (nothing when the site ranks for nothing yet) |
 | `outreach_targets` | $0.41 per batch with new pages to look up (pages looked up before are free) |
-| `outbound_targets` | $0.68 per new batch (nothing when it finds nobody new; last week's batch is free) |
+| `outbound_targets` | $1.09 per new batch (nothing when it finds nobody new; last week's batch is free) |
 | `build_ideas` (tool) | $0.04 (a skill's ideas are free) |
 | `content_brief` | $0.07 |
 | `visibility_run` | free for the first baseline, then $1.90 |
