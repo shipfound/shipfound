@@ -44,7 +44,7 @@ Then copy [AGENTS.md](AGENTS.md) into your repo. Full steps: [docs/codex.md](doc
 
 ### Sign in with an API key instead
 
-For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). Each key carries a daily credit cap.
+For CI or a machine without a browser, make a key in the Shipfound app (Settings, MCP server; it starts with `wl_`). Each key carries a daily spending cap ($10 by default).
 
 - **Claude Code:** add the server with the key as a fixed header, and use it in place of the plugin's server (turn that one off in `/mcp`; the skill and routines keep working):
 
@@ -82,15 +82,15 @@ You need two: `/shipfound:audit` on day 1, then `/shipfound:grow` every day afte
 | `/shipfound:offer` | "Make a founding offer" | A founding price, lifetime deal or pre-order for your first customers. You set every number; your agent ships the page and fills the discount in your payment dashboard for you to save. Boosts on X lead with it |
 | `/shipfound:build <tool or skill>` | "Build a free tool for our site" | A free tool your buyers search for (a checker, generator or calculator), no signup, one link to your product, as a PR; or an agent skill for your product that coding agents install with one command, published by you |
 | `/shipfound:index` | "Get us indexed" | Sitemap and IndexNow key by PR, then sitemap submits and Request indexing in your browser |
-| `/shipfound:status` | "Shipfound status" | Credits, what shipped, what is verified and what is still claimed, then what you can do next |
+| `/shipfound:status` | "Shipfound status" | Your balance, what shipped, what is verified and what is still claimed, then what you can do next |
 | `/shipfound:analytics <question>` | Any analytics question | Answers it in plain words with numbers |
 | `/shipfound:week` | "Run the Shipfound week" | The Monday routine. The server-side weekly re-check is not built yet; the routine does it by hand |
 | `/shipfound:list` | "List us on directories" | The directories AI answers cite, picked for your product from about 270 and filled in your browser one after another; you press submit. Review sites when you ask |
 | `/shipfound:launch` | "Launch us on Show HN" | Show HN, Indie Hackers, DevHunt or Product Hunt: drafted from your site in your voice, filled in your browser; you post it and answer the comments. Each launch's visits and signups counted on their own |
 | `/shipfound:reach` | "Draft a reply to this thread" | Community replies and Gmail drafts. Thread discovery comes later |
 | `/shipfound:notes` | "Write a build in public post", "Write an X Article" | Build in public posts on X and Reddit about your product: a milestone, a launch, a feature you shipped told from the problem it solves, a tool that went live, a week of work. Every 14 days, a flagship X Article: the full story with a designed cover and images of your real product (an X thread if your account has no Premium). In your own voice, learned once from your own posts. Your agent fills them in; you post. Free |
-| `/shipfound:research` | "What do products a step ahead of us do that we don't?" | Up to 8 products a step ahead of you, found for you: ones doing the same job, ones your buyers also pay for, and ones sold the same way. What each shows today (home page and signup, free tools, pricing, launches, best X posts) and how it started (its first home pages, launches, early posts), turned into moves with a first step your agent carries out. Remove any that is not like you. Free once a week on Builder and Growth, otherwise 12 credits |
-| `/shipfound:ideas` | "What features do people ask for?" | What people on Reddit and X say about the problem your product solves, grouped into features at least two of them ask for, each with their posts and the smallest version worth shipping first. Your agent builds the first version as a pull request once you say yes, or says on your site what your product already does. Free once a week on Builder and Growth, otherwise 12 credits |
+| `/shipfound:research` | "What do products a step ahead of us do that we don't?" | Up to 8 products a step ahead of you, found for you: ones doing the same job, ones your buyers also pay for, and ones sold the same way. What each shows today (home page and signup, free tools, pricing, launches, best X posts) and how it started (its first home pages, launches, early posts), turned into moves with a first step your agent carries out. Remove any that is not like you. $0.88 a study, and your agent asks first |
+| `/shipfound:ideas` | "What features do people ask for?" | What people on Reddit and X say about the problem your product solves, grouped into features at least two of them ask for, each with their posts and the smallest version worth shipping first. Your agent builds the first version as a pull request once you say yes, or says on your site what your product already does. $0.61 a study, and your agent asks first |
 | `/shipfound:test` | "What should we A/B test?" | A/B tests: a change proposed from your analytics, sized from your traffic, shipped as a variant, read honestly, winner shipped |
 | `/shipfound:video` | "Make a video of my product" | Your product's screens recreated and animated by your agent, in your own logo, fonts and colors, no sound, 30 seconds at most, made on your machine and checked frame by frame. No screen recording. Every boost carries one. Free |
 | `/shipfound:boost` | "Boost this post on X", "Run a Facebook ad", "Run a Reddit ad" | A small paid test of your messages on X (your own posts), Meta or Reddit (ads written for it). Your agent checks the ad account, puts the platform's pixel on your site through Shipfound's script (nothing to deploy), fills Ads Manager, and you press Launch; read on clicks and traced to signups. Your money, never spent without your yes |
@@ -111,7 +111,7 @@ Supported stacks for pull requests: Next.js, Astro, Nuxt, SvelteKit, Hugo and pl
 
 ## Pricing
 
-Your agent's work runs on your own Claude or ChatGPT subscription. Shipfound credits pay for search data, AI visibility runs and verification; tracking and analytics never cost credits. Free includes the audit, one baseline visibility check, 20 credits to start and 20 more every month. The agent states the price before any step over 5 credits and waits for your yes. Plans and prices: https://www.shipfound.co. Our own numbers, every answer included: https://www.shipfound.co/proof/shipfound.
+Your agent's work runs on your own Claude or ChatGPT subscription. Sign up and everything is open, with no plans: you pay as you go from a prepaid balance, for search data and AI visibility runs. You get $10 free, no card, once your first project is confirmed (it lasts 30 days); top-ups of $10, $25, $50 or $100 never expire, and auto top-up is off unless you turn it on. Analytics (100k events a month) and A/B tests are free, and so are the audit and the first visibility check. The agent states the price before any step over $1, and before every study, and waits for your yes. Prices: https://www.shipfound.co. Our own numbers, every answer included: https://www.shipfound.co/proof/shipfound.
 
 ## Privacy
 

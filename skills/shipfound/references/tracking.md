@@ -5,7 +5,7 @@ Two pieces, installed together as one of the first PRs of the fix routine:
 - **tracking.js** for people: one script tag, under 3 KB, cookieless by default.
 - **The crawler beacon** for AI bots: a few lines of server or edge code that post each hit from GPTBot, PerplexityBot, ClaudeBot and the rest of the list to the tracker. Without it, the founder never sees AI engines reading their pages.
 
-Tracking and analytics never cost credits. If the founder already runs GA4, Plausible or PostHog, keep it; Shipfound runs alongside.
+Tracking and analytics are free (100k events a month; past that $2 per 100k from the balance). If the founder already runs GA4, Plausible or PostHog, keep it; Shipfound runs alongside.
 
 ## 1. tracking_install
 

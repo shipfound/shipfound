@@ -21,7 +21,7 @@ Input: none needed.
    - With an API key instead (CI, a machine without a browser): the plugin README, "Sign in with an API key instead".
 
    Then stop and wait for the founder.
-4. Say, in one line, which site the founder works on, the plan and credits, and whether there is an audit yet (from `workspace`). If `repo` is not CONFIRMED, do what SKILL.md, "The repo", says first. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
+4. Say, in one line, which site the founder works on, the balance, and whether there is an audit yet (from `workspace`). If `repo` is not CONFIRMED, do what SKILL.md, "The repo", says first. If you were running another routine, carry on with it now from where you stopped; do not ask the founder to start it again. If you were not in another routine, do the hand-over (SKILL.md): offer the next move.
 
 If the founder has no Shipfound account yet, the approval page sends them to Sign in, where Create one makes the account and the verification email brings them back to the approval page; they add their site there once the email is verified. Keep calling `sign_in` meanwhile: the code lasts 30 minutes. If they say the email has not come, the approval page has Send it again.
 

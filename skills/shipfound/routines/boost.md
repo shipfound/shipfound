@@ -40,7 +40,7 @@ Check each line against the rules above before you show it; rewrite what fails. 
 - The only post you fill in for their timeline is the one message picked for a boost (step 4, "Not a post yet"): their landing page's own headline and subhead or the line they named, or one new angle you write from what their site says. They approve or edit every word before it is filled in, and they press Post.
 - No boost without the product video, except a Reddit post ad, which is text only. If it cannot be made clean, the boost stops with the reason.
 - Never press Create event in Events manager, or Create on a Meta business portfolio, Page or dataset, or on a Reddit ad account or pixel: you fill the form, they press it.
-- The money is the founder's, not credits: ask for a yes on the amount every time, even when they picked the boost as today's move.
+- The money is the founder's, not the Shipfound balance: ask for a yes on the amount every time, even when they picked the boost as today's move.
 
 ## Procedure
 
@@ -107,7 +107,7 @@ Check each line against the rules above before you show it; rewrite what fails. 
    - Never call a winner the verdict does not call.
 9. **Stop.** They stop the campaign in Ads Manager. Read the final numbers as in step 8 and call `boost_record` with them and `status` stopped. When `boost_results` says `retarget.enough`, ask once, as optional (header "Retarget"): a small ad to the visits that did not sign up, its `note` as the description, "Not now" as the other option; a no is never asked again for this boost. On a yes, run "Retarget" below. Then its `then` is the next move: the hand-over (SKILL.md) after they confirm it is stopped.
 
-Close the routine as SKILL.md says, with the money spent in dollars on its own line, apart from credits (boosts cost no credits).
+Close the routine as SKILL.md says, with the money spent in dollars on its own line, apart from the Shipfound balance (a boost costs nothing from it).
 
 ## Refresh
 
@@ -189,7 +189,7 @@ The same test on Google search, for buyers who type the problem into Google. A s
 
 **The founder does the Google steps themselves.** Your browser tools cannot open ads.google.com, so every step there is theirs: numbered steps in plain words with every value to copy, as on Reddit. Never ask for card details or a password.
 
-1. **Searches first**, before any setup: does anyone search for this? Write down 3 to 10 searches a buyer types when they have the problem, in their words, not the product's name. Run `keyword_research` on the main one (4 credits; say the price first) and read the searches a month and cost per click for it and its related searches. Under about 100 searches a month in all, stop here: say Google has too few searches to spend a test on, and that another platform fits better. Keep the numbers: they go into the plan as `searchVolumes`.
+1. **Searches first**, before any setup: does anyone search for this? Write down 3 to 10 searches a buyer types when they have the problem, in their words, not the product's name. Run `keyword_research` on the main one ($0.04; say the price first) and read the searches a month and cost per click for it and its related searches. Under about 100 searches a month in all, stop here: say Google has too few searches to spend a test on, and that another platform fits better. Keep the numbers: they go into the plan as `searchVolumes`.
 2. **Account, then tracking.** `ads_setup` with `platform` google, and work `readiness.next` until it says `launch`, giving the founder `steps` as a numbered list each time: the account in Expert Mode (never a Smart campaign), its payment method and Auto-tagging on, then a conversion action per step set up manually with code. Record the customer ID, payment and currency (`record.account`), then the conversion ID (the AW- part of send_to) as `pixelId` and each label (after the slash) as `events.signup` and `events.payment` (`record.tracking`). Nothing to install: Shipfound's script loads the Google tag on their site. **Verify:** open their site in your browser, then ask them to look at Goals, Conversions, Summary: when the tag shows as active, `record.tracking.verified` true.
 3. **The ads.** One to three, each a theme of searches with its own keywords (2 to 8, phrase match, or [exact] for the most precise) and a responsive search ad: 3 to 15 headlines of up to 30 characters (aim for 8 or more) and 2 to 4 descriptions of up to 90. The stranger test holds: the first headline answers the search in the searcher's words, the product's name and how it works come later or not at all. Leave out what Google's ad review rejects: "best" or "#1" without proof, prices or offers the site does not show, capitals or punctuation for effect. Suggest negative keywords for searches that are not buyers (jobs, tutorial, free download, a competitor's login), and the founder confirms them. They approve every word.
 4. **Who sees it.** As step 5: Where (countries), Language, Devices (desktop only or split when a phone cannot take the first step), and what it optimises for from `ads_setup`'s `recommend`: landing page views is Maximize clicks; signups is Maximize conversions on the signup action, only with enough a week. No look-alikes, interests or communities: the keywords are the targeting.

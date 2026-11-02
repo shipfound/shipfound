@@ -47,7 +47,7 @@ Input: an optional page visitors arrive on (default the home page), `pages` (the
    - Every change ships as a variant in an A/B test, never as a replacement, however few visitors the page has: the founder's rule. Follow the test routine: `experiment_create` with the step's next page or event as the goal (what marks `leak.to`, or the play's step), the control first, then render the variant the way its `code` says, in the same PR. Say what the test can tell and how slow it is, from `judge.note`, before you open it.
    `record_action` with `module` FIXES, `kind` PR, `title` "Home page: <the misses fixed and plays carried out, in a few words>", `url` the PR, `liveUrl` the page visitors arrive on, `meta: { type: "convert", fixIds: [the ids shipped, exactly as funnel_check gave them], plays: [the play ids carried out], funnel: leak.funnel, step: leak.kind, from: leak.from, to: leak.to, experiment: <the key, for a test>, screensBefore, screensAfter, wordsBefore, wordsAfter }`. The plays and the step are what Shipfound reads later to learn which plays move this founder's funnel. `verify` follows the buttons on the live site again and looks for every line a copy fix changed: a fix that did not ship stays Claimed.
 9. Tell the founder how it will be judged: an A/B test read with `experiment_results` until it gives a verdict, slow on a quiet page ("not enough yet" is an answer, not a failure). Never call a winner the verdict does not.
-10. Summarise: what changed, the PR (claimed, not verified), credits spent (none). Then the hand-over (SKILL.md): offer the next move.
+10. Summarise: what changed, the PR (claimed, not verified), and that nothing was spent. Then the hand-over (SKILL.md): offer the next move.
 
 ## The pages that bring visitors
 

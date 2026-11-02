@@ -18,7 +18,7 @@
 // - every MCP tool named in the skill, the commands and the docs is in the
 //   Shipfound tool table (and, inside the monorepo, that table still matches
 //   docs/shipfound/BUILD.md)
-// - commands never pre-approve a tool that costs more than 5 credits
+// - commands never pre-approve a tool that costs more than $1, or a study
 // - every crawler snippet carries the same crawler list (and, inside the
 //   monorepo, that list matches packages/shared and @shipfound/next)
 // - relative links in Markdown resolve
@@ -34,25 +34,25 @@ const errors = [];
 const notes = [];
 const fail = (file, msg) => errors.push(`${relative(ROOT, file) || file}: ${msg}`);
 
-// ─── The tool table (copy of docs/shipfound/BUILD.md, "MCP tools") ──────────
+// ─── The tool table (copy of docs/shipfound/BUILD.md, "MCP tools"), in cents ─
 const TOOLS = {
   sign_in: 0,
   workspace: 0,
   repo_confirm: 0,
   record_access: 0,
   access: 0,
-  visibility_run: 15, // 0 for the first baseline
+  visibility_run: 190, // free for the first baseline
   visibility: 0,
   research: 0,
-  research_run: 12, // 0 for the week's study on Builder and Growth
+  research_run: 88, // every study is asked for first, whatever its price
   research_skip: 0,
   ideas: 0,
-  ideas_run: 12, // 0 for the week's study on Builder and Growth
+  ideas_run: 61, // every study is asked for first, whatever its price
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
-  ideas_replies_find: 8, // nothing when the run writes no drafts
-  outbound_targets: 8, // nothing when it finds nobody new; the last batch of each source is free
+  ideas_replies_find: 95, // nothing when the run writes no drafts
+  outbound_targets: 68, // nothing when it finds nobody new; the last batch of each source is free
   mail_setup: 0,
   ideas_replies_save: 0,
   plan: 0,
@@ -60,15 +60,15 @@ const TOOLS = {
   grow_answer: 0,
   grow_notes: 0,
   grow_notes_save: 0,
-  site_fixes: 6,
+  site_fixes: 2,
   keyword_research: 4,
-  search_positions: 2,
-  outreach_targets: 4,
-  content_brief: 5,
-  check_content: 2,
+  search_positions: 7,
+  outreach_targets: 41,
+  content_brief: 7,
+  check_content: 0,
   record_action: 0,
   record_merges: 0,
-  verify: 1,
+  verify: 0,
   bing_connect: 0,
   index_status: 0,
   bing_submit: 0,
@@ -88,7 +88,7 @@ const TOOLS = {
   app_ranks: 0,
   app_countries: 0,
   app_reviews: 0,
-  listing_targets: 4,
+  listing_targets: 0,
   app_site: 0,
   app_metadata: 0,
   app_metadata_stage: 0,
@@ -118,7 +118,7 @@ const TOOLS = {
   boost_plan: 0,
   boost_record: 0,
   boost_results: 0,
-  reach_find: 8,
+  reach_find: 149, // Reddit; X is 109
   reach_drafts: 0,
   reach_mark: 0,
   reddit_notices: 0,
@@ -133,7 +133,10 @@ const TOOLS = {
   landing_check: 0, // retired: points to /shipfound:convert, reads nothing; removed the release after
   offer_plan: 0,
 };
-const CONFIRM_ABOVE_CREDITS = 5;
+// The agent states the price and waits for a yes above $1, and before every study (SF_CONFIRM_ABOVE_CENTS).
+const CONFIRM_ABOVE_CENTS = 100;
+const ALWAYS_ASK = new Set(["research_run", "ideas_run"]);
+const usd = (cents) => `$${(cents / 100).toFixed(2)}`;
 // Not Shipfound's: Claude Code offers these on a server that is not signed in, to start and finish its OAuth.
 const HOST_AUTH_TOOLS = new Set(["authenticate", "complete_authentication"]);
 // In the spec, not built yet. Allowed only in files that say "not built yet".
@@ -156,6 +159,7 @@ const NOT_TOOLS = new Set([
   "in_app_review",
   // fields in tool results
   "credits_ask",
+  "balance_ask",
   // boost_results verdict kinds
   "lost_after_click",
   // launch_targets board ids, and the free tool's t.js event (build.md)
@@ -463,7 +467,7 @@ for (const f of cmdFiles) {
     const name = t.slice(MCP_PREFIX.length);
     if (HOST_AUTH_TOOLS.has(name)) continue;
     if (!(name in TOOLS)) fail(file, `allowed-tools names unknown tool ${name}`);
-    else if (TOOLS[name] > CONFIRM_ABOVE_CREDITS) fail(file, `allowed-tools pre-approves ${name} (${TOOLS[name]} credits); tools over ${CONFIRM_ABOVE_CREDITS} credits must ask first`);
+    else if (TOOLS[name] > CONFIRM_ABOVE_CENTS || ALWAYS_ASK.has(name)) fail(file, `allowed-tools pre-approves ${name} (${usd(TOOLS[name])}); tools over ${usd(CONFIRM_ABOVE_CENTS)}, and studies, must ask first`);
   }
 }
 
@@ -606,15 +610,18 @@ if (existsSync(buildMd)) {
   const text = readFileSync(buildMd, "utf8");
   const section = text.split("## MCP tools")[1]?.split("\n## ")[0] ?? "";
   const table = {};
+  // "free", "$0.04", "free first baseline, then $1.90", "$1.49 Reddit, $1.09 X": the price after "then", else the highest, in cents.
+  const cents = (d) => Math.round(Number(d) * 100);
   for (const m of section.matchAll(/^\| `([a-z_]+)` \| ([^|]*) \|/gm)) {
-    const credits = m[2].trim();
-    const n = /^(\d+)/.exec(credits);
-    table[m[1]] = /then (\d+)/.test(credits) ? Number(/then (\d+)/.exec(credits)[1]) : n ? Number(n[1]) : NaN;
+    const price = m[2].trim();
+    const then = /then \$(\d+(?:\.\d+)?)/.exec(price);
+    const all = [...price.matchAll(/\$(\d+(?:\.\d+)?)/g)].map((x) => cents(x[1]));
+    table[m[1]] = then ? cents(then[1]) : all.length ? Math.max(...all) : /^free\b/.test(price) ? 0 : NaN;
   }
   const a = Object.keys(table).sort().join(",");
   const b = Object.keys(TOOLS).sort().join(",");
   if (a !== b) fail(buildMd, `tool table drifted. BUILD.md: ${a}. validate.mjs: ${b}`);
-  for (const [t, c] of Object.entries(table)) if (t in TOOLS && TOOLS[t] !== c) fail(buildMd, `${t} costs ${c} in BUILD.md, ${TOOLS[t]} here`);
+  for (const [t, c] of Object.entries(table)) if (t in TOOLS && TOOLS[t] !== c) fail(buildMd, `${t} costs ${Number.isNaN(c) ? "an unreadable price" : usd(c)} in BUILD.md, ${usd(TOOLS[t])} here`);
   if (a === b) notes.push(`tool table matches BUILD.md (${Object.keys(table).length} tools)`);
 }
 

@@ -26,7 +26,7 @@ Record right after the thing exists (the PR is open, the request was sent), once
 
 ## verify
 
-`verify` `{ actionId }` costs 1 credit. Call it when there is something to see, not in a loop:
+`verify` `{ actionId }` is free. Call it when there is something to see, not in a loop:
 
 | kind | When to call verify | What the server checks |
 |---|---|---|

@@ -1,6 +1,6 @@
 # Site fixes
 
-`site_fixes` (6 credits, so state the price and wait for a yes) runs the AEO audit plus on-page checks (titles and descriptions, internal links, share images) and returns fix specs grouped by theme:
+`site_fixes` ($0.02, so say the price in the same line) runs the AEO audit plus on-page checks (titles and descriptions, internal links, share images) and returns fix specs grouped by theme:
 
 ```json
 [{ "id": "structured_data:/", "theme": "structured-data", "page": "/", "issue": "No Organization or SoftwareApplication markup", "evidence": "No application/ld+json on the page", "fix": { "summary": "Add Organization and SoftwareApplication JSON-LD", "code": "<script type=\"application/ld+json\">...</script>", "language": "html" } }]

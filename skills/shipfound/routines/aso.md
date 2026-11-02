@@ -23,7 +23,7 @@ Input, optional:
 
 ## Procedure
 
-1. Call `workspace` with `repo` for the plan and credits.
+1. Call `workspace` with `repo` for the balance.
 2. The app. If `workspace` says `product.kind` "app", this product is the app: go on. Otherwise this product is a website, and an app is either part of it or its own product (SKILL.md, "Sites and apps"):
    - Find its App Store link: the founder gave it, or look in the repo (README, the site's footer, `fastlane/metadata`); if there is none, ask the founder for it.
    - The first time, ask once, with choices: "Is <app> the same product as <site>, or its own product?" Same product (the site is the app's home page): call `app_add` with the link. Its own product: the founder adds it in the results app (Add a product, with the App Store link), and the work happens from that product: in the app's repo, `workspace` moves the session to the app once that repo is confirmed for it (SKILL.md, "The repo"); no second sign-in. If this repo is the app's, `repo_confirm` it for the app now (`product`) and carry on there. Otherwise stop here and say so in one line.
@@ -36,7 +36,7 @@ Input, optional:
    - Otherwise read the repo's `fastlane/metadata/<locale>/` (`name.txt`, `subtitle.txt`, `keywords.txt`, `promotional_text.txt`, `description.txt`) and the screenshot captions where the repo keeps them, and pass them as `locales`.
    - With neither, say so: the audit checks the public listing only. Offer `connect`.
 5. Call `app_audit`. Show the findings, high first, one line each.
-6. On Free, stop here. The audit and the review to-do list are free; the fixes are on Builder and Growth. Say so in one line with the results app link from `workspace`, and offer the review to-do list.
+6. The audit and the review to-do list are free, and every account has the fixes: carry on.
 7. Aim the fixes at the searches the app can win: the latest `app_keywords` check for this storefront. When there is none from the last 30 days, run step 17 first. Then write the fixes by the rules in the reference: limits first, then the keyword field, the subtitle, the description for AI answers, screenshot captions, and the locales the storefront also indexes. Never put a competitor's name or a trademark in any field. Call `app_audit` again with the new text and fix until no high finding is left.
 8. Ship them one of two ways:
    - **App Store Connect connected.** Show the founder every field changed (before, after, characters), then call `app_metadata_stage`. It writes into the version they will submit and never touches what is live. If it answers that no version is open, the founder creates the next version in App Store Connect first.
@@ -46,7 +46,7 @@ Input, optional:
    - `url` is the App Store link plus `#` and today's date;
    - `meta` holds `appStoreId` and one `expect.<field>.<locale>` per field changed. That is the keyword field and promotional text too when App Store Connect is connected; for the description, its first 300 characters.
 
-   Then `verify` (1 credit), or leave it to the free daily re-check. Two weeks after the release, read the ranks for the searches the change aimed at (step 18) before changing the same words again.
+   Then `verify` (free), or leave it to the daily re-check. Two weeks after the release, read the ranks for the searches the change aimed at (step 18) before changing the same words again.
 
 ### Reviews
 
@@ -58,7 +58,7 @@ Input, optional:
     1. Pick the pages: the home page, then one page per search people make. Choose the searches with `keyword_research` (price it first) and from the reviews' own words.
     2. Write each page from the listing, the repo and the reviews (see the reference). Never invent numbers, quotes or features.
     3. Save the whole site with `app_site` and fix every issue it returns.
-    4. Tell the founder the draft is ready: they preview it and press Publish on the App Store page of the results app (Builder). Never say it is live before they do.
+    4. Tell the founder the draft is ready: they preview it and press Publish on the App Store page of the results app. Never say it is live before they do.
     5. Once they publish it, it is recorded as shipped work; `verify` checks it is live.
     6. Shipfound tells Google and Bing about the site each time it is published. shipfound.site is Shipfound's domain, so the founder cannot verify it in Search Console or Bing Webmaster Tools: never offer to submit its sitemap or request indexing for its pages.
 
@@ -70,7 +70,7 @@ Input, optional:
     - Once connected, `app_metadata` reads everything and `app_downloads` gives downloads by source.
     - For trial and subscription starts, the founder also pastes the account's vendor number on the same page (App Store Connect shows it on Payments and Financial Reports). Then `app_downloads` says how many people started a free trial or a subscription after the download, and how many became paid, whatever the app uses for subscriptions.
 
-### A screenshot A/B test (Growth)
+### A screenshot A/B test
 
 13. Apple tests screenshots, the icon and previews, never text. Every change to the screenshots everyone sees goes through a test first.
     1. Read the current screenshots: open the images `app_add` lists and read their captions. Call `app_downloads` for `productPage` (seen, opened, Get): it says whether the page is where people stop.
@@ -85,7 +85,7 @@ Input, optional:
     7. The results. Apple's reports do not split a test's treatments, so read them in App Store Connect (the app, Product Page Optimization) in the founder's Chrome: each treatment's conversion and Apple's confidence. Never call a winner Apple does not.
     8. A winner goes to everyone with `app_screenshots_apply` (`why` test_winner, the test's locale and size, the winning set in order) into the next version. Then `record_action` with `module` ASO, kind STORE_LISTING once released, `meta` `{ appStoreId, step: "screenshots", locale }`.
 
-### A custom product page (Growth)
+### A custom product page
 
 14. One page per audience or search.
     1. Pick the search, and the words from the app's approved keyword field it should show for.
@@ -94,7 +94,7 @@ Input, optional:
     4. The founder submits it for review in App Store Connect.
     5. Then link it: the matching shipfound.site page takes its `ppid` (`app_site`), and so can an Apple Ads ad group.
 
-### Apple Ads (Growth)
+### Apple Ads
 
 15. Connecting is the founder's, on the App Store page of the results app. It is two steps: they paste the public key Shipfound shows into Apple Ads, then type back three ids.
     1. Ask the founder for their target cost per trial (or per subscription, when the app has no trial) if they have one, and pass it as `targetCostPerStart`; a target cost per install goes in `targetCpi`.
@@ -157,7 +157,7 @@ Input, optional:
     3. The searches, in that language. Write 5 to 10 searches people there type, in their words; never translate the English ones word for word. Check them with `app_keywords` for that country: Apple's suggestions show what people there actually type, so prefer them.
     4. Write the locale's name, subtitle, keyword field, promotional text and description, aimed at that check's open and gap searches, by the rules in the reference. Keep the brand name as it is.
     5. Show the founder every field with an English translation beside it, and say the agent wrote it. If they do not read the language, a native speaker checks it before it ships. Nothing ships before their yes.
-    6. Ship it as in step 8: `app_metadata_stage` with the new locale (App Store Connect connected, Builder), or `fastlane/metadata/<locale>/` in a PR. Call `record_action` with `module` ASO and `meta` `{ appStoreId, step: "country", country, locale }`: kind PR for the PR, or STORE_LISTING with `expect.<field>.<locale>` once Apple has released it. Grow stops offering that country.
+    6. Ship it as in step 8: `app_metadata_stage` with the new locale (App Store Connect connected), or `fastlane/metadata/<locale>/` in a PR. Call `record_action` with `module` ASO and `meta` `{ appStoreId, step: "country", country, locale }`: kind PR for the PR, or STORE_LISTING with `expect.<field>.<locale>` once Apple has released it. Grow stops offering that country.
     7. The check in sub-step 3 started that country's ranks (step 18). Read them two weeks after the release.
     8. Screenshot captions in that language and the app's own text are separate changes, each offered on its own.
 
@@ -167,7 +167,7 @@ Input, optional:
     1. The locale is the one named, or the first opened language without screenshots of its own.
     2. The captions: the open and gap searches from that country's `app_keywords` check, as benefits in that language. The same raw screens as the main set, unless the app's screens are localized too.
     3. Render them with `app_screenshots`; any script renders (Japanese, Korean, Arabic...). Show the founder every caption with its English translation; a native speaker checks it when they do not read the language.
-    4. On their yes, `app_screenshots_apply` with `why` new_language puts them in the next version for that locale (Builder). The language's text must be staged first (step 19).
+    4. On their yes, `app_screenshots_apply` with `why` new_language puts them in the next version for that locale. The language's text must be staged first (step 19).
     5. Once Apple releases it, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "screenshots", locale }`.
     6. A later change to these screenshots is tested like any other (step 13).
 
@@ -196,10 +196,10 @@ Input, optional:
     1. Call `app_purchases`. Show each purchase with its names per language and the findings, plan-word names first.
     2. Write new names: what the purchase gives, in the words people search (the latest `app_keywords` check), then the plan: "Robot Coding Games: Full Year". At most 30 characters, description at most 45. Never another app's name. Keep the price and period clear: a person must still know what they buy.
     3. For a language the listing has and a purchase does not, write its name and description in that language (step 19's rules: written, not translated word for word, shown with an English translation).
-    4. Show the founder every name before and after. On their yes, `app_purchases_stage` (Builder).
+    4. Show the founder every name before and after. On their yes, `app_purchases_stage`.
     5. Apple reviews them with the next version the founder submits. Once released, `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "purchases" }`.
 
-### Featuring and events (Growth)
+### Featuring and events
 
 23. Two ways to be seen beyond search, both drafted in App Store Connect for the founder to submit. Both need something real and new in the app: read the repo's recent commits and the release being prepared. With nothing new, say so and stop.
     1. **A featuring nomination** asks Apple's editors to consider the app around a date: a launch, an update (APP_ENHANCEMENTS) or new content (NEW_CONTENT).
@@ -236,7 +236,7 @@ Input, optional:
     7. Call `record_action` with `module` ASO, kind PR, `url` the PR, `meta` `{ appStoreId, step: "app_strings", locale }`.
     8. The founder merges, builds and submits the release; only they do. The App Store then lists that language under the app's languages.
 
-### Prices by country (Growth)
+### Prices by country
 
 25. At Apple's exchange-rate prices, the same subscription weighs about twice as much in Brazil as in the US. This proposes a lower price per country; the founder approves each.
     1. First `app_downloads`: with no trial or subscription started anywhere, the step after the download comes first (step 16), not prices.
@@ -263,7 +263,7 @@ Input, optional:
 ### This week's set
 
 27. The week's listing work, as grow offers it first until it ships (founder, Oct 28): call `aso_set`.
-    1. On Free, only the listing check and the search check run here; the fixes, the aimed words and a new language are on Builder and Growth (step 6): say so in one line with the results app link.
+    1. On Free, only the listing check and the search check run here; the fixes, the aimed words and a new language are open to every account (step 6).
     2. Say the set in a few lines: each action and why, with its numbers. Then `held`, one line each (a language whose listing changed in the last two weeks waits until its ranks are read), and `reads` (what moved in App Store search).
     3. Do the actions in order. Skip one only when it cannot be done here, and say why.
        - `audit` or `fixes`: steps 4 to 7, the fixes aimed at the latest search checks.
@@ -283,7 +283,7 @@ Input, optional:
     - what was staged or opened as a PR (claimed);
     - what the founder submits, publishes, starts or approves;
     - the review themes;
-    - credits spent.
+    - what was spent from the balance.
 
     Then the hand-over (SKILL.md): offer the next move.
 

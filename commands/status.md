@@ -1,5 +1,5 @@
 ---
-description: Credits, what shipped, what is verified and what is still claimed, tracking state, the results app link, and what you can do next.
+description: Your balance, what shipped, what is verified and what is still claimed, tracking state, the results app link, and what you can do next.
 argument-hint: "[module]"
 allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__plan, mcp__plugin_shipfound_shipfound__goals_list, mcp__plugin_shipfound_shipfound__goals_save, Bash(gh pr view *)
 ---
