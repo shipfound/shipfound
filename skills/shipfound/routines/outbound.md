@@ -34,7 +34,7 @@ Input: optional. `fresh` asks for a new batch even when the last one still has p
      No attachments, no images, no follow-up, nothing that reads like a template, under about 120 words.
    - Make it a draft in the sending address's mailbox (Drafting, below).
    - `record_action` with `module` INBOX, `kind` DRAFT, `title` "Wrote to <name, handle or product>", `url` their post or launch, `meta: { type: "outbound", person: <person>, post: <post.url>, email: <email> }`.
-6. For someone picked with no `email`: offer a reply in their own thread instead. On X, fill the reply box in the browser and stop; on Hacker News, give the text to paste; on a Product Hunt launch, give a comment to paste. Same rules as the reach routine, never a DM. When the founder posts it, `record_action` with `module` COMMUNITIES, `kind` POST, `url` the reply, `meta: { type: "outbound", person: <person>, post: <post.url> }`, so they are not offered again.
+6. For someone picked with no `email`: offer a reply in their own thread instead. On X, fill the reply box in the browser and stop; on Hacker News, give the text to paste; on a Product Hunt launch, give a comment to paste. Same rules as the reach routine: no link, on X no product name either, never a DM. When the founder posts it, `record_action` with `module` COMMUNITIES, `kind` POST, `url` the reply, `meta: { type: "outbound", person: <person>, post: <post.url> }`, so they are not offered again.
 7. Say what is waiting: the number of drafts in the sending mailbox's Drafts for the founder to read and send, and that each one is theirs to change or delete. Then the hand-over (SKILL.md): offer the next move.
 
 ## Drafting
