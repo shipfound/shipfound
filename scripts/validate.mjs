@@ -52,7 +52,7 @@ const TOOLS = {
   ideas_check: 0,
   ideas_replies: 0,
   ideas_replies_find: 95, // nothing when the run writes no drafts
-  outbound_targets: 109, // nothing when it finds nobody new; the last batch of each source is free
+  outbound_targets: 149, // nothing when it finds nobody new; the last batch of each source is free
   mail_setup: 0,
   ideas_replies_save: 0,
   plan: 0,
