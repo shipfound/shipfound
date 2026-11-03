@@ -76,6 +76,7 @@ const TOOLS = {
   tracking_install: 0,
   tracking_check: 0,
   analytics: 0,
+  users_activation: 0,
   goals_list: 0,
   goals_save: 0,
   funnels_save: 0,
@@ -212,7 +213,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "test", "aso", "boost", "video", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
