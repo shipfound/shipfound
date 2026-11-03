@@ -3,9 +3,9 @@
 A short personal email to people with a reason to hear from the founder now. The founder sends every email; Shipfound never does. Shipfound picks where to look from who buys the product (its brief), so nobody chooses a source:
 
 - **people with the pain**, for every product: people who said in public, in the last two weeks, that they have the problem the founder's product solves: they described it, asked for a tool like it, or complained about a tool named in its place. They are the warmest strangers there are.
-- **teams that just launched**, only when the buyers are makers, founders, startups or software teams: today's Product Hunt launches and the last three days of Show HN. A team that just launched needs what comes after a launch.
+- **teams that just launched**, only when the buyers are makers, founders, startups or software teams: today's Product Hunt launches and the last two weeks of Show HN. A team that just launched needs what comes after a launch.
 
-The batch is filled to 10 people with an address, the pain posts first; `sources` says which ran, and each person's `found` says how they were found.
+Everyone found goes on the product's outbound list and stays there until written to, skipped, or two weeks old, so the list does not run dry after one batch. `outbound_targets` hands back up to 10 people with an address from it, the pain posts first, and each person's `found` says how they were found. Reading the list is free. When it is short, a search runs in the background for a few minutes (`searching`) and adds to it.
 
 Every hard line applies here more than anywhere: one to one, drafts only, at most 20 a day counting every other inbox draft (the server counts them: `draftsLeftToday`), no follow-ups, never sent by you.
 
@@ -13,7 +13,7 @@ Where they come from: X posts and Hacker News comments, and for launches Show HN
 
 How they are reached, only the way they chose to publish: the email on their own profile, a work email found from their name and the site on their profile, or for a launch the address its own domain's mail server accepts, only when verified. Never a guessed address, never a DM, never a list bought or scraped.
 
-Input: optional. `fresh` asks for a new batch even when the last one still has people in it.
+Input: optional. `fresh` asks for a new search even when the list still has people on it.
 
 ## Procedure
 
@@ -21,8 +21,8 @@ Input: optional. `fresh` asks for a new batch even when the last one still has p
 2. **The sending address.** Call `mail_setup`. The drafts go from that address, in its own mailbox, which may not be the Gmail the connector reads or the account the founder signs in with (a personal Gmail for GitHub mail, a company address for outreach).
    - No address yet: ask which address outreach should go from, on the product's own domain, and call `mail_setup` with it.
    - Not `ready`: say in one line what is missing (its `next`), and offer to fix it now with [mail setup](../references/mail-setup.md). Outreach waits until `mail_setup` says ready: mail from a domain without SPF, DKIM and DMARC lands in spam.
-3. Tell the founder in two plain lines what a run does and its price: it finds up to 10 people with a reason to hear from them (people who said this fortnight they have the problem, and teams who just launched when the product is sold to such teams), keeps the ones who could buy, and finds the email they published or a verified one, for $1.49, charged only when it finds someone new. The last batch comes back free. Wait for a yes before a new batch.
-4. Call `outbound_targets` (with `fresh` only when the founder asked for a new batch; never with `source`, which is for testing). Show each person in one line: who (name, handle or product, and where), how they were found (`found`: a post about the problem, or a launch) with `post.quote` and `post.url`, `why`, and whether there is an email. Ask which to write to. Anyone the founder will not write to: call `outbound_targets` with `skip` set to their `person`, so they never come back.
+3. Tell the founder in two plain lines what it does and its price: it hands back up to 10 people with a reason to hear from them (people who said this fortnight they have the problem, and teams who just launched when the product is sold to such teams), the ones who could buy, each with the email they published or a verified one. Free while the list has people; when it is short, a search adds more for $1.49, charged only when it adds someone with an address. Wait for a yes before the first call of a session (it may start a search).
+4. Call `outbound_targets` (with `fresh` only when the founder asked for a new search). When `searching` is true and nobody with an email came back, say in one line that a search is running, then call it again in about 3 minutes, without `fresh` (free); never start a second search. Show each person in one line: who (name, handle or product, and where), how they were found (`found`: a post about the problem, or a launch) with `post.quote` and `post.url`, `why`, and whether there is an email. Ask which to write to. Anyone the founder will not write to: call `outbound_targets` with `skip` set to their `person`, so they never come back.
 5. For each person picked who has an `email`, one at a time, up to `draftsLeftToday`:
    - Check the sending mailbox has never written to them: search its Sent mail for `to:<email>` (Drafting, below). Already written to: skip them and say so.
    - Open their post or launch (`post.url`) and read it whole, so the note answers what they actually said or made.
