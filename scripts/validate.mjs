@@ -51,6 +51,10 @@ const TOOLS = {
   shorts_research: 2,
   assets_save: 0,
   social_setup: 0,
+  giveaway_plan: 0,
+  giveaway_start: 0,
+  giveaway_replies: 0,
+  giveaway_mark: 0,
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
@@ -153,6 +157,9 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // boost.md: the phone capture goal and the hand-off to the signup follow-up
+  "setup_link",
+  "signup_followup",
   // Flutter's on-device storage, named in the aso routine's rating prompt
   "shared_preferences",
   // convert_pages findings
@@ -220,7 +227,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
