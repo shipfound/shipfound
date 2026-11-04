@@ -1,7 +1,7 @@
 # Routine: aso
 
 The founder's iOS app on the App Store:
-- each week, one set grow offers first: the listing fixes, the name, subtitle and keyword field aimed at the searches it can win in every language it has, and the next language to open;
+- each week, one set grow offers first: the listing fixes, the name, subtitle and keyword field aimed at the searches it can win in every language it has, the next language to open, and a finding from the study of apps a step ahead (research routine) with its link;
 - find the App Store searches it can win, country by country, and follow its rank for them week by week;
 - open it in another country's language, aimed at what people there search;
 - audit the listing and ship the fixes, aimed at those searches;
@@ -270,6 +270,7 @@ Input, optional:
        - `keywords`: step 17 for that country. Then aim the listing at what it found (the next bullet) in the same sitting.
        - `aim`: for that country's language (`locale`, or the main listing when there is none), write the name, subtitle and keyword field for the action's `searches` by the rules in the reference ("Which searches to target"): the main open search in the name or subtitle, its other words and the next searches in the keyword field, a search the app already ranks for kept where it is. Never put a competitor's name or a trademark in any field. Call `app_audit` with the new text and fix until no high finding is left.
        - `countries`: step 19, sub-step 1, and the founder picks. `country`: step 19 from sub-step 3, for that country.
+       - `study`: a finding from the study of apps a step ahead (its `key` starts with `RESEARCH:`). Say it in a line with its `link`, so the founder can read the whole study ("Kodable and Tynker each offer a 7 day trial on the yearly plan. All of it: <link>."). On a yes, `grow_answer` yes on its `key`, then run the part of this routine its `command` names (`set`: fold it into the `aim` above; `trial`, `test`, `purchases`, `prices`, `rating` or `featuring`: that step), with what the apps do as its starting point; every `record_action` for it carries `meta.research` with the key (routines/research.md, step 6). It is not listing work, so it never holds the set back.
     4. Show the founder every field changed in one table: locale, field, before, after, characters, and an English translation beside another language's lines. Say the agent wrote them. Nothing ships before their yes.
     5. Ship it as one change, as step 8 says: `app_metadata_stage` with every locale changed (App Store Connect connected), or one PR on `shipfound/aso-<week>`.
     6. `record_action` once for each action shipped, `module` ASO, `kind` PR (or STORE_LISTING once Apple released it), `meta` the action's `record` plus `appStoreId` (a new language keeps `step` "country", `country` and `locale`). The week's set then counts as done, and grow offers the next one on Monday.
