@@ -2,7 +2,7 @@
 
 Slideshows for TikTok and Instagram: photo posts of 3 to 8 slides, 9:16, in the formats that work for the founder's buyers this week, made from the product's own screens with the video kit and saved to the Desktop for the founder to post from their own account. Then creators in the niche to pay for a post, one email each. App founders reported slideshows as their channel more than any other on X and Reddit (one niche account: 1,250 downloads and $2.3k MRR in 5 weeks from under 1M views), and the same posts reach a site's buyers.
 
-Input: `creators`, `read`, or nothing. Grow offers it once a week (`SHORTS:week`); for an app, only once downloads start trials, because views do not pay while the step after the download loses everyone (one app had 30M views in a month and its revenue fell).
+Input: `creators`, `read`, or nothing. The posts go out from the founder's own TikTok or Instagram: with neither started yet, grow holds this and offers the social setup first (routines/social.md). Grow offers it once a week (`SHORTS:week`); for an app, only once downloads start trials, because views do not pay while the step after the download loses everyone (one app had 30M views in a month and its revenue fell).
 
 ## What it is
 
