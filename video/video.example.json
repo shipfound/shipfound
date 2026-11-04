@@ -7,6 +7,53 @@
   ],
   "image": { "hook": "Your store is open.\nNobody visits.", "scene": "browser-example", "at": 3.5, "line": "Shoppers start finding your store" },
   "end": { "line": "Free to start. No card.", "cta": "acme.com" },
+  "screen": {
+    "app": { "host": "app.acme.example", "workspace": "demo-shop.example", "nav": ["Overview", "Checks", "Fixes", "Settings"] },
+    "terminal": { "title": "demo-shop: zsh", "style": "shell" },
+    "beats": [
+      {
+        "kind": "terminal",
+        "seconds": 3,
+        "type": "acme check demo-shop.example",
+        "lines": [
+          { "text": "Checked 42 pages in 9s", "tone": "dim" },
+          { "text": "3 fixes found" },
+          { "text": "Opened pull request #14", "tone": "accent" }
+        ]
+      },
+      {
+        "kind": "page",
+        "seconds": 2.5,
+        "nav": "Fixes",
+        "path": "/fixes",
+        "title": "Fixes",
+        "sub": "What changed on your site, and whether it is live.",
+        "chips": ["All", "Open", "Live"],
+        "chip": "All",
+        "items": [
+          {
+            "eyebrow": "Pull request",
+            "title": "Page titles on 12 pages",
+            "meta": "demo/shop #14",
+            "badge": { "from": "Open", "to": "Live", "at": 1.3 },
+            "steps": [{ "label": "opened", "at": 0 }, { "label": "merged", "at": 0.7 }, { "label": "live", "at": 1.2 }],
+            "at": 0.2
+          },
+          { "eyebrow": "Pull request", "title": "Share images on 30 pages", "meta": "demo/shop #13", "badge": { "to": "Live" } }
+        ]
+      },
+      {
+        "kind": "page",
+        "seconds": 2.5,
+        "nav": "Overview",
+        "path": "/",
+        "title": "Overview",
+        "sub": "demo-shop.example",
+        "items": [{ "title": "This week", "body": "Two fixes went live. Next: the sitemap.", "typed": 0.2, "buttons": ["Share", "Open report"] }],
+        "click": { "target": "Share", "at": 1.6, "then": "Link copied" }
+      }
+    ]
+  },
   "ads": [
     {
       "hook": "Get shoppers while you run the store.",

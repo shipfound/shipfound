@@ -1,9 +1,11 @@
 import React from "react";
 import { AbsoluteFill, Composition, Freeze, OffthreadVideo, staticFile } from "remotion";
 import { CUTS, Clip, DURATION, SHORTS, durationOf } from "./Clip";
-import { FPS } from "./kit";
+import { FPS, sec } from "./kit";
 import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
+import { SCREEN, SCREEN_SIZES, Screen, defaultSeconds, screenFrames, type Device } from "./Screen";
+import { End, LABEL, Label, type EndProps } from "./Ugc";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
 // Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
@@ -14,6 +16,10 @@ import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Previ
 // each with the safe zone drawn in, for the quality check before anyone sees
 // it (--props='{"cut":"2"}' for ad 2). It is as long as the longest cut (a
 // Sequence is cut at its composition's end) and rendered as frame 0.
+// Screen and Screen-phone: only the product's screen, edge to edge, for
+// compositing onto a laptop (1600x1000) or a phone (1170x2532) in a
+// generated scene, from video.json's `screen` (src/Screen.tsx). Retime it to
+// a voiceover with --props='{"seconds":[...]}', one per beat.
 // Thumbs: frame 0 of every cut in every format at 200px wide, the way a
 // scroller sees it before the video plays.
 
@@ -127,6 +133,33 @@ export const Root: React.FC = () => (
         calculateMetadata={({ props }) => ({ durationInFrames: Math.max(1, previewFrames(props)) })}
       />
     ))}
+    {SCREEN
+      ? (Object.keys(SCREEN_SIZES) as Device[]).map((device) => (
+          <Composition
+            key={`Screen-${device}`}
+            id={device === "laptop" ? "Screen" : "Screen-phone"}
+            component={Screen}
+            fps={FPS}
+            width={SCREEN_SIZES[device].w}
+            height={SCREEN_SIZES[device].h}
+            durationInFrames={screenFrames(defaultSeconds())}
+            defaultProps={{ device, seconds: defaultSeconds() }}
+            calculateMetadata={({ props }) => ({ durationInFrames: screenFrames(props.seconds ?? defaultSeconds()) })}
+          />
+        ))
+      : null}
+    {/* ugc.mjs: the end card at any size and length, and the AI presenter label (src/Ugc.tsx). */}
+    <Composition
+      id="End"
+      component={End}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={sec(2.5)}
+      defaultProps={{ w: 1080, h: 1920, seconds: 2.5 } as EndProps}
+      calculateMetadata={({ props }) => ({ width: props.w, height: props.h, durationInFrames: Math.max(1, sec(props.seconds)) })}
+    />
+    <Composition id="Label" component={Label} fps={FPS} width={LABEL.w} height={LABEL.h} durationInFrames={1} defaultProps={{ text: "AI-generated presenter" }} />
     <Composition id="Thumbs" component={Thumbs} durationInFrames={1} fps={FPS} width={16 + FORMATS.length * (THUMB_W + 16)} height={Math.round(THUMBS_H)} />
     <Composition
       id="Frames"
