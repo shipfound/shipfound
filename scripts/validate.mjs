@@ -49,6 +49,9 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 61, // every study is asked for first, whatever its price
   shorts_research: 2,
+  ugc_plan: 0,
+  ugc_start: 662, // Higgsfield's estimate plus the margin; this is the most, for 15 seconds at 720p
+  ugc_status: 0,
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
@@ -143,6 +146,8 @@ const usd = (cents) => `$${(cents / 100).toFixed(2)}`;
 const HOST_AUTH_TOOLS = new Set(["authenticate", "complete_authentication"]);
 // In the spec, not built yet. Allowed only in files that say "not built yet".
 const NOT_YET = [
+  // the Assets tab's save tool, from another release; the ugc routine skips it when missing
+  "assets_save",
   "visibility_rerun",
   "experiment_plan",
   "experiment_hypotheses",
@@ -216,7 +221,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "ugc", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
