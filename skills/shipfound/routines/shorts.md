@@ -10,7 +10,7 @@ Input: `creators`, `read`, or nothing. Grow offers it once a week (`SHORTS:week`
 - **The formats that work now, never their words.** `shorts_research` reads the week's top posts for the buyers' searches. Copy a post's shape (its number of slides, where the hook sits, list or story), never its text, its images or its account's look.
 - **Their screens, their words.** Each slide is the kit's card (the image ad in `video/src/Static.tsx`) at 1080x1920: a headline, one screen of the product recreated from its source, a line. The same hard lines as the video (routines/video.md, "Hard lines here"): only screens the product has, demo data, no one's real data, no AI images, no stock, no AI people.
 - **The stranger test.** Every word passes "The words: the stranger test" in routines/video.md. A headline is 8 words or fewer, a line 14 or fewer; the kit refuses longer.
-- **On the Desktop.** `<product>-shorts-<date>/`: `show<n>-slide<k>.png` in order and `show<n>-caption.txt`. The founder AirDrops them to the phone and posts them.
+- **On the Desktop.** `<product>-shorts-<date>/`: `show<n>-slide<k>.png` in order and `show<n>-caption.txt`. The founder AirDrops them to the phone and posts them. The slides are also saved to the founder's Assets tab with `assets_save` (`kind` slideshow, `source` shorts; routines/video.md, "Also in Assets"), so they can open them on the phone from there too.
 
 ## Hard lines here
 
@@ -30,7 +30,7 @@ Input: `creators`, `read`, or nothing. Grow offers it once a week (`SHORTS:week`
    1. The kit is `.shipfound/video/` at the root of their repo. If it is not there, or has no scenes of this product, set it up and build the scenes as routines/video.md steps 2 to 5 say (the capture of their brand and the product's screens recreated); only the screens the slides name.
    2. Put the slideshows in `public/video.json` as `shorts: [{ caption, slides: [...] }]`, beside what is there.
    3. `npm run shorts`. Open each slide image and look at it: the headline whole, the screen readable, nothing cut at the edges, the top and bottom 12% clear of text (TikTok draws over them). Fix and render again until each one passes.
-   4. Tell the founder the folder.
+   4. Save the slide images to Assets (`assets_save` with `files`, each `kind` slideshow and `source` shorts, titled "Slideshow <n>, slide <k>"; run each `curl`, then `confirm` the ids). Tell the founder the folder, then "Also in Assets:" with the `link` it returns. When it fails, the folder is the hand-over.
 6. **The founder posts.** In the TikTok app: photo mode, the slides in order, the caption from the file, a sound. On Instagram: a carousel. When they give the post's link, `record_action` with `module` COMMUNITIES, `kind` POST, `url` the link, `meta` `{ type: "shorts", platform: "tiktok" | "instagram", format, campaign: "sf-shorts-own" }`, then `verify` (TikTok is checked by its public embed). Grow leaves shorts until Monday once one is posted.
 7. **Creators** (input `creators`, or once the founder's own posts are out). From `shorts_research`'s `creators`, the ones whose best post fits the buyers, with an email their bio publishes:
    1. Show them one line each: handle, followers, the post and its plays, the email. The founder picks; skip the rest.

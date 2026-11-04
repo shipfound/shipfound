@@ -49,6 +49,7 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 61, // every study is asked for first, whatever its price
   shorts_research: 2,
+  assets_save: 0,
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
