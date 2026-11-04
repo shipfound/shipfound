@@ -2,7 +2,7 @@
 
 The first command, free, about 3 minutes. You check what the founder actually has, store it with `record_access`, and the server builds the plan only from what is open. A founder with no X account never gets X plays.
 
-Work through the eleven areas in this order (local first, then the browser, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
+Work through the twelve areas in this order (local first, then the browser, then live fetches), and keep each check light: read, do not change anything. The audit never edits files, never opens PRs and never submits anything.
 
 For each area decide:
 
@@ -12,7 +12,7 @@ For each area decide:
 
 Write `detail` as one or two plain sentences of what you saw (max 600 characters), and `fix` as the one action that turns it green (max 300 characters, empty when green). Put numbers and flags in `facts` (strings, numbers, booleans, null, or arrays of strings).
 
-If you could not check an area (no browser tools, the founder skipped a sign-in), mark it amber, say "Not checked: <reason>" in `detail`, and make the fix the step that lets you check it. For the three browser areas (gsc, bing, x) without browser tools, the reason is "your browser is not connected" and the fix is connecting it (SKILL.md, "Hosts", the Browser row).
+If you could not check an area (no browser tools, the founder skipped a sign-in), mark it amber, say "Not checked: <reason>" in `detail`, and make the fix the step that lets you check it. For the four browser areas (gsc, bing, x, social) without browser tools, the reason is "your browser is not connected" and the fix is connecting it (SKILL.md, "Hosts", the Browser row).
 
 ## 1. Repo (`repo`)
 
@@ -88,14 +88,25 @@ In the browser, open https://x.com/home. If logged in, read the profile: joined 
 
 Green: logged in, account older than 30 days, posted in the last 30 days. Amber: new or quiet. Red: not logged in or no account. Facts: `{ handle, accountAgeDays, followers, daysSinceLastPost, premium }`, with `handle` without the @ (boost reads it) and `premium` true or false (the notes routine writes an X Article with it, a thread without; leave it out when the page did not say).
 
-## 8. GitHub (`github`)
+## 8. TikTok and Instagram (`social`)
+
+In the browser. Read only: never sign up, follow, like or change a setting here. Ask once whose accounts the posts go out from: the product's, or the founder's own when they build in public.
+
+- **Exists**: open https://www.tiktok.com and https://www.instagram.com. Logged in, open the profile and note the handle. Not logged in, ask the founder whether they have an account there and its handle, and open its public profile (`https://www.tiktok.com/@<handle>`, `https://www.instagram.com/<handle>/`). No account: say so and move on.
+- **Business or Creator**: TikTok's Settings and privacy, Account (a Business account says so); Instagram's Settings, "Account type and tools" (a Professional account has the professional dashboard on its profile).
+- **The profile**: a profile photo that is not the default, a bio, and a link in the bio. Open the link: does it go to the site or the App Store listing, and does it carry its tags (`utm_source` or `ct=sf-social-`)?
+- **Ads**: Instagram connected to a Meta business portfolio or Page (Meta Business Suite settings, Instagram accounts), which the boost needs for Instagram ads; TikTok added to a TikTok Business Center (https://business.tiktok.com, Assets, TikTok accounts), which Spark Ads need. Not signed in there: leave the fact out.
+
+Green: both accounts exist, each Business or Creator with a photo, a bio and a link to the product. Amber: one of them, or a profile not finished. Red: neither. The fix: "Start them with the Shipfound social setup: your agent opens each signup and fills the profile, you press create." Facts, each handle without the @ and null when there is no account, a fact left out when the page did not say: `{ whose: "product", tiktok: "acme.app", tiktokBusiness: true, tiktokPhoto: true, tiktokBio: true, tiktokLink: "https://acme.com/?utm_source=tiktok", tiktokLinkOk: true, tiktokBusinessCenter: false, instagram: null, instagramProfessional: false, instagramPhoto: false, instagramBio: false, instagramLink: null, instagramMeta: false }`. `tiktokLinkOk` and `instagramLinkOk` say whether the link opens the site or the App Store.
+
+## 9. GitHub (`github`)
 
 - `gh auth status`.
 - Relevant awesome lists: `gh search repos "awesome <category>" --sort stars --limit 10`. For the top 3, check whether the product is already listed: `gh api repos/{owner}/{repo}/readme --jq .content | base64 -d | grep -i <domain>`. A list also counts as done when `shipped` (module LISTINGS) has it or the founder has an open or merged PR or issue there (`gh search prs --author @me --json repository,state`), including a sister list (awesome-remote-mcp-servers stands for awesome-mcp-servers). Leave those out of `lists`, and never carry a "not listed" line over from an older audit without checking again.
 
 Green: authed and at least one relevant list where the product is not yet listed. Amber: authed, no fitting list. Red: `gh` missing or not authed. Facts: `{ authed: true, lists: ["owner/awesome-x"] }`.
 
-## 9. Tracking (`tracking`)
+## 10. Tracking (`tracking`)
 
 - Repo: `t.shipfound.co/t.js`, `data-site="sf_`, `@shipfound/next`, `/t/crawler`, `x-shipfound-secret`.
 - Live: `curl -s https://<domain>/ | grep -o 'data-site="sf_[^"]*"'`.
@@ -104,13 +115,13 @@ Green: authed and at least one relevant list where the product is not yet listed
 
 Green: script live, crawler beacon installed, and `tracking_check` has seen a real event, a crawler hit and a goal. Amber: partly installed. Red: nothing installed; the fix is "Run the Shipfound fix; tracking is the first PR". Facts: `{ script: false, beacon: false, otherAnalytics: ["ga4"] }`.
 
-## 10. Product assets (`assets`)
+## 11. Product assets (`assets`)
 
 Check the repo and the live site for: a logo (SVG or 512 px PNG), at least 2 screenshots, a description of 160 characters or fewer (the home page meta description is a start), a pricing page (`/pricing` returns 200), an OG image (`og:image` present and returns 200), and a privacy page (`/privacy` returns 200).
 
 Green: all six. Amber: three to five. Red: fewer than three. Facts: `{ logo: true, screenshots: 0, description160: true, pricing: true, ogImage: false, privacy: true }`.
 
-## 11. Marketplace fit (`marketplace`)
+## 12. Marketplace fit (`marketplace`)
 
 Repo scan for: a public API (`openapi.*`, documented `/api/` routes), an MCP server (`@modelcontextprotocol/sdk` or an `/mcp` route; "remote-mcp" when it is hosted at a URL users connect to), integrations (Slack, Zapier, HubSpot, Shopify (`shopify.app.toml`), WordPress (a plugin header `Plugin Name:`), Webflow, Framer, Notion (a public OAuth integration), Figma (`manifest.json` with `api` and `editorType`), Raycast (`package.json` with the Raycast schema), Atlassian (`manifest.yml` for Forge), n8n (an `n8n-nodes-*` package)), a Chrome extension (`manifest.json` with `manifest_version`), a VS Code extension (`engines.vscode` in a package.json).
 
@@ -118,7 +129,7 @@ Green: at least one fits; list which. Amber: none fit; the fix is "Nothing to do
 
 ## Calling record_access
 
-One call with all eleven areas you checked:
+One call with all twelve areas you checked:
 
 ```json
 {
@@ -131,8 +142,8 @@ One call with all eleven areas you checked:
 }
 ```
 
-Area ids: repo, hosting, gsc, bing, gmail, reddit, x, github, tracking, assets, marketplace. Use `"client": "codex"` when running in Codex.
+Area ids: repo, hosting, gsc, bing, gmail, reddit, x, social, github, tracking, assets, marketplace. Use `"client": "codex"` when running in Codex.
 
 ## The Access Card in the terminal
 
-After `record_access`, print a short card: the headline ("7 of 11 open, 3 amber, 2 red"), one line per area as `[green] Repo: Next.js, can push`, and under each amber or red line its fix. Then the results app link.
+After `record_access`, print a short card: the headline ("7 of 12 open, 3 amber, 2 red"), one line per area as `[green] Repo: Next.js, can push`, and under each amber or red line its fix. Then the results app link.
