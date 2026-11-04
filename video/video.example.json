@@ -15,5 +15,16 @@
         { "id": "browser-example", "seconds": 4, "caption": "Shoppers start finding your store" }
       ]
     }
+  ],
+  "shorts": [
+    {
+      "caption": "3 things that got our first shoppers 🛍️ #smallbusiness #shopify",
+      "slides": [
+        { "hook": "Zero visitors.\nHere is what changed.", "scene": "browser-example", "at": 0.5, "line": "Swipe for the three things" },
+        { "hook": "1. Shoppers search, not browse", "scene": "browser-example", "at": 2, "line": "Your store has to be where they search" },
+        { "hook": "2. One link does it", "scene": "terminal-example", "at": 4, "line": "Paste your store's link and it starts" },
+        { "hook": "3. Watch them arrive", "scene": "browser-example", "at": 3.5, "line": "Free to start at acme.com" }
+      ]
+    }
   ]
 }

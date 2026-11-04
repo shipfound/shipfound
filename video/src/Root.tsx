@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill, Composition, Freeze, OffthreadVideo, staticFile } from "remotion";
-import { CUTS, Clip, DURATION, durationOf } from "./Clip";
+import { CUTS, Clip, DURATION, SHORTS, durationOf } from "./Clip";
 import { FPS } from "./kit";
 import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
@@ -100,6 +100,9 @@ export const Root: React.FC = () => (
       <Composition key={`Image-${cut}`} id={`Image-${cut}`} component={Static} durationInFrames={durationOf(cut)} fps={FPS} width={1080} height={1350} defaultProps={{ w: 1080, h: 1350, cut }} />,
       <Composition key={`Image-${cut}-square`} id={`Image-${cut}-square`} component={Static} durationInFrames={durationOf(cut)} fps={FPS} width={1200} height={1200} defaultProps={{ w: 1200, h: 1200, cut }} />,
     ])}
+    {SHORTS.flatMap((show, i) =>
+      show.slides.map((image, k) => <Composition key={`Slide-${i + 1}-${k + 1}`} id={`Slide-${i + 1}-${k + 1}`} component={Static} durationInFrames={DURATION} fps={FPS} width={1080} height={1920} defaultProps={{ w: 1080, h: 1920, cut: "1", image }} />)
+    )}
     <Composition
       id="Sheet"
       component={Sheet}

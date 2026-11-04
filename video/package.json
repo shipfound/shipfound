@@ -1,7 +1,7 @@
 {
   "name": "shipfound-product-video",
   "private": true,
-  "description": "A product video for a boost: the product's screens recreated in HTML and animated, in its own branding, no sound, 30 seconds at most, one cut per ad in three formats plus an image of each. Runs on the founder's machine; see skills/shipfound/routines/video.md. Also the App Store app preview from the simulator's own recordings (preview.mjs).",
+  "description": "A product video for a boost: the product's screens recreated in HTML and animated, in its own branding, no sound, 30 seconds at most, one cut per ad in three formats plus an image of each, and slideshows for TikTok and Instagram (shorts.mjs). Runs on the founder's machine; see skills/shipfound/routines/video.md. Also the App Store app preview from the simulator's own recordings (preview.mjs).",
   "type": "module",
   "scripts": {
     "capture": "node capture.mjs",
@@ -11,6 +11,7 @@
     "render": "npm run render:square && npm run render:wide",
     "thumbs": "remotion still Thumbs out/thumbs.png",
     "ads": "node ads.mjs",
+    "shorts": "node shorts.mjs",
     "preview": "node preview.mjs"
   },
   "dependencies": {

@@ -35,11 +35,18 @@ interface CutSpec {
   image?: ImageSpec;
 }
 
+/** A slideshow for TikTok and Instagram (routines/shorts.md): 3 to 8 slides, each a headline, one screen and a line; the caption posted with it. */
+export interface ShortSpec {
+  caption: string;
+  slides: ImageSpec[];
+}
+
 export interface VideoSpec extends CutSpec {
   product: string;
   colors?: Partial<typeof C>;
   end: { line: string; cta: string };
   ads?: CutSpec[];
+  shorts?: ShortSpec[];
 }
 
 const base = video as VideoSpec;
@@ -73,6 +80,20 @@ export const durationOf = (cut: string) => {
 };
 export const DURATION = durationOf("1");
 for (const cut of Object.keys(CUTS)) durationOf(cut);
+
+const MAX_SLIDE_LINE_WORDS = 14;
+
+/** The slideshows, checked like the cuts: each slide's screen registered, its headline a hook, its line short enough to read in a swipe. */
+export const SHORTS: ShortSpec[] = (base.shorts ?? []).map((show, i) => {
+  const name = `video.json shorts[${i}]`;
+  if (show.slides.length < 3 || show.slides.length > 8) throw new Error(`${name} needs 3 to 8 slides, it has ${show.slides.length}`);
+  show.slides.forEach((sl, k) => {
+    if (!scenes[sl.scene]) throw new Error(`${name} slide ${k + 1} names scene "${sl.scene}", which src/scenes/index.ts does not register`);
+    if (words(sl.hook) > MAX_HOOK_WORDS) throw new Error(`${name} slide ${k + 1}: the headline "${sl.hook}" is over ${MAX_HOOK_WORDS} words`);
+    if (words(sl.line) > MAX_SLIDE_LINE_WORDS) throw new Error(`${name} slide ${k + 1}: the line "${sl.line}" is over ${MAX_SLIDE_LINE_WORDS} words`);
+  });
+  return show;
+});
 
 const SpecCtx = React.createContext<VideoSpec>(CUTS["1"]!);
 export const useSpec = () => React.useContext(SpecCtx);
