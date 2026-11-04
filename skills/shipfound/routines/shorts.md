@@ -23,7 +23,7 @@ Input: `creators`, `read`, or nothing. Grow offers it once a week (`SHORTS:week`
 ## Procedure
 
 1. **What to search.** Write 3 to 6 searches the buyers type on TikTok, in their words, never the product's name: what they want or what hurts ("coding games for kids", "screen time ideas", "how to get my first customers"). For an app, the open searches from its App Store check are a start; for a site, its buyers' questions from the brief.
-2. **Read.** Tell the founder the price `shorts_research` states and wait for their yes. Call it with the searches. When it returns a `note` about the provider token, say it in one line: without it, downloads from these posts cannot be told apart.
+2. **Read.** Say the price `shorts_research` states in the same line as the searches, then call it. When it returns a `note` about the provider token, say it in one line: without it, downloads from these posts cannot be told apart.
 3. **The formats.** Say the 3 formats that work in these posts, one line each: the shape, one post with its plays and link, and why it fits this product. Slideshows first; a video format only when no slideshow is in the top posts.
 4. **Write three slideshows**, one in each format. For each: 3 to 8 slides, each `{ hook, scene, at, line }` (the headline, the kit scene, the second its motion lands, the line under it), and the caption (one line in the founder's voice, then 3 to 5 hashtags seen on the top posts). The product's slide says what the viewer gets, never how it works; the last slide says the next step: search the app's name on the App Store, or the link in bio (the `ownLink` from step 2 goes in the founder's bio). Show every slide's words and the caption, and wait for the founder's yes; change what they say.
 5. **Render.**

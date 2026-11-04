@@ -162,6 +162,7 @@ Everything is open to every account, with no plans. Paid jobs come out of the ac
 | `visibility_run` | free for the first baseline, then $1.90 |
 | `research_run` | $0.88 (nothing when fewer than 2 products could be read) |
 | `ideas_run` | $0.61 (nothing when fewer than 10 posts could be read) |
+| `shorts_research` | $0.02 |
 | `reach_find` | $1.49 for Reddit, $1.09 for X (nothing when the run writes no drafts) |
 | `ideas_replies_find` | $0.95 a platform (nothing when the run writes no drafts) |
 | everything else | free |
@@ -190,6 +191,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `research_skip` | `{ domain, undo? }` | Remove a product the founder says is not like them from this study's patterns and every study after; `undo` brings it back. Free |
 | `ideas` | none | The latest feature ideas study (ideas routine): each idea with its `key`, `kind` (missing or unsaid), the problem, the feature, its `first` version, the effort, the people behind it and their posts; whether one is running, when the next free one is, the price. Ideas done and skipped are left out. Free |
 | `ideas_run` | none | Start a study in the background, a few minutes. $0.61, charged only when 10 or more posts could be read; at most one a day; always ask first |
+| `shorts_research` | `{ searches }` | The top TikTok posts of the last 180 days for the buyers' searches, slideshows first, the creators behind them (with the email their bio publishes) and the tracking links (shorts routine). $0.02 |
 | `ideas_skip` | `{ key, undo? }` | An idea the founder will not build: never offered again; `undo` brings it back. Free |
 | `ideas_check` | `{ checks: { key, built, said?, file? }[] }` | What the founder's repo says about each idea `workspace` lists in `ideasToCheck`: one the product already does is never offered as a feature (left out when the site says it, said on the site when not). Free |
 | `ideas_replies` | `{ key }` | Once a feature from an idea is live: the idea's own posts still open for a reply (Reddit threads under 150 days, X posts under 28, one per thread, 5 at most, none drafted before), with what they said and the live link, and the next step. Free |
