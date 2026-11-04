@@ -12,7 +12,8 @@
     "thumbs": "remotion still Thumbs out/thumbs.png",
     "ads": "node ads.mjs",
     "shorts": "node shorts.mjs",
-    "preview": "node preview.mjs"
+    "preview": "node preview.mjs",
+    "ugc": "node ugc.mjs"
   },
   "dependencies": {
     "@remotion/cli": "4.0.520",
