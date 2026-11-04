@@ -1,10 +1,11 @@
 import React from "react";
 import { AbsoluteFill, Composition, Freeze, OffthreadVideo, staticFile } from "remotion";
 import { CUTS, Clip, DURATION, SHORTS, durationOf } from "./Clip";
-import { FPS } from "./kit";
+import { FPS, sec } from "./kit";
 import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
 import { SCREEN, SCREEN_SIZES, Screen, defaultSeconds, screenFrames, type Device } from "./Screen";
+import { End, LABEL, Label, type EndProps } from "./Ugc";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
 // Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
@@ -147,6 +148,18 @@ export const Root: React.FC = () => (
           />
         ))
       : null}
+    {/* ugc.mjs: the end card at any size and length, and the AI presenter label (src/Ugc.tsx). */}
+    <Composition
+      id="End"
+      component={End}
+      fps={FPS}
+      width={1080}
+      height={1920}
+      durationInFrames={sec(2.5)}
+      defaultProps={{ w: 1080, h: 1920, seconds: 2.5 } as EndProps}
+      calculateMetadata={({ props }) => ({ width: props.w, height: props.h, durationInFrames: Math.max(1, sec(props.seconds)) })}
+    />
+    <Composition id="Label" component={Label} fps={FPS} width={LABEL.w} height={LABEL.h} durationInFrames={1} defaultProps={{ text: "AI-generated presenter" }} />
     <Composition id="Thumbs" component={Thumbs} durationInFrames={1} fps={FPS} width={16 + FORMATS.length * (THUMB_W + 16)} height={Math.round(THUMBS_H)} />
     <Composition
       id="Frames"

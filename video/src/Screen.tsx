@@ -1004,15 +1004,15 @@ const Inner: React.FC<ScreenProps> = ({ device, seconds }) => {
   const windows = runs.map((run, k) => {
     const x = (k - shift) * (g.W + 48);
     if (Math.abs(k - shift) >= 1) return null;
-    const shown = run.filter((i, n) => (n === 0 || f >= starts[i]!) && !(run[n + 1] !== undefined && f >= starts[run[n + 1]!]! + 8));
-    // A content swap: the old rows go in 2 frames, then the new ones rise in over 6.
+    const shown = run.filter((i, n) => (n === 0 || f >= starts[i]!) && !(run[n + 1] !== undefined && f >= starts[run[n + 1]!]! + 6));
+    // A content swap: the old rows go in 2 frames as the new ones rise in over 5.
     // A header that stays the same (the same page, another filter) does not
     // fade at all: only what changed moves.
     const title = (i: number) => (beats[i]!.kind === "page" ? (beats[i] as PageBeat).title : null);
     const parts = shown.map((i, n) => {
       const nx = shown[n + 1];
       const out = nx === undefined ? 1 : 1 - lerp(f, starts[nx]!, starts[nx]! + 2, 0, 1, Easing.linear);
-      const inn = n === 0 ? 1 : lerp(f, starts[i]! + 2, starts[i]! + 8, 0, 1, Easing.out(Easing.cubic));
+      const inn = n === 0 ? 1 : lerp(f, starts[i]! + 1, starts[i]! + 6, 0, 1, Easing.out(Easing.cubic));
       const o = Math.min(out, inn);
       const sameNext = nx !== undefined && title(nx) !== null && title(nx) === title(i);
       const samePrev = n > 0 && title(i) !== null && title(shown[n - 1]!) === title(i);
