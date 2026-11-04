@@ -14,7 +14,7 @@ Say this once, in plain words, the first time it comes up: "A boost pays X to sh
 
 - Default: $45 over 3 days, split equally across the posts, each in its own ad group so X cannot hand all the money to one post early.
 - **Every boost carries the product video**: its screens recreated in HTML and animated, in their branding, no sound, 30 seconds at most (routines/video.md). A boost shows strangers the product, not only a sentence about it. The one exception is a Reddit post ad (Reddit, "Video or post"): text only, by the founder's choice.
-- **One cut per ad, and an image of each.** Once the ads are written and approved, and before the plan, run routines/video.md with input `ads`: each ad gets its own cut opening on its own hook (frame 0 is that hook), in 1:1, 4:5 and 9:16, plus an image of the ad in 4:5 and 1:1. They land in a folder on the founder's Desktop, `~/Desktop/<product>-ads-<date>/`, named by ad: `ad<n>-video-square.mp4` (X, Reddit), `ad<n>-video-portrait.mp4` (Meta feeds), `ad<n>-video-vertical.mp4` (Reels, Stories), `ad<n>-image-portrait.png` and `ad<n>-image-square.png`. Every file you upload or give the founder comes from that folder, never from the hidden `.shipfound/` folder. Pass each ad's files as its `media` in `boost_plan`.
+- **One cut per ad, and an image of each.** Once the ads are written and approved, and before the plan, run routines/video.md with input `ads`: each ad gets its own cut opening on its own hook (frame 0 is that hook), in 1:1, 4:5 and 9:16, plus an image of the ad in 4:5 and 1:1. They land in a folder on the founder's Desktop, `~/Desktop/<product>-ads-<date>/`, named by ad: `ad<n>-video-square.mp4` (X, Reddit), `ad<n>-video-portrait.mp4` (Meta feeds), `ad<n>-video-vertical.mp4` (Reels, Stories), `ad<n>-image-portrait.png` and `ad<n>-image-square.png`. Every file you upload or give the founder comes from that folder, never from the hidden `.shipfound/` folder. The video routine also saves them to the founder's Assets tab with `assets_save` (`source` boost; routines/video.md, "Also in Assets"), and the hand-over line gives the Desktop folder, then the Assets link. Pass each ad's files as its `media` in `boost_plan`.
 - Goal **visits** (default): each post runs as a Promoted-only copy, its text plus the product video as a video website card with its own tagged link. Only the ad audience sees it, never the founder's timeline, and every visit and signup traces back to its post.
 - Goal **reach**: the post is boosted as it is, for the founder who wants the post itself seen more, so only a post that already carries the video. Measured by engagements; visits cannot be traced to one post.
 - A post with few views is untested, not weak. A small account's post can go unseen just because few people follow it.
@@ -116,7 +116,7 @@ Close the routine as SKILL.md says, with the money spent in dollars on its own l
 1. **Read it.** The numbers from Ads Manager (`boost_record`), then `boost_results`.
 2. **Diagnose in two lines**, one each: **setup** (`costAlarm`: the price per view is far above the range; name the cause it gives) and **creative** (a click rate under the stop line at a normal price per view). Usually it is both, and each gets its line. A tagging problem (`taggingNote`) is fixed first.
 3. **New angles.** Write two or three new ads through the stranger test, each a different angle from the others and from every message in the history (`boost_results` with `history`). The founder approves every word.
-4. **New cuts and images** for the new ads (routines/video.md, `ads`), into a new Desktop folder.
+4. **New cuts and images** for the new ads (routines/video.md, `ads`), into a new Desktop folder and the Assets tab.
 5. **The fixed setup**: optimise for the step `ads_setup` recommends (no `force`), interests confirmed, no broad ones beside a narrow message, the Page picture set.
 6. **Plan it** with `boost_plan` and `refreshOf: <old id>`, so history shows where it came from and the old messages are never offered again. The money: what is left of the old budget (`refresh.remainingUsd`), unless the founder says yes to more.
 7. **The founder pauses the old ads first** (their click; on Reddit, from your numbered steps). Then the new campaign is filled and launched as for any boost. Record the old one stopped with its final numbers (`boost_record`, status stopped).
@@ -203,7 +203,7 @@ Before planning:
 - Whether a phone can take the first step is on file, read from the site and confirmed by the founder; the devices follow from it unless they chose otherwise.
 - Every ad passes the stranger test: the bottom rung of its ladder first, no product vocabulary in its first line or headline.
 - Two or three ads, each a different angle.
-- One cut per ad, frame 0 its hook, in 1:1, 4:5 and 9:16, plus its image, all in the Desktop folder.
+- One cut per ad, frame 0 its hook, in 1:1, 4:5 and 9:16, plus its image, all in the Desktop folder and saved to Assets.
 
 Setup:
 - Optimised for the step `ads_setup` recommends; a deeper one only with the founder's yes after hearing why (`force`), and never an event Events Manager lists as inactive.

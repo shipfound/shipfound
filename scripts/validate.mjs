@@ -49,6 +49,8 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 61, // every study is asked for first, whatever its price
   shorts_research: 2,
+  assets_save: 0,
+  social_setup: 0,
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
@@ -218,7 +220,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
