@@ -99,7 +99,9 @@ Input, optional:
 15. Connecting is the founder's, on the App Store page of the results app. It is two steps: they paste the public key Shipfound shows into Apple Ads, then type back three ids.
     1. Ask the founder for their target cost per trial (or per subscription, when the app has no trial) if they have one, and pass it as `targetCostPerStart`; a target cost per install goes in `targetCpi`.
     2. Call `ads_review`.
-    3. If `afterInstall.hold` is true, say that first: not one trial or subscription started after the installs the ads bought, so no bid goes up and no budget grows, and buying more installs will not fix it. Otherwise give the share of downloads that start one and the estimated cost per start, and say it is an estimate: Apple does not tie a trial to an ad.
+    3. If `afterInstall.hold` is true, say that first: not one trial or subscription started after the installs the ads bought, so no bid goes up and no budget grows, and buying more installs will not fix it. Each campaign that still spends has a pause proposal: say what each one spent, and that the pause holds the money until a change to the step after the download (step 16) is read. Offer step 16 next. Otherwise give the share of downloads that start one and the estimated cost per start, and say it is an estimate: Apple does not tie a trial to an ad.
+       - A resume proposal comes once starts follow a pause Shipfound proposed: say how many started and the daily budget it brings back.
+       - A countries proposal names the countries where the campaign bought installs and not one trial started while the app's own rate expected some: say each country with its installs and spend. Apple ties starts to a country, not to an ad, so this compares each country's downloads with the app's rate.
     4. Say each new proposal in one line: the change, the numbers behind it, and what it can add to daily spend.
     5. Add your own keyword ideas with `ads_propose`, each with why.
     6. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
