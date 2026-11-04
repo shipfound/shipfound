@@ -120,6 +120,9 @@ const TOOLS = {
   boost_plan: 0,
   boost_record: 0,
   boost_results: 0,
+  ad_angles: 6, // a read of peers' ads, said in the line; a read under 14 days old is free
+  boost_check: 0,
+  boost_change: 0,
   reach_find: 149, // Reddit; X is 109
   reach_drafts: 0,
   reach_mark: 0,
