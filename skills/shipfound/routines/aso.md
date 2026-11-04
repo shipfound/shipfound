@@ -113,14 +113,16 @@ Input, optional:
     4. Read `app_reviews` for what people say about their first minutes.
     5. Name where the offer is lost, with file and line: an offer most new users never reach (only after a lock they may never hit, behind a step they skip), a plan shown without its trial, a trial whose length or price is never said, a paywall with no way back to the app, a gate the person who pays never sees. Apple reports no screens, so never put a number on a screen.
     6. Pick one change for this app, by the case: the one that puts the trial in front of the person who decides, sooner or more clearly. Say it in one line with why, and wait for the founder's yes.
+       - `app_downloads` gives `plays`: changes other apps made at this step, each with its result and the posts behind it, not run here yet. Prefer the one that fixes where the walk found the offer lost, and say its result and source in the line ("8.1% to 27.5% in one app, from its founder's post"). A play's `kidsApp` "only" is for a Kids category app, "never" not for one. When the walk shows a loss no play covers (an offer the parent never reaches, a trial never named), that change comes first; no play is forced.
        - A Kids category app: the offer is for the parent, behind a parental gate; no purchase screen the child can act on, and no third-party analytics or ads SDK (Apple's Kids rules).
     7. Ship it as a split against today's flow, never as a straight swap:
        - Through the app's subscription service when it runs experiments (RevenueCat Experiments, Superwall, Adapty placements): the new flow is the treatment there.
        - Otherwise, a split the app makes at first launch, kept on the device, with each half reported where starts can be told apart: a subscriber attribute in the subscription service, or a separate introductory offer per half so Apple's report counts them apart.
        - With neither possible, say so: the change goes to everyone and is read before and after.
        Branch `shipfound/aso-trial-<theme>`, open the PR with the walk (step 3), the change and how it is split.
-    8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split }`. Grow holds the next change to this step while this one is read.
+    8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split, plays: [<play id>] }` (`plays` only when the change is one of them). Grow holds the next change to this step while this one is read, and then names the plays not run yet.
     9. The founder merges, builds and submits the release; only they do. Once Apple releases it, `app_downloads` reads the starts against the downloads again after two weeks.
+       - Paywall views: when the subscription service counts them (RevenueCat Paywalls, Superwall, Adapty), read paywall views and starts per half in its dashboard in the founder's Chrome, so the read says whether people saw the offer or saw it and left. Apple reports no screens; without such a service, starts per download is the read.
 
 ### The searches to target
 
