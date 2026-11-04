@@ -52,12 +52,20 @@ const TOOLS = {
   ugc_plan: 0,
   ugc_start: 662, // Higgsfield's estimate plus the margin; this is the most, for 15 seconds at 720p
   ugc_status: 0,
+  assets_save: 0,
+  social_setup: 0,
+  giveaway_plan: 0,
+  giveaway_start: 0,
+  giveaway_replies: 0,
+  giveaway_mark: 0,
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
   ideas_replies_find: 95, // nothing when the run writes no drafts
   outbound_targets: 149, // nothing when it finds nobody new; the last batch of each source is free
   mail_setup: 0,
+  followup_offer: 0,
+  followup_targets: 0,
   ideas_replies_save: 0,
   plan: 0,
   today: 0,
@@ -123,6 +131,9 @@ const TOOLS = {
   boost_plan: 0,
   boost_record: 0,
   boost_results: 0,
+  ad_angles: 6, // a read of peers' ads, said in the line; a read under 14 days old is free
+  boost_check: 0,
+  boost_change: 0,
   reach_find: 149, // Reddit; X is 109
   reach_drafts: 0,
   reach_mark: 0,
@@ -137,6 +148,7 @@ const TOOLS = {
   funnel_check: 0,
   landing_check: 0, // retired: points to /shipfound:convert, reads nothing; removed the release after
   offer_plan: 0,
+  pricing_check: 0,
 };
 // The agent states the price and waits for a yes above $1, and before every study (SF_CONFIRM_ABOVE_CENTS).
 const CONFIRM_ABOVE_CENTS = 100;
@@ -154,6 +166,9 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // boost.md: the phone capture goal and the hand-off to the signup follow-up
+  "setup_link",
+  "signup_followup",
   // Flutter's on-device storage, named in the aso routine's rating prompt
   "shared_preferences",
   // convert_pages findings
@@ -221,7 +236,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "ugc", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

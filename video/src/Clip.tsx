@@ -185,10 +185,11 @@ const Hook: React.FC<{ size: Size }> = ({ size }) => {
   );
 };
 
-const EndCard: React.FC<{ size: Size }> = ({ size }) => {
+/** The end card; `length` (frames) when it runs longer than the cut's own, as under a voice's last line (ugc.mjs). */
+export const EndCard: React.FC<{ size: Size; length?: number }> = ({ size, length = END + 6 }) => {
   const spec = useSpec();
   const col = useCol();
-  const { frame, enter } = useFade(END + 6);
+  const { frame, enter } = useFade(length);
   const { fps } = useVideoConfig();
   const unit = Math.min(size.w, size.h);
   const cta = settle(frame - 8, fps, { damping: 14, stiffness: 160 });
