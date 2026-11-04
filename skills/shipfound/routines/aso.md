@@ -99,7 +99,9 @@ Input, optional:
 15. Connecting is the founder's, on the App Store page of the results app. It is two steps: they paste the public key Shipfound shows into Apple Ads, then type back three ids.
     1. Ask the founder for their target cost per trial (or per subscription, when the app has no trial) if they have one, and pass it as `targetCostPerStart`; a target cost per install goes in `targetCpi`.
     2. Call `ads_review`.
-    3. If `afterInstall.hold` is true, say that first: not one trial or subscription started after the installs the ads bought, so no bid goes up and no budget grows, and buying more installs will not fix it. Otherwise give the share of downloads that start one and the estimated cost per start, and say it is an estimate: Apple does not tie a trial to an ad.
+    3. If `afterInstall.hold` is true, say that first: not one trial or subscription started after the installs the ads bought, so no bid goes up and no budget grows, and buying more installs will not fix it. Each campaign that still spends has a pause proposal: say what each one spent, and that the pause holds the money until a change to the step after the download (step 16) is read. Offer step 16 next. Otherwise give the share of downloads that start one and the estimated cost per start, and say it is an estimate: Apple does not tie a trial to an ad.
+       - A resume proposal comes once starts follow a pause Shipfound proposed: say how many started and the daily budget it brings back.
+       - A countries proposal names the countries where the campaign bought installs and not one trial started while the app's own rate expected some: say each country with its installs and spend. Apple ties starts to a country, not to an ad, so this compares each country's downloads with the app's rate.
     4. Say each new proposal in one line: the change, the numbers behind it, and what it can add to daily spend.
     5. Add your own keyword ideas with `ads_propose`, each with why.
     6. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
@@ -113,14 +115,16 @@ Input, optional:
     4. Read `app_reviews` for what people say about their first minutes.
     5. Name where the offer is lost, with file and line: an offer most new users never reach (only after a lock they may never hit, behind a step they skip), a plan shown without its trial, a trial whose length or price is never said, a paywall with no way back to the app, a gate the person who pays never sees. Apple reports no screens, so never put a number on a screen.
     6. Pick one change for this app, by the case: the one that puts the trial in front of the person who decides, sooner or more clearly. Say it in one line with why, and wait for the founder's yes.
+       - `app_downloads` gives `plays`: changes other apps made at this step, each with its result and the posts behind it, not run here yet. Prefer the one that fixes where the walk found the offer lost, and say its result and source in the line ("8.1% to 27.5% in one app, from its founder's post"). A play's `kidsApp` "only" is for a Kids category app, "never" not for one. When the walk shows a loss no play covers (an offer the parent never reaches, a trial never named), that change comes first; no play is forced.
        - A Kids category app: the offer is for the parent, behind a parental gate; no purchase screen the child can act on, and no third-party analytics or ads SDK (Apple's Kids rules).
     7. Ship it as a split against today's flow, never as a straight swap:
        - Through the app's subscription service when it runs experiments (RevenueCat Experiments, Superwall, Adapty placements): the new flow is the treatment there.
        - Otherwise, a split the app makes at first launch, kept on the device, with each half reported where starts can be told apart: a subscriber attribute in the subscription service, or a separate introductory offer per half so Apple's report counts them apart.
        - With neither possible, say so: the change goes to everyone and is read before and after.
        Branch `shipfound/aso-trial-<theme>`, open the PR with the walk (step 3), the change and how it is split.
-    8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split }`. Grow holds the next change to this step while this one is read.
+    8. Call `record_action` with `module` ASO, `kind` PR, `url` the PR, and `meta` `{ appStoreId, step: "trial", change, split, plays: [<play id>] }` (`plays` only when the change is one of them). Grow holds the next change to this step while this one is read, and then names the plays not run yet.
     9. The founder merges, builds and submits the release; only they do. Once Apple releases it, `app_downloads` reads the starts against the downloads again after two weeks.
+       - Paywall views: when the subscription service counts them (RevenueCat Paywalls, Superwall, Adapty), read paywall views and starts per half in its dashboard in the founder's Chrome, so the read says whether people saw the offer or saw it and left. Apple reports no screens; without such a service, starts per download is the read.
 
 ### The searches to target
 
@@ -173,11 +177,11 @@ Input, optional:
 
 ### Asking for a rating
 
-21. A rating shows beside the app in every search result, and from 4.5 stars and 20 ratings it can go on the screenshots. This adds Apple's rating prompt right after the app's first win, as a PR to the app. It needs the app's repo (SKILL.md, "The repo"); without it, say so and stop.
+21. A rating shows beside the app in every search result, and from 4.5 stars and 20 ratings it can go on the screenshots. This adds Apple's rating prompt right after the app's third win, as a PR to the app: by then the person has come back to the app's core job and liked it (one app asked after a key action was done 3 times and got 80 ratings at 4.8). It needs the app's repo (SKILL.md, "The repo"); without it, say so and stop.
     1. Read the rating now (`app_add` or `app_audit`) and say it in one line. Under 4 stars, the low reviews come first (step 10): a prompt then asks unhappy people.
     2. Find what the app does today: search the code for `requestReview`, `SKStoreReviewController`, `AppStore.requestReview`, `StoreReview`, `InAppReview`, `in_app_review`. If it already asks, say where and when, and stop unless the moment is wrong (first launch, onboarding, after an error).
-    3. Find the first win in the code: the first time the app's core job succeeds for the person (a lesson finished, a task done, a first result shown, a streak kept). Name it with file and line. Never during onboarding, on first launch, right after an error, or on the paywall: Apple rejects prompts in onboarding.
-    4. Add the prompt right after that moment, with the stack's own API:
+    3. Find the win in the code: each time the app's core job succeeds for the person (a lesson finished, a task done, a result shown, a streak kept). Name it with file and line. Never during onboarding, on first launch, right after an error, or on the paywall: Apple rejects prompts in onboarding.
+    4. Count the wins on the device (the stack's own storage: `UserDefaults`/`@AppStorage`, `AsyncStorage`, `shared_preferences`...), and ask right after the third, with the stack's own API:
        - SwiftUI: `@Environment(\.requestReview)`, then `requestReview()`.
        - UIKit: `AppStore.requestReview(in: windowScene)` (iOS 16+), else `SKStoreReviewController.requestReview(in:)`.
        - Expo: `expo-store-review` (`StoreReview.isAvailableAsync()`, then `StoreReview.requestReview()`).
@@ -185,9 +189,9 @@ Input, optional:
        - The same call asks on Google Play when the app ships there too.
        Keep a flag on the device so it asks at most once per app version; Apple shows it at most three times a year anyway.
     5. A Kids category app asks only in the parent area, after the parental gate (after the parent sees the child's progress), never where the child plays.
-    6. Never ask only happy users, never offer anything for a rating, never put a custom "rate us" screen before Apple's prompt.
+    6. Never ask only happy users, never offer anything for a rating, never put a custom "rate us" or "Enjoying it?" screen before Apple's prompt: sending unhappy people elsewhere first is review gating, which Google Play bans and Apple's own prompt is built to replace.
     7. Ratings cannot be told apart by who saw the prompt, so this is read before and after: say so in the PR. Branch `shipfound/aso-rating-prompt`, open the PR with the moment (file and line) and why.
-    8. Call `record_action` with `module` ASO, kind PR, `url` the PR, and `meta` `{ appStoreId, step: "rating_prompt", ratingsAt: <rating count now>, moment }`. Grow holds the move while the ratings are read.
+    8. Call `record_action` with `module` ASO, kind PR, `url` the PR, and `meta` `{ appStoreId, step: "rating_prompt", ratingsAt: <rating count now>, moment, after: 3 }`. Grow holds the move while the ratings are read.
     9. The founder merges, builds and submits the release; only they do. Two weeks after Apple releases it, compare the rating count with `ratingsAt`.
 
 ### In-app purchase names
@@ -251,7 +255,7 @@ Input, optional:
 ### An app preview video
 
 26. A preview autoplays muted at the top of the product page, before any screenshot. Apple requires it to be captured from the app itself: never the boost video (routines/video.md), whose screens are recreated, and never AI footage. It needs the app's repo and a Mac with Xcode.
-    1. Pick the moment: the first win (step 21) and the one or two things the open searches promise. 15 to 30 seconds in all; the first 3 seconds carry it.
+    1. Pick the moment: the app's win (step 21) and the one or two things the open searches promise. 15 to 30 seconds in all; the first 3 seconds carry it.
     2. Set up the kit as the video routine does (step 2 there), in `.shipfound/video/`.
     3. Boot the largest iPhone simulator (6.9 inch) with the app, clean the status bar (`xcrun simctl status_bar booted override --time 9:41 --batteryLevel 100 --cellularBars 4 --wifiBars 3`), and record: `xcrun simctl io booted recordVideo --codec=h264 .shipfound/video/public/rec1.mp4`. The founder taps through the moment while it records; stop it with Ctrl-C. One recording per part is fine.
     4. Write `public/preview.json`: `product`, and the clips, each a recording with `from` and `to` in seconds and a caption: what the viewer gets, in the words of the searches the app aims at, 7 words or fewer, in the listing's language.
@@ -266,15 +270,16 @@ Input, optional:
     1. On Free, only the listing check and the search check run here; the fixes, the aimed words and a new language are open to every account (step 6).
     2. Say the set in a few lines: each action and why, with its numbers. Then `held`, one line each (a language whose listing changed in the last two weeks waits until its ranks are read), and `reads` (what moved in App Store search).
     3. Do the actions in order. Skip one only when it cannot be done here, and say why.
+       - `undo`: a released change cost search downloads (its `why` has the numbers, 14 days each side). Put back the name, subtitle and keyword field as they were: from `restore` when the change recorded them, else from the repo's `fastlane/metadata` history or the previous version in App Store Connect (in the founder's Chrome). Say the numbers first, then show the fields (step 4); `meta` gets `step: "undo"`, `country` and `released` from the action's `record`.
        - `audit` or `fixes`: steps 4 to 7, the fixes aimed at the latest search checks.
        - `keywords`: step 17 for that country. Then aim the listing at what it found (the next bullet) in the same sitting.
        - `aim`: for that country's language (`locale`, or the main listing when there is none), write the name, subtitle and keyword field for the action's `searches` by the rules in the reference ("Which searches to target"): the main open search in the name or subtitle, its other words and the next searches in the keyword field, a search the app already ranks for kept where it is. Never put a competitor's name or a trademark in any field. Call `app_audit` with the new text and fix until no high finding is left.
-       - `countries`: step 19, sub-step 1, and the founder picks. `country`: step 19 from sub-step 3, for that country.
+       - `countries`: step 19, sub-step 1, and the founder picks. `country`: step 19 from sub-step 3, for that country. When the action has `keep`, the app ranks there today for those searches from its current listing: say so, and put their words in the new keyword field as well, in the language's own spelling where people type it that way, so the new listing does not lose them. Add them to the ranks tracked there (`app_ranks`).
        - `study`: a finding from the study of apps a step ahead (its `key` starts with `RESEARCH:`). Say it in a line with its `link`, so the founder can read the whole study ("Kodable and Tynker each offer a 7 day trial on the yearly plan. All of it: <link>."). On a yes, `grow_answer` yes on its `key`, then run the part of this routine its `command` names (`set`: fold it into the `aim` above; `trial`, `test`, `purchases`, `prices`, `rating` or `featuring`: that step), with what the apps do as its starting point; every `record_action` for it carries `meta.research` with the key (routines/research.md, step 6). It is not listing work, so it never holds the set back.
     4. Show the founder every field changed in one table: locale, field, before, after, characters, and an English translation beside another language's lines. Say the agent wrote them. Nothing ships before their yes.
     5. Ship it as one change, as step 8 says: `app_metadata_stage` with every locale changed (App Store Connect connected), or one PR on `shipfound/aso-<week>`.
-    6. `record_action` once for each action shipped, `module` ASO, `kind` PR (or STORE_LISTING once Apple released it), `meta` the action's `record` plus `appStoreId` (a new language keeps `step` "country", `country` and `locale`). The week's set then counts as done, and grow offers the next one on Monday.
-    7. The founder submits the version; only they do. Two weeks after Apple releases it, read the ranks (step 18) before the same words change again; the set holds that language until then by itself.
+    6. `record_action` once for each action shipped, `module` ASO, `kind` PR (or STORE_LISTING once Apple released it), `meta` the action's `record` plus `appStoreId` and `before`: every field you changed as it was, `{ "<field>.<locale>": "<old text>" }` (a new language keeps `step` "country", `country` and `locale`, and has no `before`). The week's set then counts as done, and grow offers the next one on Monday.
+    7. The founder submits the version; only they do. Two weeks after Apple releases it, read the ranks (step 18) before the same words change again; the set holds that language until then by itself. The set also reads the change on App Store search, 14 days before the release against 14 after: if search downloads a day fell by 30% or more it opens with an `undo`, otherwise it says the change was kept in `reads`. The release counts from a STORE_LISTING record, or from the day `verify` saw the change live, so call `verify` once Apple releases a PR'd change.
 
 ### Close
 
