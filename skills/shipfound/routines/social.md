@@ -10,6 +10,7 @@ Input: `setup`, `tiktok`, `instagram`, or nothing (the same as `setup`). Grow of
 - The founder types the email or phone, the password, every code and the birthday, and presses every create, save, switch and confirm button. You never type a password or a code.
 - No warm-up automation, no sockpuppets, no follow and unfollow, no bought followers, views or likes, no engagement groups. The first days are the founder using the app by hand.
 - A post with AI video in it carries TikTok's AI-generated content label (and Instagram's AI info label), which the founder turns on when posting.
+- **A TikTok post about the product goes up from the TikTok phone app, never the web uploader, with More options, Content disclosure, Your brand on.** Its caption says "Link in bio", never a URL, and it has a sound from TikTok's Commercial Music Library. TikTok keeps an undisclosed post about the account's own product out of the For You feed, and a post outside it gets no views and cannot be promoted.
 - Never post the same cut twice: each post is new slides or a new cut.
 - A Kids category app speaks to the parent: the account is the app's, never a child's, and no child is on the profile photo.
 
