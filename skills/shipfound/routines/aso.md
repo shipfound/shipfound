@@ -104,7 +104,8 @@ Input, optional:
        - A countries proposal names the countries where the campaign bought installs and not one trial started while the app's own rate expected some: say each country with its installs and spend. Apple ties starts to a country, not to an ad, so this compares each country's downloads with the app's rate.
     4. Say each new proposal in one line: the change, the numbers behind it, and what it can add to daily spend.
     5. Add your own keyword ideas with `ads_propose`, each with why.
-    6. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
+    6. **How the account is built** (`structure`), after the proposals, one line per finding: new users only, Search Match kept to one discovery ad group with no keywords, exact keywords apart from broad ones, a discovery campaign with the other campaigns' exact keywords as its exact negatives, iPad apart when the app is used there. These are Apple's own campaign structure; the founder changes ad groups and campaigns in Apple Ads (ads.apple.com) themselves. Offer to walk them through one at a time, the costliest first (customer type, then Search Match). Never as a proposal, and never say one is done until they say so.
+    7. Every change waits for the founder's Approve on the App Store page. Nothing is spent before that, so never say a change is made until they approve it.
 
 ### From download to trial
 
