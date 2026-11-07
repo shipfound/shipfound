@@ -288,6 +288,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `app_events` | `{ appId? }` | The app's in-app events: name, badge, state, dates |
 | `app_prices` | `{ appId? }` | Lower subscription prices per country from purchasing power, as proposals the founder approves in the results app |
 | `app_event_create` | `{ appId?, referenceName, badge, purpose, primaryLocale, publishStart, eventStart, eventEnd, localizations, ... }` | An in-app event as a draft with its text per language; the founder adds its images and submits it |
+| `app_featuring` | `{ appId? }` | Before a nomination: Apple's factors with what the listing shows and what to check, the moments ahead for the app's category, the nominations and events already in App Store Connect |
 | `app_nomination_create` | `{ appId?, name, type, description, publishStartDate, ... }` | A featuring nomination as a draft, never submitted; the founder submits it |
 | `app_cpp_list` | `{ appId? }` | The app's custom product pages with their ppid |
 | `app_cpp_create` | `{ appId?, name, locale?, promotionalText?, deepLink?, keywords?, screenshots? }` | Make a custom product page as a draft with its keywords and screenshots; the founder submits it |
