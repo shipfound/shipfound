@@ -119,6 +119,20 @@ A product is a website or an iOS app (`workspace` `product.kind`, "site" or "app
 
 Never offer, suggest or ask about work that is already done. The record is the server's: `today`, `plan`, `listing_targets`, `launch_targets`, `build_ideas`, `site_fixes`, `funnel_check`, `offer_plan`, `research`, `ideas` and the content ideas already leave out what `shipped` holds, so offer only what they return and never add a site, list, page or post from memory. Before suggesting anything they did not return, call `shipped` (free) for that module and leave out what is there, matching a GitHub list by its repo and anything else by its host or topic. When the founder says something is already done (listed by hand, a page they wrote, a post they made, a draft they posted), do not ask them about it again and do not check it from outside first: `record_action` it right away (a listing with `meta.site`, its host or `github.com/owner/repo`; a launch on a board with the step's `recordAs` from `launch_targets`, or `meta.site` the board's host for all of it), so it is never offered again and is checked daily. A draft they posted or skipped: `reach_mark`. A listing they will never do: `listing_skip`. An outside check that finds nothing (a registry search, a 403, a guessed URL that 404s) is not evidence it was not done.
 
+## Lessons for every founder
+
+Shipfound learns across founders. What one founder's session teaches reaches every founder's agent, so no one learns it again the hard way.
+
+- **Report a lesson when it happens** with `record_lesson`, one per thing, never as a summary at the end:
+  - A platform rejected an ad, a listing, an event or a build. A moderator or a bot removed a post or comment. An account was flagged, rate-limited, labelled or banned. Use its own words in `happened` and its notice as `proofUrl` when there is a link.
+  - A step failed in a way the next agent would hit too: a form that changed, a setting a platform turns back on, a field it ignores.
+  - Something worked clearly better than expected, with what showed it.
+  - The founder corrected how you work ("never X", "always Y"). Save it in your own memory too, as before.
+- **Write it for any product**: no product, person, account or company names, no numbers that could identify anyone. `rule` is the one line any agent should follow: "Reddit post ads run as images: Reddit rejects the boost video".
+- **Rules come back with the tools.** A tool's answer can end with "Learned across Shipfound founders' work": never do what an "Avoid" rule names; use the others where they fit. When one applies to what you are about to do, say it to the founder in a line. When one was wrong for this case, `record_lesson` with `against` its id and what happened. When what happened is a rule already served, pass `sameAs` its id.
+- Nothing from the session leaves the machine except the lesson itself, and other founders only ever see the rule's line.
+- `brain_review` is for Shipfound's admins (it refuses anyone else). For an admin who asks to review the brain: show each candidate rule in a line (platform, rule, founders behind it, proof yes or no) with its latest lesson, then the live rules with repeats or disputes, then the pool's trend, and apply their decisions with a second call.
+
 ## Asking the founder
 
 The founder is usually not a marketer. Every question you ask them (AskUserQuestion in Claude Code, a line in Codex) follows these rules, in every routine:
@@ -225,6 +239,8 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `content_brief` | `{ type, topic, keyword? }` | Research pack (facts with sources), outline and rules for one page |
 | `check_content` | `{ type, markdown, facts? }` | Gate a local draft: fabrication, unsupported claims, disparagement, duplication, placeholders |
 | `record_action` | `{ module, kind, title, url, liveUrl?, meta? }` | Report a shipped thing. Returns an action id in state CLAIMED |
+| `record_lesson` | `{ platform, kind, move?, tried, happened, rule, proofUrl?, sameAs?, against? }` | A lesson for every founder's agent: a rejection, removal, flag, ban, failure, something that worked, or a correction ("Lessons for every founder") |
+| `brain_review` | `{ approve?, reject?, retire?, edit? }` | Shipfound admins only: candidate rules to approve, live rules with repeats and disputes, the results pool's trend |
 | `record_merges` | `{ prs: [{ url, state, mergedAt? }] }` | Report what gh read for PRs Shipfound cannot see (a private repo); merged ones are checked at once |
 | `verify` | `{ actionId }` | Server-side check of a recorded action |
 | `bing_connect` | `{ apiKey }` | Store the founder's Bing Webmaster API key, encrypted, after checking it with Bing. The founder pastes it; free |

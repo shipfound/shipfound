@@ -1,7 +1,7 @@
 ---
 description: Start your own TikTok and Instagram for your slideshows and videos. Each signup opened in your Chrome for you to create, then the profile filled from your site with a tagged link, switched to Business and connected for ads. Free.
 argument-hint: "[setup | tiktok | instagram]"
-allowed-tools: AskUserQuestion, Read, Grep, Glob, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_access, mcp__plugin_shipfound_shipfound__social_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__verify, mcp__plugin_shipfound_shipfound__shipped
+allowed-tools: AskUserQuestion, Read, Grep, Glob, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__record_access, mcp__plugin_shipfound_shipfound__social_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__record_lesson, mcp__plugin_shipfound_shipfound__verify, mcp__plugin_shipfound_shipfound__shipped
 ---
 
 # /shipfound:social

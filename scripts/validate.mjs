@@ -79,6 +79,8 @@ const TOOLS = {
   content_brief: 7,
   check_content: 0,
   record_action: 0,
+  record_lesson: 0,
+  brain_review: 0,
   record_merges: 0,
   verify: 0,
   bing_connect: 0,

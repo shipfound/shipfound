@@ -1,7 +1,7 @@
 ---
 description: See every user and what they do after signing up. Adds a few lines to your product's server (signup, sign-in, main actions, payment), then reads who activated, who comes back and where they came from. Free.
 argument-hint: "[read]"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__users_activation, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__record_action
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__analytics, mcp__plugin_shipfound_shipfound__users_activation, mcp__plugin_shipfound_shipfound__tracking_check, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__record_lesson
 ---
 
 # /shipfound:users

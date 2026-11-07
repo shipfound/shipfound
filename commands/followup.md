@@ -1,7 +1,7 @@
 ---
 description: A personal note to each person who signed up and got stuck, saying what they did, with the one offer you pick, drafted in your mailbox for you to send. Read two weeks later on whether they activated or paid. Free.
 argument-hint: "[offer]"
-allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__followup_offer, mcp__plugin_shipfound_shipfound__followup_targets, mcp__plugin_shipfound_shipfound__mail_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped
+allowed-tools: AskUserQuestion, Read, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__followup_offer, mcp__plugin_shipfound_shipfound__followup_targets, mcp__plugin_shipfound_shipfound__mail_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__record_lesson, mcp__plugin_shipfound_shipfound__shipped
 ---
 
 # /shipfound:followup
