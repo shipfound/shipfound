@@ -57,7 +57,11 @@ Each in-app purchase and subscription has a display name (2 to 30 characters) an
 
 ## Featuring and in-app events
 
-- **Nominations:** Apple's editors choose what to feature partly from nominations (App Store Connect, Featuring). Send one weeks before a launch, an update or new content, with the release date. Say what is new and why it matters, plainly.
+- **Nobody applies for featuring or awards.** App of the Day, Apps We Love, App Store Awards and Apple Design Awards are all chosen by Apple's editors. A nomination (App Store Connect, Featuring) is the only way to put an app in front of them.
+- **What the editors weigh** (developer.apple.com/app-store/getting-featured): user experience, UI design, innovation (new Apple technologies used for a real problem), uniqueness, accessibility, localization, and the product page (screenshots, previews, ratings and reviews). For games, also gameplay, art, controls, story, replayability, sound, performance and value. "We're always looking to highlight new apps, games, significant updates, In-App Events, great stories, and more."
+- **Notice:** at least two weeks; up to three months ahead for wider consideration.
+- **A nomination worth reading:** something new on a date, tied to a moment the editors are planning for (a season, a holiday, an awareness day the app has content for), written to an editor: what is new, for whom, why it matters, who made it and why, and which factors it shows. Plain words, no superlatives.
+- **Every field:** the type (launch, update, new content), the date, device families, locales, territories, the in-app events it is about, and supplemental material (the app's site, a video, a press kit).
 - **In-app events:** a card in search results and on the product page, for something time-bound in the app. Name 30 characters, short description 50, long description 120. It runs at most 31 days and shows from up to 14 days before. It needs a card image (1920x1080) and a page image (1080x1920). Events can be found in search by their own words, so write the name in the words people search.
 
 ## App preview video

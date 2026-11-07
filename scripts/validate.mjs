@@ -118,6 +118,7 @@ const TOOLS = {
   seo_programmatic_check: 0,
   app_prices: 0,
   app_event_create: 0,
+  app_featuring: 0,
   app_nomination_create: 0,
   app_cpp_list: 0,
   app_cpp_create: 0,

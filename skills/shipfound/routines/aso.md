@@ -207,16 +207,28 @@ Input, optional:
 ### Featuring and events
 
 23. Two ways to be seen beyond search, both drafted in App Store Connect for the founder to submit. Both need something real and new in the app: read the repo's recent commits and the release being prepared. With nothing new, say so and stop.
-    1. **A featuring nomination** asks Apple's editors to consider the app around a date: a launch, an update (APP_ENHANCEMENTS) or new content (NEW_CONTENT).
-       - Set the date to the release date, weeks ahead; editors need the notice.
-       - Write the description plainly: what is new, for whom, and why it matters to them. No superlatives, no claims about other apps.
-       - Add the app's site or a short video as supplemental material when there is one.
-       - Show the founder the text. On their yes, `app_nomination_create` drafts it. The founder submits it (App Store Connect, Featuring, Nominations), then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "nomination", nominationId }`.
+    - Asked how to apply for App of the Day, Apps We Love, App Store Awards or Apple Design Awards: say plainly that none takes applications. Apple's editors choose. A featuring nomination is the one way to put the app in front of them, so this step is the answer.
+    1. **A featuring nomination** asks Apple's editors to consider the app around a date: a launch (APP_LAUNCH), an update (APP_ENHANCEMENTS) or new content (NEW_CONTENT).
+       1. Call `app_featuring`. It returns Apple's own factors, each with what the listing shows and what to check; the moments ahead that suit the app's category; and the nominations and events already in App Store Connect.
+       2. Read the app against each factor: run each `check` in the repo and the listing, and `app_audit` for the product page. Tell the founder the two strongest and the one gap worth closing before nominating (often accessibility or the product page), in a short list. A gap is a fix to offer, not a reason to wait, unless it breaks the app for someone.
+       3. Choose what to nominate, and propose it; never hand the choice back as an open question:
+          - What is new: the release being prepared, new content, or an event. Name it from the repo, with when it can ship.
+          - The moment: one of `moments` that the new thing fits, soonest first. A moment marked `needs` counts only when the app has what it names. With no moment that fits, the release date is the date.
+          - When nothing is new yet, propose the smallest true thing that fits the next moment and can ship two weeks before it (one lesson, a challenge from content that exists, the iPad layout already planned), and say what it takes.
+       4. Write the nomination to an editor, not to a buyer:
+          - What is new, for whom, and why it matters to them, in two or three sentences.
+          - The story: who made it and why, in the founder's own words (`notes_context`, or ask in one line).
+          - Which of Apple's factors it shows, with the proof (the accessibility work, the languages, the Apple features used).
+          - Plain words, no superlatives, no claims about other apps, nothing that is not in the app on the date.
+       5. Fill every field: the date (the moment's first day or the release date; Apple asks for at least two weeks' notice and up to three months for wider consideration), the device families the app runs well on, the locales, the territories when it is for one country, the event's id when there is one (`inAppEventIds`), and the app's site or a short video as supplemental material.
+       6. Show the founder the text and the fields. On their yes, `app_nomination_create` drafts it. The founder submits it (App Store Connect, Featuring, Nominations), then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "nomination", nominationId }`.
+       7. Apple may email the account's Admin, App Manager or Marketing people for promotional artwork. Tell the founder to watch for it and answer fast.
     2. **An in-app event** is a card in search results and on the product page, for at most 31 days, shown from up to 14 days before it starts. It is for something time-bound that people can do in the app: a challenge, a new season, a big update. Never an ad for the app itself.
        - Call `app_events` for what ran before.
        - Pick the badge and purpose that fit (a challenge to bring new people: CHALLENGE, ATTRACT_NEW_USERS).
        - Write the name (30), short description (50) and long description (120) for the primary language, and for each language the listing has, in that language.
        - Give the deep link that opens the event in the app, when the app has one.
+       - An event for a moment is drafted before its nomination, so the nomination can name it.
        - Show the founder. On their yes, `app_event_create` drafts it. The founder adds the card image (1920x1080) and page image (1080x1920) in App Store Connect and submits it, then `record_action` with `module` ASO, kind STORE_LISTING, `meta` `{ appStoreId, step: "event", eventId }`.
        - A Kids category app's event says nothing that sends the child out of the app or to a purchase.
 
