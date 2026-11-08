@@ -137,6 +137,12 @@ const TOOLS = {
   ad_angles: 6, // a read of peers' ads, said in the line; a read under 14 days old is free
   boost_check: 0,
   boost_change: 0,
+  bullseye_plan: 0,
+  bullseye_add: 0,
+  bullseye_batch: 0,
+  bullseye_mark: 0,
+  bullseye_read: 0,
+  bullseye_change: 0,
   reach_find: 149, // Reddit; X is 109
   reach_drafts: 0,
   reach_mark: 0,
@@ -169,6 +175,10 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // bullseye.md: channel names and the user event a test reads
+  "x_dm",
+  "reddit_dm",
+  "plugin_connected",
   // boost.md: the phone capture goal and the hand-off to the signup follow-up
   "setup_link",
   "signup_followup",
@@ -239,7 +249,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
