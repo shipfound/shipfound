@@ -143,6 +143,7 @@ const TOOLS = {
   reddit_notices: 0,
   notes_context: 0,
   notes_voice: 0,
+  writing_check: 0,
   notes_save: 0,
   listing_skip: 0,
   launch_targets: 0,

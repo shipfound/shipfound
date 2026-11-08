@@ -35,15 +35,15 @@ Input: a source key from grow (`milestone:...`, `launch:...`, `feature:...`, `to
    - Launch, free tool or skill: the post or page in `facts`. Open it and read what it says.
    - A week's work: the commits you counted, and the code they change. Say what changed for the person using the product, not the files.
    - Ask the founder one question for the part only they know: what was hard, what surprised them, what is next. One line from them makes the note theirs. Use their words.
-6. **Write the drafts**, one per open platform for this source:
+6. **Build each draft pick by pick**, one per open platform for this source ("Pick by pick", below). Never hand over finished prose: a post the founder only approves reads as AI and gets removed (one did, Nov 8). What each platform needs:
    - **In their voice.** Their stored rules beat the Voice section of SKILL.md on casing, emoji, length and tone. These house rules stay: no made-up numbers, none of the banned words, no em dashes.
-   - **X:** one post, at most 280 characters as X counts them (each link is 23). Lead with what happened. A feature leads with the problem, then what shipped ("clients ignore invoice emails. so now [product] sends the reminder on WhatsApp"), in their voice. A link only when the source has one worth opening (the launch, the tool, the product), to their own site or the launch post.
-   - **Reddit:** pick the subreddit from `subreddits` that fits: r/SideProject for a launch or a tool, r/indiehackers or r/EntrepreneurRideAlong for a milestone with what they learned, r/buildinpublic for progress. Read its `rules` and `gate` and keep every one. A plain title (what happened, with the number if they share it), never clickbait. The body: what happened, how, what they learned, what is next, and one honest question for the sub. A link only where the rules allow it; when unsure, none. Before their first post in a sub, ask them to check its account age and karma minimums (SKILL.md, "Reddit: you post it").
+   - **X:** one post, at most 280 characters as X counts them (each link is 23). Lead with what happened. A feature leads with the problem, then what shipped. A link only when the source has one worth opening, to their own site or the launch post.
+   - **Reddit:** pick the subreddit from `subreddits` that fits: r/SideProject for a launch or a tool, r/indiehackers or r/EntrepreneurRideAlong for a milestone with what they learned, r/buildinpublic for progress. Read its `rules` and `gate` and keep every one. A plain title, never clickbait. A link only where the rules allow it; when unsure, none. Before their first post in a sub, ask them to check its account age and karma minimums (SKILL.md, "Reddit: you post it").
 7. **The image**, one per note, saved under `.shipfound/notes/<YYYY-MM-DD>-<slug>/` in the repo root (add `.shipfound/` to `.git/info/exclude` if it is not there):
    - A launch, a tool or a week's work: a screenshot of the real screen it is about. Use the video kit's capture (routines/video.md, step 4: `shots.json` with that page, then `node capture.mjs`), or a frame of the product video if there is one (`npx remotion still Square <file> --frame=<n>` in `.shipfound/video/`). Use a demo account, never a customer's data.
    - A milestone: a card made in code. A small HTML page in their brand (the logo, fonts and colors the capture reads) with the number and what it counts, nothing else, then `npx playwright screenshot --viewport-size=1200,675 file://<card.html> x.png`.
    - Look at it before you use it: nothing cut off, nothing private, readable on a phone.
-8. **Show the founder** each draft and the image. In Claude Code, one AskUserQuestion per platform: "Use it (Recommended)", "Edit it", "Leave <platform> out". Their edits go in as they wrote them.
+8. **Show the founder** the assembled draft and the image, with `writing_check`'s flags. They change any line or keep it; their edits go in as they wrote them. "Leave <platform> out" is always an option.
 9. **Save** with `notes_save` (free): `source` its key and title, `x` and or `reddit` with the text and the image path. The source is written now and is never offered again. Saving again for the same source revises a draft they have not posted.
 10. **Fill it in.**
     - **X:** open the `openUrl` it returns in their Chrome (X's composer with the post in it), attach the image, and stop. They read it and post it.
@@ -51,6 +51,15 @@ Input: a source key from grow (`milestone:...`, `launch:...`, `feature:...`, `to
 11. End with "Tell me when you have posted it" and stop. When they give the links, call `reach_mark` with `status` posted and the `url` for each (ids from `notes_save`), so each is recorded. A note they leave out: `reach_mark` with `status` skipped. Then the hand-over (SKILL.md), once they say they have posted.
 
 A note is a few minutes' work and grow offers one at most every 3 days on X and every 14 on Reddit. Never offer a second note in the same sitting.
+
+## Pick by pick
+
+How every post and reply Shipfound helps write is built (notes, reach replies, ideas replies). The founder picks, edits and adds; the agent never hands over finished prose.
+
+1. **Angle.** Two to four angles, each one line in plain words built from the material: a number reveal, what went wrong, a lesson, a question to the community (for a reply: answer from my experience, share my number, ask them back). Claude Code: AskUserQuestion, header "Angle"; Codex: a numbered list. "Other" lets them write their own.
+2. **The story.** Two to three full versions for the angle they picked, built only from their facts (their numbers, what shipped, what failed) and their own past posts' words, each shown whole (Claude Code: an option's `preview`), each with one line marked **[your sentence]**. "Other" always lets them write the whole thing instead. Vary the options per founder and per post: never a fixed skeleton Reddit can see across accounts.
+3. **Their sentence.** Ask for the line at **[your sentence]** in their own words, about anything true for them: a feeling, something they tried, a detail only they know. It is required: nothing is filled in without it. When they type more (their own ending, a line rewritten), use theirs as written.
+4. **Check.** `writing_check` with the final text, their sentence, the picked options, kind and platform. Say each flag in one line with its words and why, and ask; they change it or keep it. Never rewrite a flag yourself.
 
 ## The X Article
 
