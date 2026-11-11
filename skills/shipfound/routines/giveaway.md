@@ -4,15 +4,15 @@ A post on X or Reddit where people drop what the gift is for (their startup, the
 
 The founder's own example, for Shipfound: "Drop your startup below: the first 30 get $30 in their Shipfound account."
 
-Input: nothing (a new one), or `deliver` (the one running). Grow offers a new one in its own slot, whenever X or Reddit can post (never only when a note is due), one at a time, 14 days after the last; and `deliver` while one runs and its post is up.
+Input: nothing (a new one), `deliver` (the one running), or a post the founder already put up ("comment below and I'll...") to define now. Grow offers a new one in its own slot, whenever X or Reddit can post (never only when a note is due), one at a time, 14 days after the last; and `deliver` while one runs and its post is up.
 
 ## The shapes
 
-- **Credit or usage.** An amount in their balance, or free uses. Two ways to reach each person (`claim`):
+- **Credit, usage or a promo code.** An amount in their balance, free uses, or a discount. Two ways to reach each person (`claim`):
   - **match** (credits only, the strongest): the product they listed is the key. The credit lands when they sign up with it, once each, within the cap. Your agent adds that check to the product's signup (step 5); for Shipfound's own drops it is the grant, nothing to build.
   - **code**: one code the payment provider or the product's admin caps at the number given away; each reply carries it.
 - **A result done for them.** The product's own job, run for each person: an audit, a report, a design, a generated output. They reply with their input (their URL, what they need).
-- **An asset.** Templates, a dataset or benchmark, a playbook, built from the product's domain or public data. A page on the founder's own site, shipped as a PR in their stack, with no email gate.
+- **An asset or a link.** Templates, a dataset or benchmark, a playbook, built from the product's domain or public data as a page on the founder's own site (a PR in their stack, no email gate); or a link the founder already has (a doc, a deal page, a download), used as it is.
 - **Founding seats.** The first N customers at a founding price the founder sets (routines/offer.md), by a capped code.
 
 ## Hard lines here
@@ -30,6 +30,7 @@ Input: nothing (a new one), or `deliver` (the one running). Grow offers a new on
 ## Procedure
 
 1. Call `workspace` with `repo`, then `giveaway_plan` (free). `running` is there: go to "Delivering". Neither platform ready: say its `next` in one line and stop.
+   - **Posted already.** The founder wrote the post themselves and defines the drop now: ask in one go what each person gets (credit, a promo code, a link, a result, seats), the cap and any end date, then `giveaway_start` with them and `postUrls` (the post's links). Do step 5 for what has to exist, `verify` each recorded post, then go to "Delivering". No new post.
 2. **What one costs.** When `askCost` is true, read the repo for what one run of the product's job costs (calls to an AI model or a paid API per use). If it pays per use, ask the founder once what one use costs them (AskUserQuestion, a few amounts and "Not sure"), then call `giveaway_plan` again with `unitCostUsd`. It is kept; never ask again.
 3. **Propose three**, each a different shape where it fits, from `product` (what it does, its buyers, their pains), `ideas` and `peers` when there are any, and what the product can make: read the repo for the job it runs, what it outputs, how accounts and balances work, and the domain or public data it holds. Credit by match first when the product has accounts and a balance or usage to give. Each in a few lines: what the person gets, who it is for, what they drop under the post, and the cost line (`costs`; for credit, the cap × the credit, spent only as they use it). One AskUserQuestion, your pick first with "(Recommended)". Then ask the cap ("10 (Recommended)", "30", "50", or their number) and an end date ("None", "3 days", "7 days").
 4. `giveaway_start` with the pick, the cap, any `endsAt`, and for credit `claim` and `creditCents` (credit in money, in cents: $30 is 3000). It returns the `source` key, the cost line, the tagged `link`, and for a match drop the `claimSecret` and `claimEndpoint`.
@@ -50,8 +51,8 @@ Input: nothing (a new one), or `deliver` (the one running). Grow offers a new on
 8. `giveaway_replies` (free). Say in one line: replies, waiting, delivered of the cap, and claimed for a match drop. Nobody waiting: say so and stop; read again tomorrow, never in a loop.
 9. For each person in `queue`, in order:
    1. Leave out anyone off topic, a bot, a rival, or asking for what the product does not do: `giveaway_mark` with `action` skip. The next in line takes the place. For a match drop, someone with no `host` (no product named) gets one only by their handle: say so to the founder.
-   2. Make it. A result: run the product's own job on what they gave, in the founder's environment (the dev server, a script or CLI in the repo, or the product's own API with the founder's own keys), never on a customer's data. Keep what it made, and an image of it when it is visual, under `.shipfound/giveaway/<id>/<handle>.png` (add `.shipfound/` to `.git/info/exclude` if it is not there). An asset: the page is the result. Credit by code or seats: the code. Credit by match: nothing to make; it lands when they sign up.
-   3. Draft the reply: the result in a few plain lines, written to what they said. Credit by match: that it is waiting for their site and shows when they sign in with it, in a line ("Done: your $30 is waiting for your site, it shows when you sign in with it."). On X at most 280 characters, with no link, no address and no pitch (the image carries the rest). On Reddit, the asset's page only where the sub allows links. Show the founder the first few, then carry on as they say.
+   2. Make it. A result: run the product's own job on what they gave, in the founder's environment (the dev server, a script or CLI in the repo, or the product's own API with the founder's own keys), never on a customer's data. Keep what it made, and an image of it when it is visual, under `.shipfound/giveaway/<id>/<handle>.png` (add `.shipfound/` to `.git/info/exclude` if it is not there). An asset: the page is the result; a link the founder has: the link. A promo code or seats: the code. Credit by match: nothing to make; it lands when they sign up.
+   3. Draft the reply: the result in a few plain lines, written to what they said. Credit by match: that it is waiting for their site and shows when they sign in with it, in a line ("Done: your $30 is waiting for your site, it shows when you sign in with it."). On X at most 280 characters, with no link, no address and no pitch (the image carries the rest); a link gift says where it is (pinned, or in the bio), never the link itself. On Reddit, the asset's page only where the sub allows links. Show the founder the first few, then carry on as they say.
    4. `giveaway_mark` with `action` draft, the `key` and the `reply`. X: open `openUrl` (the reply box, filled in) in their Chrome, attach the image, and stop. Reddit: give them the reply to copy and the comment's link (`openUrl`).
    5. When they say it is posted, `giveaway_mark` with `action` posted and the link to their reply.
 10. When the cap is reached, or the end date passed and the queue is empty, `giveaway_mark` with `action` close. A match drop's credit can still be claimed up to 60 days after the drop started.
