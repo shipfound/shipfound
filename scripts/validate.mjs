@@ -160,6 +160,7 @@ const TOOLS = {
   build_ideas: 4, // a skill's ideas are free
   funnel_check: 0,
   qa_walk: 0,
+  ai_offer: 0,
   landing_check: 0, // retired: points to /shipfound:convert, reads nothing; removed the release after
   offer_plan: 0,
   pricing_check: 0,
@@ -258,7 +259,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "trumpet"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "ai-offer", "trumpet"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
