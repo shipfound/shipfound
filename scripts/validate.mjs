@@ -161,6 +161,7 @@ const TOOLS = {
   landing_check: 0, // retired: points to /shipfound:convert, reads nothing; removed the release after
   offer_plan: 0,
   pricing_check: 0,
+  ladder: 0,
 };
 // The agent states the price and waits for a yes above $1, and before every study (SF_CONFIRM_ABOVE_CENTS).
 const CONFIRM_ABOVE_CENTS = 100;
@@ -178,6 +179,9 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // tripwire.md: the ladder's rung ids
+  "first_payment",
+  "bigger_payment",
   // bullseye.md: channel names and the user event a test reads
   "x_dm",
   "reddit_dm",
@@ -252,7 +256,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "ai-offer"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "ai-offer"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
