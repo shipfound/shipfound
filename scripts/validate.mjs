@@ -63,6 +63,9 @@ const TOOLS = {
   ideas_replies: 0,
   ideas_replies_find: 95, // nothing when the run writes no drafts
   outbound_targets: 149, // nothing when it finds nobody new; the last batch of each source is free
+  trumpet: 0,
+  trumpet_find: 82, // nothing when no creators come back
+  trumpet_contact: 19, // per creator with an email
   mail_setup: 0,
   followup_offer: 0,
   followup_targets: 0,
@@ -255,7 +258,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "trumpet"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);
