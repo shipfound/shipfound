@@ -62,6 +62,7 @@ const TOOLS = {
   ideas_check: 0,
   ideas_replies: 0,
   ideas_replies_find: 95, // nothing when the run writes no drafts
+  drop_threads_find: 95, // nothing when the run writes no drafts
   outbound_targets: 149, // nothing when it finds nobody new; the last batch of each source is free
   trumpet: 0,
   trumpet_find: 82, // nothing when no creators come back

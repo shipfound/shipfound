@@ -194,6 +194,7 @@ Everything is open to every account, with no plans. Paid jobs come out of the ac
 | `ad_angles` | $0.06 (a read under 14 days old is free; nothing when nothing comes back) |
 | `reach_find` | $1.49 for Reddit, $1.09 for X (nothing when the run writes no drafts) |
 | `ideas_replies_find` | $0.95 a platform (nothing when the run writes no drafts) |
+| `drop_threads_find` | $0.95 a platform (nothing when the run writes no drafts) |
 | everything else | free |
 
 - **Over $1** (a repeat `visibility_run`, `reach_find`, `ugc_start`), and **every study** (`research_run`, `ideas_run`) whatever its price: before the call, state the price and the balance from `workspace`, for example "A re-check costs $1.90; your balance is $8.10. Run it?", and wait for a yes. No yes, no call.
@@ -327,6 +328,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `boost_check` | `{ id? }` | The daily check while a boost runs, after `boost_record`: each ad group's spend, clicks and signups, and the changes to propose (pause, budget, duplicate), capped at +20% a step and the approved total. Proposes only. Free |
 | `boost_change` | `{ id, proposal?, kind, n, device?, toUsd?, hook?, angle?, status }` | Record a change the founder made in Ads Manager, or turned down; the caps are checked again. Free |
 | `reach_find` | `{ platform }` | Start a Reddit or X run on Assisted posts ($1.49 for Reddit, $1.09 for X, only when it finds drafts): threads or live conversations and a reply for each, in the background, about two minutes. Returns the link to the drafts |
+| `drop_threads_find` | `{ platform }` | Threads on Reddit (two weeks) or posts on X (three days) that invite founders to share what they built, and a reply to each that names the product with its address and answers what the post asks, up to 5, on Assisted posts marked Drop thread. $0.95, only when it writes drafts. Read them with `reach_drafts` |
 | `reach_drafts` | `{ platform }` | The drafts on Assisted posts for one platform: still running, why it found nothing, or what is ready to post, and the link |
 | `reach_mark` | `{ platform, id, status, url? }` | Mark a draft posted (with the link to the reply) or skipped when the founder says so, so it is not offered again. Free |
 | `reddit_notices` | `{ notices, reopen? }` | Reddit's removal and ban emails, read in the founder's Gmail when today's `confirm.reddit` asks. A removal closes that subreddit to drafts until the founder says to try again (`reopen`); a ban closes it for good. Free |
