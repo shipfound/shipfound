@@ -41,16 +41,16 @@ const TOOLS = {
   repo_confirm: 0,
   record_access: 0,
   access: 0,
-  visibility_run: 190, // free for the first baseline
+  visibility_run: 280, // free for the first baseline
   visibility: 0,
   research: 0,
-  research_run: 88, // every study is asked for first, whatever its price
+  research_run: 130, // every study is asked for first, whatever its price
   research_skip: 0,
   ideas: 0,
-  ideas_run: 61, // every study is asked for first, whatever its price
-  shorts_research: 2,
+  ideas_run: 90, // every study is asked for first, whatever its price
+  shorts_research: 3,
   ugc_plan: 0,
-  ugc_start: 662, // Higgsfield's estimate plus the margin; this is the most, for 15 seconds at 720p
+  ugc_start: 978, // Higgsfield's estimate times the price multiple; this is the most, for 15 seconds at 720p
   ugc_status: 0,
   assets_save: 0,
   social_setup: 0,
@@ -61,12 +61,12 @@ const TOOLS = {
   ideas_skip: 0,
   ideas_check: 0,
   ideas_replies: 0,
-  ideas_replies_find: 95, // nothing when the run writes no drafts
-  drop_threads_find: 95, // nothing when the run writes no drafts
-  outbound_targets: 149, // nothing when it finds nobody new; the last batch of each source is free
+  ideas_replies_find: 140, // nothing when the run writes no drafts
+  drop_threads_find: 140, // nothing when the run writes no drafts
+  outbound_targets: 220, // nothing when it finds nobody new; the last batch of each source is free
   trumpet: 0,
-  trumpet_find: 82, // nothing when no creators come back
-  trumpet_contact: 19, // per creator with an email
+  trumpet_find: 120, // nothing when no creators come back
+  trumpet_contact: 28, // per creator with an email
   mail_setup: 0,
   followup_offer: 0,
   followup_targets: 0,
@@ -77,10 +77,10 @@ const TOOLS = {
   grow_notes: 0,
   grow_notes_save: 0,
   site_fixes: 2,
-  keyword_research: 4,
-  search_positions: 7,
-  outreach_targets: 41,
-  content_brief: 7,
+  keyword_research: 6,
+  search_positions: 10,
+  outreach_targets: 60,
+  content_brief: 10,
   check_content: 0,
   record_action: 0,
   record_lesson: 0,
@@ -138,7 +138,7 @@ const TOOLS = {
   boost_plan: 0,
   boost_record: 0,
   boost_results: 0,
-  ad_angles: 6, // a read of peers' ads, said in the line; a read under 14 days old is free
+  ad_angles: 9, // a read of peers' ads, said in the line; a read under 14 days old is free
   boost_check: 0,
   boost_change: 0,
   bullseye_plan: 0,
@@ -147,7 +147,7 @@ const TOOLS = {
   bullseye_mark: 0,
   bullseye_read: 0,
   bullseye_change: 0,
-  reach_find: 149, // Reddit; X is 109
+  reach_find: 220, // Reddit; X is 160
   reach_drafts: 0,
   reach_mark: 0,
   reddit_notices: 0,
@@ -158,7 +158,7 @@ const TOOLS = {
   listing_skip: 0,
   launch_targets: 0,
   launch_prep: 0,
-  build_ideas: 4, // a skill's ideas are free
+  build_ideas: 5, // a skill's ideas are free
   agent_inside: 0,
   funnel_check: 0,
   qa_walk: 0,
