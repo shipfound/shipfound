@@ -1,0 +1,17 @@
+{
+  "description": "Shipfound at session start: today's growth move for this repo's product, once a day, so a reply of go starts it without typing /shipfound:grow.",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "sh \"${CLAUDE_PLUGIN_ROOT}/scripts/session.sh\"",
+            "timeout": 8
+          }
+        ]
+      }
+    ]
+  }
+}
