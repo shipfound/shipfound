@@ -95,6 +95,7 @@ const TOOLS = {
   tracking_check: 0,
   analytics: 0,
   users_activation: 0,
+  routine: 0,
   goals_list: 0,
   goals_save: 0,
   funnels_save: 0,
