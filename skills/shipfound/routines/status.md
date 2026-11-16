@@ -8,17 +8,18 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
 
 ## Procedure
 
-1. Call `workspace` with `repo`: the balance (the free $10 left and when it ends, and what was paid), access summary, tracking state, links.
+1. Call `workspace` with `repo`: the balance (the free credit left and when it ends, and what was paid), access summary, tracking state, links.
 2. Call `shipped` with `{}`, or `{ module }` with the module in upper case if the founder named one. Count by state (VERIFIED, CLAIMED, FAILED) and by module.
-3. If a tracking PR is recorded, or `workspace` shows tracking installed but not confirmed, call `tracking_check` and report what it has and has not seen (events, crawler hits, goals).
-4. Print:
-   - Balance: "$23.40 left, $4.10 of it the free $10 until Nov 30."
+3. Call `customers_brought`. When it answers `on: true`, say in one line who Shipfound brought this month and through what, the share charged and owed, and, when `blocked`, why paid jobs wait and where to fix it. With no provider connected, offer `payments_connect` once.
+4. If a tracking PR is recorded, or `workspace` shows tracking installed but not confirmed, call `tracking_check` and report what it has and has not seen (events, crawler hits, goals).
+5. Print:
+   - Balance: "$23.40 left, $4.10 of it the free $20 until Nov 30."
    - Access: "8 of 12 open."
    - Shipped: "11 verified, 4 claimed, 1 failed", then the claimed and failed items, one line each with title and age.
    - Tracking: one line from `tracking_check`.
    - The results app link from `workspace` (else https://www.shipfound.co).
-5. Offer to verify the claimed items the founder says are merged or live: "Checking them is free." Only on a yes, and only those items.
-6. Call `plan` (free) and `goals_list` (free). Then end with what the founder can do now. Status is never the end of the day: it hands over to the next move.
+6. Offer to verify the claimed items the founder says are merged or live: "Checking them is free." Only on a yes, and only those items.
+7. Call `plan` (free) and `goals_list` (free). Then end with what the founder can do now. Status is never the end of the day: it hands over to the next move.
 
    **What you can do now**: the top 3 `plan` items, in its order, one line each: what it gets them, the reason from `why` with its number, how to start it, and the price. For example:
 
@@ -42,6 +43,6 @@ Input: an optional module filter (fixes, content, index, listings, communities, 
 
    Say how to start each one the way the founder's host runs it: the command from the routines table in Claude Code, the phrase from the same table in Codex. In the examples above, Codex would read "Write a comparison page about Ahrefs" instead of the command.
 
-   Close with one question naming the first move and its price: "Want me to start with the comparison page? It costs $0.07: the brief and the check." (the real total from the prices) On a yes, run that routine from its first step, with the price rule as usual. Never start one without the yes, and never more than one.
+   Close with one question naming the first move and its price: "Want me to start with the comparison page? It costs $0.10: the brief and the check." (the real total from the prices) On a yes, run that routine from its first step, with the price rule as usual. Never start one without the yes, and never more than one.
 
 Never call something done that is not VERIFIED.
