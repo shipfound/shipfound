@@ -97,6 +97,8 @@ const TOOLS = {
   users_activation: 0,
   payments_connect: 0,
   customers_brought: 0,
+  repo_read: 0,
+  open_pr: 0,
   routine: 0,
   goals_list: 0,
   goals_save: 0,
