@@ -95,6 +95,8 @@ const TOOLS = {
   tracking_check: 0,
   analytics: 0,
   users_activation: 0,
+  payments_connect: 0,
+  customers_brought: 0,
   goals_list: 0,
   goals_save: 0,
   funnels_save: 0,
@@ -184,6 +186,9 @@ const NOT_YET = [
 ];
 // snake_case identifiers that are not tools: report names, filter fields, example events, config keys.
 const NOT_TOOLS = new Set([
+  // SKILL.md revenue share: the checkout fields that name the person
+  "client_reference_id",
+  "sf_user",
   // tripwire.md: the ladder's rung ids
   "first_payment",
   "bigger_payment",
