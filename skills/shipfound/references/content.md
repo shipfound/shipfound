@@ -18,8 +18,8 @@ The lengths are what `check_content` gates on. A **listicle** ("Best <category> 
 
 ## Steps
 
-1. **Pick the topic.** From `plan`, from the founder's request, or from `keyword_research` (`{ topic }`, $0.04; say the price). Do not research more than one topic per write run.
-2. **Brief.** `content_brief` with `{ type, topic, keyword? }` ($0.07; say the price). It returns a research pack (facts, each with a source), an outline and rules. Read all of it before writing.
+1. **Pick the topic.** From `plan`, from the founder's request, or from `keyword_research` (`{ topic }`, $0.06; say the price). Do not research more than one topic per write run.
+2. **Brief.** `content_brief` with `{ type, topic, keyword? }` ($0.10; say the price). It returns a research pack (facts, each with a source), an outline and rules. Read all of it before writing.
 3. **Read the site.** Find where this kind of page lives (the `contentDir` from the audit, existing posts, the glossary route), the file format (MDX, Markdown with frontmatter, a `.astro` or `.svelte` page, a Hugo content file), the frontmatter fields existing pages use, and two existing pages for tone. Match them exactly.
 4. **Write.** Follow the outline. Lead with the answer. Use the founder's own product facts from their site and docs, and only the external facts in the research pack, cited where the brief says to.
 5. **Gate.** `check_content` with `{ type, markdown, facts? }` (free). Pass the draft as Markdown (strip component syntax) and the research pack's facts as `facts`. Fix every failure (fabrication, unsupported claim, disparagement, duplication, placeholder) and run it again once. If it still fails, stop and show the founder the failures; do not open the PR.

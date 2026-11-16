@@ -1,7 +1,7 @@
 ---
 description: "Trumpet™. Creators your buyers already watch, found by niche, size and brand deals, an email to each drafted for you to send, paid your way (flat, per view, or upfront plus a bonus), each post read by its own link."
 argument-hint: "[write | read]"
-allowed-tools: AskUserQuestion, Read, Grep, Glob, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__trumpet, mcp__plugin_shipfound_shipfound__trumpet_find, mcp__plugin_shipfound_shipfound__trumpet_contact, mcp__plugin_shipfound_shipfound__mail_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__verify
+allowed-tools: AskUserQuestion, Read, Grep, Glob, Bash(sh ${CLAUDE_PLUGIN_ROOT}/scripts/device.sh init), Bash(open "https://www.shipfound.co/connect?code=*"), Bash(xdg-open "https://www.shipfound.co/connect?code=*"), mcp__plugin_shipfound_shipfound__sign_in, mcp__plugin_shipfound_shipfound__workspace, mcp__plugin_shipfound_shipfound__access, mcp__plugin_shipfound_shipfound__trumpet, mcp__plugin_shipfound_shipfound__trumpet_contact, mcp__plugin_shipfound_shipfound__mail_setup, mcp__plugin_shipfound_shipfound__record_action, mcp__plugin_shipfound_shipfound__shipped, mcp__plugin_shipfound_shipfound__verify
 ---
 
 # /shipfound:trumpet
