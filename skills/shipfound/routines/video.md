@@ -81,7 +81,7 @@ Retime it to a voiceover without touching video.json: a props file `{ "device": 
 
 ## The AI presenter ad (ugc.mjs)
 
-The ugc routine generates one clip (9:16, 720p, up to 15 seconds, with its own voice): a selfie hook of an AI presenter, then a hard cut to a device shot, a laptop for a web product or a phone in hand for an app, whose screen is solid green with the camera still. `ugc.mjs` in the kit turns that clip into the finished ad on the founder's machine. Its rules, in place of the product-only rules above: the post or ad carries the platform's AI-generated content label, the presenter is never presented as a customer, a user or the founder, never says they used the product, and the screen on the device is the product's real screen from `screen` in video.json, its words and numbers only.
+The ugc routine generates one clip (9:16, 720p, up to 15 seconds, with its own voice): an AI presenter talking to the camera as a selfie in one take. `ugc.mjs` in the kit turns that clip into the finished ad on the founder's machine. Its rules, in place of the product-only rules above: the post or ad carries the platform's AI-generated content label, the presenter is never presented as a customer, a user or the founder, never says they used the product, and the screens are the product's real screens from `screen` in video.json, its words and numbers only.
 
 Write the script, `public/ugc.json`: the lines the voice says, in order, and which Screen beat each is about.
 
@@ -97,17 +97,15 @@ Write the script, `public/ugc.json`: the lines the voice says, in order, and whi
 }
 ```
 
-Lines before the first beat are the hook; the line marked `end` runs under the end card. `beat` is one beat or several (the line's own pauses, else its words, split it). `"at": [start, end]` pins a line when the pauses do not tell the lines apart. `presenterCrop` (0 to 1, default 0.3) moves the 4:5 crop on the presenter shot.
+Lines before the first beat are the hook; the line marked `end` runs under the end card. `beat` is one beat or several (the line's own pauses, else its words, split it). `"at": [start, end]` pins a line when the pauses do not tell the lines apart. `presenterCrop` (0 to 1, default 0.3) moves the 4:5 crop on the hook; `face` (`{ "x", "y", "size" }`, default 0.5, 0.33, 0.62) moves the bubble's crop.
 
 Then `npm run ugc -- --clip <clip.mp4>` (`--script`, `--out` default `out/ugc`, `--desktop` for another folder). It:
 
-1. **Finds the cut**: the first frame where the green screen appears.
-2. **Times the speech** with ffmpeg's silencedetect, fitted to the lines by their length. Each beat starts as its words begin (0.1s early), the first at the cut; the end card starts 0.2s before the last line. It renders the Screen composition with those `seconds` (`Screen` or `Screen-phone`).
-3. **Finds the four green corners** every second frame of the device shot, and pushes them 8px out. If they move more than 4px they are tracked per frame. It refuses if they move more than 60px or the screen is covered or leaves the frame: make the clip again.
-4. **Composites**: the screen with a 4px transparent pad, put on the corners with perspective; gblur 0.9, slightly darker; a glow (gblur 18 at 35%) under it. The clip goes to 1080x1920 with lanczos, a light unsharp and light grain. The kit's end card (`End`) goes over the last line while the voice keeps going.
-5. **Writes** `ugc-video-vertical.mp4` (1080x1920), `ugc-video-portrait.mp4` (1080x1350, cropped to keep the face, then the device), a contact sheet of each (a frame every half second) and `ugc-timing.json` to `out/ugc/`, and copies the videos and sheets to `~/Desktop/<product>-ads-<date>/`.
+1. **Times the speech** with ffmpeg's silencedetect, fitted to the lines by their length, and cuts to the screens in the pause between the hook and the first beat's line. Each beat starts as its words begin (0.1s early), the first at the cut; the end card starts 0.2s before the last line. It renders the Screen composition with those `seconds` (`Screen` or `Screen-phone`).
+2. **Composites**: the hook full screen; then the screens on a dark ground (a laptop screen across the width, a phone screen tall on the right) and the end card, with the presenter's face cropped from the same take into a round bubble with a white ring, bottom left above the platforms' own buttons, so the lips stay in sync.
+3. **Writes** `ugc-video-vertical.mp4` (1080x1920), `ugc-video-portrait.mp4` (1080x1350), a contact sheet of each (a frame every half second) and `ugc-timing.json` to `out/ugc/`, and copies the videos and sheets to `~/Desktop/<product>-ads-<date>/`.
 
-Check both sheets before the founder sees them. The screen sits on the device with no green edge and can be read. Each beat changes as its words are said. The end card is under the last line. Nothing is cut off in 4:5. Fix the script, `screen` or the clip, then run it again.
+Check both sheets before the founder sees them. The face is whole and centred in the bubble. The screens can be read. Each beat changes as its words are said. The end card is under the last line. Nothing is cut off in 4:5. Fix the script, `screen` or the clip, then run it again.
 
 ## A cut for each ad
 
