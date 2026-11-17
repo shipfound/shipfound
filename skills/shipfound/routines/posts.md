@@ -8,17 +8,16 @@ Grow offers it once a week, pinned first like the App Store and SEO sets. The po
 
 ## What it is
 
-- **The variety.** Each week's 10 come from `social_set`: about 4 slideshows, then one each of a comparison table (us vs them), the product's real email in an iPhone inbox, an iPhone Notes list, a chat with the product, a POV hook and a true text story over calm footage. Remakes take a slideshow's place. Once three formats have views, one post moves from the weakest format to the strongest each week. The formats and their rules are in `social_set`'s `formats`; follow them.
+- **The variety.** Each week's 10 come from `social_set`: about 3 slideshows, then one each of a comparison table (us vs them), the product's real email in an iPhone inbox, an iPhone Notes list, a chat with the product, a POV hook, a true text story over calm footage and an AI presenter video. Remakes take a slideshow's place. Once three formats have views, one post moves from the weakest format to the strongest each week. The formats and their rules are in `social_set`'s `formats`; follow them.
 - **Hooks for one person.** Each slot names the audience its hook is for. The hook is that person's moment in their own words, 12 words at most, lowercase where it reads as a person talking: "shipped it last week. now what?", "things i stopped doing by hand this month", "POV: you just shipped and need customers", "my analytics vs my actual signups". Never the product's name in the hook. Every hook passes the stranger test (routines/video.md, "The words: the stranger test").
 - **The product inside a story, never an ad.** It shows the way a phone shows it: the email at the top of the inbox, the line in the Notes list, the one answering in the chat, the screen on a later slide. The last frame or the caption gives the one next step for the goal: search its name, or "link in bio".
 - **The goal.** `goal.line` says what each week leans toward (downloads, paying users, a following, a launch); every caption's next step follows it.
-- **Stock.** `stock_media` finds licensed photos and footage on Pexels, real people included (founder, Nov 17). Use it for slideshow backgrounds, POV reaction shots and story footage. Never an AI person or AI image, and never a stock person shown saying, holding, using or endorsing the product: they react to the moment; the product appears on its own screen.
+- **Stock.** `stock_media` finds licensed photos and footage on Pexels, real people included (founder, Nov 17). Use it for slideshow backgrounds, POV reaction shots and story footage.
 
 ## Hard lines here
 
 - One account per platform: the founder's own. Never a second account, an account farm, bought views or follows.
 - True. A first-person story is the founder's own, from what they did and shipped (ask them when unsure). A number is theirs, or a demo screen shown as one. Never a made-up friend, customer, chat, review, quote or result. A POV hook about the buyer's moment is fine; "I found this app and it changed my life" from a stranger is not.
-- No AI presenters, AI people or AI images in any post (founder, Nov 17).
 - A Kids category app speaks to the parent: never a child as the audience, never a frame that asks a child to download or buy.
 - The founder presses Schedule or Post. You fill everything up to that button and stop.
 
@@ -44,12 +43,14 @@ Grow offers it once a week, pinned first like the App Store and SEO sets. The po
       - `{ "kind": "versus", "headline": "...", "left": "The usual way", "right": "With <product>", "rows": [["...", "..."]] }`
       - `{ "kind": "video", "clip": "stock/hands.mp4", "seconds": 8, "lines": ["...", "..."] }`
    4. `npm run posts`. It writes `post<n>-slide<k>.png`, `post<n>.mp4` and `post<n>-caption.txt` for every post to `~/Desktop/<product>-posts-<week>/`. Open every slide and look: the hook whole and readable, nothing cut, the top and bottom 12% clear of text, no face under text. Fix and render again until each passes.
-   5. Save them to Assets with `assets_save` (`kind` slideshow for the slides, video for the MP4s, `source` posts; titled "Post <n>, slide <k>" and "Post <n>"), run each `curl`, then `confirm`.
+   5. The AI presenter post: the ugc routine with input `post` and this slot's hook (it prices the video and asks first). Copy its `ugc-video-vertical.mp4` to the week's Desktop folder as `post<n>.mp4` and write `post<n>-caption.txt` next to it; it is not in `posts.json`.
+   6. Save them to Assets with `assets_save` (`kind` slideshow for the slides, video for the MP4s, `source` posts; titled "Post <n>, slide <k>" and "Post <n>"), run each `curl`, then `confirm`.
 5. **Save the week.** `social_posts_save` with `tz` and every post: `n`, `format`, `audience`, `hook`, `caption`, `at` (from its slot), `assetIds`, `platforms`.
 6. **Schedule, in the founder's Chrome.** One platform at a time, each post at its `at`. Upload with the browser's file upload tool from the Desktop folder. Fill everything, then stop at the Schedule button for the founder to press; after they do, `social_posts_update` with `status` scheduled. If a platform asks for a login, a code or a check that it is a person, the founder does it.
    - **TikTok** (TikTok Studio, `scheduler` in `platforms`): Upload `post<n>.mp4` (or the slides, where Studio offers a photo post), the caption, Content disclosure with "Your brand" on, then Schedule with the date and time. TikTok schedules up to 10 days ahead.
    - **Instagram** (Meta Business Suite's composer): a Reel with `post<n>.mp4`, or a carousel with the slides for a slideshow; the caption; then Schedule with the date and time.
    - **YouTube Shorts** (YouTube Studio): Create, Upload videos, `post<n>.mp4`; the hook as the title, the caption as the description, not made for kids unless the app is, then Visibility, Schedule.
    - **X**: the composer with the image or video and the X text; the schedule icon with the date and time. Without X Premium the schedule may be missing: then fill the post on its day at grow, for the founder to post.
+   For the AI presenter post, TikTok's AI-generated content switch is on, and Instagram's AI info label where Meta offers it.
    When all are scheduled, `record_action` once: `module` COMMUNITIES, `kind` POST, `title` "This week's <n> posts scheduled", `meta` `{ type: "posts", week, count }`. It is Claimed; nothing is verified until a post is live.
 7. **Read** (input `read`, or at the start of next week's set). For each post of last week, in the founder's Chrome: TikTok Studio's posts list, Meta Business Suite's insights for the Reels, YouTube Studio's content list, and X's post analytics. Read each post's views and likes and its link. `social_posts_update` with them (`status` posted, `url`, `views`, `likes`). Then say in a few lines: views per format (median and the best post with its link), and what next week has more of. For the first live TikTok post of the week, `record_action` with its `url` (`module` COMMUNITIES, `kind` POST, `meta` `{ type: "posts", week, platform: "tiktok" }`) and `verify` it.
