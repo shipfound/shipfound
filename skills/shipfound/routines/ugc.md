@@ -1,6 +1,6 @@
 # Routine: ugc
 
-An AI presenter video, for an ad or a post on the founder's own TikTok and Instagram. A presenter (AI-generated, an adult who is nobody real) talks to the camera as a selfie in one take. The video kit on the founder's machine shows the hook full screen (about 4 seconds), then the product's real screens fill the frame while the presenter keeps talking from a round bubble in the corner (the facecam look, founder, Nov 18), then the end card under the last line. Made at Higgsfield, priced from its cost plus Shipfound's margin.
+An AI presenter video, for an ad or a post on the founder's own TikTok and Instagram. A presenter (AI-generated, an adult who is nobody real) talks to the camera as a selfie in one take. The video kit on the founder's machine shows the hook as big text with the presenter already talking from a round bubble in the corner, then the product's real screens fill the frame while the presenter keeps talking from the bubble (the facecam look, founder, Nov 18), then the end card under the last line. No body shows, so a generated take's hands never do (`"hook": "face"` in public/ugc.json shows the presenter full screen for the hook instead). Made at Higgsfield, priced from its cost plus Shipfound's margin.
 
 Input: `ad`, `post`, `read`, or nothing. Grow offers it as one move (`UGC:week`) whenever there is a brief to write it from, led by the ad while a boost is being prepared or its ads stopped bringing clicks.
 

@@ -5,7 +5,7 @@ import { FPS, sec } from "./kit";
 import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
 import { SCREEN, SCREEN_SIZES, Screen, defaultSeconds, screenFrames, type Device } from "./Screen";
-import { End, type EndProps } from "./Ugc";
+import { End, HOOK, Hook, type EndProps } from "./Ugc";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
 // Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
@@ -149,7 +149,8 @@ export const Root: React.FC = () => (
         ))
       : null}
     {/* ugc.mjs: the end card at any size and length (src/Ugc.tsx). */}
-    <Composition
+    <Composition id="Hook" component={Hook} fps={FPS} width={HOOK.w} height={HOOK.h} durationInFrames={1} defaultProps={{ text: "You built it. Nobody came." }} />
+      <Composition
       id="End"
       component={End}
       fps={FPS}

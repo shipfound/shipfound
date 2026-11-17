@@ -23,7 +23,10 @@
 // from the pauses alone. Lines before the first beat are the hook; the `end`
 // line runs under the end card. `face` ({ "x", "y", "size" }, fractions of
 // the frame: the face's centre and the bubble's crop width; default 0.5,
-// 0.33, 0.62) moves the bubble's crop when the face sits elsewhere.
+// 0.32, 0.78) moves the bubble's crop when the face sits elsewhere. `hook`
+// is "card" (default: the hook as big text, the presenter already in the
+// bubble, so no generated body or hands show) or "face" (the presenter full
+// screen for the hook).
 //
 // Steps: time the speech (silencedetect, fitted to the lines' lengths), cut
 // to the screens between the hook and the first beat's line, retime and
@@ -228,7 +231,11 @@ for (const s of SHAPES) remotion(["render", "End", join(out, `end-${s.name}.mp4`
 const shot = r2(endAt - cut);
 const tail = r2(dur - endAt);
 // The face's square in the 1080x1920 selfie, for the bubble.
-const face = { x: 0.5, y: 0.33, size: 0.62, ...(script.face ?? {}) };
+const face = { x: 0.5, y: 0.32, size: 0.78, ...(script.face ?? {}) };
+const hookCard = (script.hook ?? "card") !== "face";
+const hookText = String(lines[0]?.text ?? "");
+const hookFile = join(out, "hook.png");
+if (hookCard) remotion(["still", "Hook", hookFile, `--props=${props("hook-props", { text: hookText })}`]);
 const fs = Math.round(W * face.size);
 const fx = Math.round(Math.min(W - fs, Math.max(0, W * face.x - fs / 2)));
 const fy = Math.round(Math.min(H - fs, Math.max(0, H * face.y - fs / 2)));
@@ -268,9 +275,11 @@ for (const s of SHAPES) {
   const crop = s.h === H ? "" : `,crop=${W}:${s.h}:0:${presenterY}`;
   const graph = [
     `[0:v]fps=30,scale=${W}:${H}:flags=lanczos,setsar=1,split[c1][c2]`,
-    `[c1]trim=0:${cut},setpts=PTS-STARTPTS${crop},format=yuv420p[pre]`,
-    // The bubble: the face cropped square from the same take, so the lips stay in sync with the voice.
-    `[c2]trim=${cut},setpts=PTS-STARTPTS,crop=${fs}:${fs}:${fx}:${fy},scale=${L.d}:${L.d}:flags=lanczos,format=rgba[f0]`,
+    hookCard
+      ? `[5:v]scale=${W}:${H},setsar=1,fps=30,trim=0:${cut},setpts=PTS-STARTPTS${s.h === H ? "" : `,crop=${W}:${s.h}:0:${Math.round((H - s.h) / 2)}`},format=yuv420p[pre];[c1]nullsink`
+      : `[c1]trim=0:${cut},setpts=PTS-STARTPTS${crop},format=yuv420p[pre]`,
+    // The bubble: the face cropped square from the same take, so the lips stay in sync with the voice (from the start with the hook card).
+    `[c2]${hookCard ? "" : `trim=${cut},`}setpts=PTS-STARTPTS,crop=${fs}:${fs}:${fx}:${fy},scale=${L.d}:${L.d}:flags=lanczos,format=rgba[f0]`,
     `[3:v]format=rgba,alphaextract,scale=${L.d}:${L.d}[m]`,
     `[f0][m]alphamerge[face]`,
     // The screens on a dark ground, then the end card, under the bubble.
@@ -279,13 +288,13 @@ for (const s of SHAPES) {
     `[bg][scr]overlay=${L.sx}:${L.sy}:eof_action=repeat,format=yuv420p[mid]`,
     `[2:v]fps=30,scale=${s.w}:${s.h},setsar=1,format=yuv420p,trim=0:${tail},setpts=PTS-STARTPTS[end]`,
     `[mid][end]concat=n=2:v=1:a=0[body]`,
-    `[body][4:v]overlay=${L.bx - RING}:${L.by - RING}[ringed]`,
-    `[ringed][face]overlay=${L.bx}:${L.by}:eof_action=pass,format=yuv420p[post]`,
-    `[pre][post]concat=n=2:v=1:a=0,noise=alls=3:allf=t,tpad=stop_mode=clone:stop_duration=0.5[v]`,
+    ...(hookCard
+      ? [`[pre][body]concat=n=2:v=1:a=0[all]`, `[all][4:v]overlay=${L.bx - RING}:${L.by - RING}[ringed]`, `[ringed][face]overlay=${L.bx}:${L.by}:eof_action=pass,format=yuv420p,noise=alls=3:allf=t,tpad=stop_mode=clone:stop_duration=0.5[v]`]
+      : [`[body][4:v]overlay=${L.bx - RING}:${L.by - RING}[ringed]`, `[ringed][face]overlay=${L.bx}:${L.by}:eof_action=pass,format=yuv420p[post]`, `[pre][post]concat=n=2:v=1:a=0,noise=alls=3:allf=t,tpad=stop_mode=clone:stop_duration=0.5[v]`]),
     `[0:a]aresample=48000,apad[a]`,
   ].join(";");
   const file = join(out, `ugc-video-${s.name}.mp4`);
-  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-loop", "1", "-i", mask, "-loop", "1", "-i", ring, "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
+  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-loop", "1", "-i", mask, "-loop", "1", "-i", ring, ...(hookCard ? ["-loop", "1", "-i", hookFile] : []), "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
   made.push(file);
   // ─── 5. The contact sheet: a frame every half second. ──
   const sheet = join(out, `ugc-sheet-${s.name}.png`);

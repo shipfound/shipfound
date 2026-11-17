@@ -1,6 +1,6 @@
 import React from "react";
 import { AbsoluteFill } from "remotion";
-import { C, FontsReady } from "./kit";
+import { C, FontsReady, fonts, headingWeight } from "./kit";
 import { EndCard, SpecProvider } from "./Clip";
 
 // The parts ugc.mjs needs from the kit to finish an AI-presenter clip: the
@@ -22,4 +22,18 @@ export const End: React.FC<EndProps> = ({ w, h, seconds }) => (
       </FontsReady>
     </AbsoluteFill>
   </SpecProvider>
+);
+
+export const HOOK = { w: 1080, h: 1920 };
+
+/**
+ * The hook as a card: big text on a dark ground, the presenter talking from
+ * the bubble under it. Shows no body, so a generated take's hands never show.
+ */
+export const Hook: React.FC<{ text: string }> = ({ text }) => (
+  <AbsoluteFill style={{ backgroundColor: "#111111", alignItems: "center", justifyContent: "center", padding: "0 90px 380px" }}>
+    <FontsReady>
+      <div style={{ color: "#ffffff", fontFamily: fonts.heading, fontWeight: headingWeight, fontSize: 104, lineHeight: 1.08, textAlign: "center" }}>{text}</div>
+    </FontsReady>
+  </AbsoluteFill>
 );

@@ -97,12 +97,12 @@ Write the script, `public/ugc.json`: the lines the voice says, in order, and whi
 }
 ```
 
-Lines before the first beat are the hook; the line marked `end` runs under the end card. `beat` is one beat or several (the line's own pauses, else its words, split it). `"at": [start, end]` pins a line when the pauses do not tell the lines apart. `presenterCrop` (0 to 1, default 0.3) moves the 4:5 crop on the hook; `face` (`{ "x", "y", "size" }`, default 0.5, 0.33, 0.62) moves the bubble's crop.
+Lines before the first beat are the hook; the line marked `end` runs under the end card. `beat` is one beat or several (the line's own pauses, else its words, split it). `"at": [start, end]` pins a line when the pauses do not tell the lines apart. `presenterCrop` (0 to 1, default 0.3) moves the 4:5 crop on the hook; `face` (`{ "x", "y", "size" }`, default 0.5, 0.32, 0.78) moves the bubble's crop.
 
 Then `npm run ugc -- --clip <clip.mp4>` (`--script`, `--out` default `out/ugc`, `--desktop` for another folder). It:
 
 1. **Times the speech** with ffmpeg's silencedetect, fitted to the lines by their length, and cuts to the screens in the pause between the hook and the first beat's line. Each beat starts as its words begin (0.1s early), the first at the cut; the end card starts 0.2s before the last line. It renders the Screen composition with those `seconds` (`Screen` or `Screen-phone`).
-2. **Composites**: the hook full screen; then the screens on a dark ground (a laptop screen across the width, a phone screen tall on the right) and the end card, with the presenter's face cropped from the same take into a round bubble with a white ring, bottom left above the platforms' own buttons, so the lips stay in sync.
+2. **Composites**: the hook as big text on a dark card (the kit's `Hook`; `"hook": "face"` shows the presenter full screen instead), then the screens on a dark ground (a laptop screen across the width, a phone screen tall on the right) and the end card, with the presenter's face cropped from the same take into a round bubble with a white ring, bottom left above the platforms' own buttons, so the lips stay in sync.
 3. **Writes** `ugc-video-vertical.mp4` (1080x1920), `ugc-video-portrait.mp4` (1080x1350), a contact sheet of each (a frame every half second) and `ugc-timing.json` to `out/ugc/`, and copies the videos and sheets to `~/Desktop/<product>-ads-<date>/`.
 
 Check both sheets before the founder sees them. The face is whole and centred in the bubble. The screens can be read. Each beat changes as its words are said. The end card is under the last line. Nothing is cut off in 4:5. Fix the script, `screen` or the clip, then run it again.
