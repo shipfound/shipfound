@@ -49,6 +49,10 @@ const TOOLS = {
   ideas: 0,
   ideas_run: 90, // every study is asked for first, whatever its price
   shorts_research: 3,
+  social_set: 0,
+  stock_media: 0,
+  social_posts_save: 0,
+  social_posts_update: 0,
   ugc_plan: 0,
   ugc_start: 978, // Higgsfield's estimate times the price multiple; this is the most, for 15 seconds at 720p
   ugc_status: 0,
@@ -269,7 +273,7 @@ const NOT_TOOLS = new Set([
   "return_url",
   "redirect_url",
 ]);
-const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "ai-offer", "trumpet", "agent-inside"];
+const COMMANDS = ["grow", "login", "audit", "plan", "fix", "convert", "offer", "pricing", "write", "build", "index", "status", "week", "list", "launch", "reach", "outbound", "bullseye", "notes", "research", "ideas", "analytics", "users", "test", "aso", "boost", "video", "shorts", "posts", "followup", "social", "giveaway", "ugc", "seo", "qa-walk", "tripwire", "ai-offer", "trumpet", "agent-inside"];
 const MCP_PREFIX = "mcp__plugin_shipfound_shipfound__";
 const BANNED = ["unlock", "supercharge", "10x", "ai-powered"];
 const EM_DASH = String.fromCharCode(0x2014);

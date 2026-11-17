@@ -12,6 +12,7 @@
     "thumbs": "remotion still Thumbs out/thumbs.png",
     "ads": "node ads.mjs",
     "shorts": "node shorts.mjs",
+    "posts": "node posts.mjs",
     "preview": "node preview.mjs",
     "ugc": "node ugc.mjs"
   },
