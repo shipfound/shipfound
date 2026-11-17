@@ -1,6 +1,6 @@
 // Finishes an AI-presenter clip (the ugc move, routines/video.md "The AI
 // presenter ad") into the ad: the product's real screen on the clip's green
-// screen, timed to the voice, the AI label on every presenter shot, the kit's
+// screen, timed to the voice, the kit's
 // end card under the last line, in 9:16 and 4:5.
 //
 //   npm run ugc -- --clip <clip.mp4> [--script public/ugc.json] [--out out/ugc] [--desktop <dir>]
@@ -313,8 +313,6 @@ const SHAPES = [
   { name: "portrait", w: 1080, h: 1350 },
 ];
 for (const s of SHAPES) remotion(["render", "End", join(out, `end-${s.name}.mp4`), "--codec=h264", "--crf=16", `--props=${props(`end-${s.name}-props`, { w: s.w, h: s.h, seconds: endSeconds + 0.2 })}`]);
-const labelFile = join(out, "label.png");
-remotion(["still", "Label", labelFile, `--props=${props("label-props", { text: script.label ?? "AI-generated presenter" })}`]);
 
 // ─── 4. The composite ───────────────────────────────────
 
@@ -335,13 +333,12 @@ for (const s of SHAPES) {
     `[bg][glow]overlay=0:0[b1]`,
     `[b1][sharp]overlay=0:0,format=yuv420p,trim=0:${shot},setpts=PTS-STARTPTS[dev]`,
     `[pre][dev]concat=n=2:v=1:a=0,noise=alls=5:allf=t${crop}[body]`,
-    `[body][3:v]overlay=36:48,setsar=1[lab]`,
     `[2:v]fps=30,scale=${W}:${s.h},setsar=1,format=yuv420p,trim=0:${endSeconds},setpts=PTS-STARTPTS[end]`,
-    `[lab][end]concat=n=2:v=1:a=0,tpad=stop_mode=clone:stop_duration=0.5[v]`,
+    `[body][end]concat=n=2:v=1:a=0,tpad=stop_mode=clone:stop_duration=0.5[v]`,
     `[0:a]aresample=48000,apad[a]`,
   ].join(";");
   const file = join(out, `ugc-video-${s.name}.mp4`);
-  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-i", labelFile, "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
+  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
   made.push(file);
   // ─── 5. The contact sheet: a frame every half second. ──
   const sheet = join(out, `ugc-sheet-${s.name}.png`);
@@ -358,4 +355,4 @@ if (dest) {
   mkdirSync(dest, { recursive: true });
   for (const f of made) copyFileSync(f, join(dest, f.split("/").pop()));
 }
-console.log(`\nThe ad is in ${dest ?? out}:\n${made.map((f) => `  ${f.split("/").pop()}`).join("\n")}\nLook at both sheets before anyone sees it: the screen on the device with no green edge, readable, the label on every presenter shot, the end card under the last line.`);
+console.log(`\nThe ad is in ${dest ?? out}:\n${made.map((f) => `  ${f.split("/").pop()}`).join("\n")}\nLook at both sheets before anyone sees it: the screen on the device with no green edge, readable, the end card under the last line.`);
