@@ -233,7 +233,7 @@ const Versus: React.FC<{ f: Extract<Frame, { kind: "versus" }> }> = ({ f }) => {
   const frame = useCurrentFrame();
   const shown = Math.min(f.rows.length, Math.floor(frame / sec(0.4)) + 1);
   return (
-    <AbsoluteFill style={{ backgroundColor: "#000", padding: `${SAFE}px 56px`, fontFamily: SYS, color: "#fff" }}>
+    <AbsoluteFill style={{ backgroundColor: "#000", padding: `${SAFE}px 56px`, fontFamily: SYS, color: "#fff", justifyContent: "center" }}>
       <div style={{ fontFamily: fonts.heading, fontWeight: headingWeight, fontSize: 76, lineHeight: 1.08, textAlign: "center", marginBottom: 56 }}>{f.headline}</div>
       <div style={{ background: "#fff", color: "#000", borderRadius: 28, overflow: "hidden" }}>
         <div style={{ display: "flex", fontSize: 36, fontWeight: 700, background: "#f2f2f7" }}>
@@ -243,8 +243,9 @@ const Versus: React.FC<{ f: Extract<Frame, { kind: "versus" }> }> = ({ f }) => {
             {f.right}
           </div>
         </div>
-        {f.rows.slice(0, shown).map(([l, r], i) => (
-          <div key={i} style={{ display: "flex", fontSize: 36, lineHeight: 1.3, borderTop: "1px solid #e5e5ea" }}>
+        {/* Every row takes its place from the start (unshown ones invisible), so the centred table never moves. */}
+        {f.rows.map(([l, r], i) => (
+          <div key={i} style={{ display: "flex", fontSize: 38, lineHeight: 1.3, borderTop: "1px solid #e5e5ea", opacity: i < shown ? 1 : 0 }}>
             <div style={{ flex: 1, padding: "24px 30px", color: "#6e6e73" }}>✕ {l}</div>
             <div style={{ flex: 1, padding: "24px 30px", fontWeight: 600, borderLeft: "1px solid #e5e5ea" }}>✓ {r}</div>
           </div>
@@ -261,7 +262,7 @@ const Footage: React.FC<{ f: Extract<Frame, { kind: "video" }> }> = ({ f }) => {
   return (
     <AbsoluteFill style={{ backgroundColor: "#000" }}>
       <OffthreadVideo src={staticFile(f.clip)} startFrom={sec(f.from ?? 0)} muted style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-      <AbsoluteFill style={{ background: "rgba(0,0,0,0.18)", alignItems: "center", justifyContent: "center", padding: `${SAFE}px 0` }}>
+      <AbsoluteFill style={{ background: "rgba(0,0,0,0.38)", alignItems: "center", justifyContent: "center", padding: `${SAFE}px 0` }}>
         <OverText lines={f.lines} shown={shown} />
       </AbsoluteFill>
     </AbsoluteFill>
