@@ -50,7 +50,6 @@ const TOOLS = {
   ideas_run: 90, // every study is asked for first, whatever its price
   shorts_research: 3,
   social_set: 0,
-  stock_media: 0,
   social_posts_save: 0,
   social_posts_update: 0,
   ugc_plan: 0,

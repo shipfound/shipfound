@@ -9,8 +9,7 @@
 //
 // public/posts.json: { "product": "Shipfound", "week": "2026-w47", "posts": [{ "n": 1, "format": "notes", "caption": "...", "frames": [...] }] }
 // Per post n: post<n>-slide<k>.png for each frame, post<n>.mp4, and
-// post<n>-caption.txt. Every file a frame names (stock/..., an own photo or
-// clip) must be in public/.
+// post<n>-caption.txt. Frames are built in the kit (src/Posts.tsx), no stock.
 
 import { spawnSync } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
@@ -24,7 +23,10 @@ const arg = (name) => {
 
 const FPS = 30;
 const BEAT = 2.5;
-const secondsOf = (f) => f.seconds ?? (["notes", "chat", "versus"].includes(f.kind) ? 4 : BEAT);
+// The same seconds as src/Posts.tsx.
+const SECONDS = { notes: 4, chat: 4, versus: 4, tier: 5, beforeafter: 4, lockscreen: 3.5, calendar: 4, guess: 3.5, xpost: 3.5, answer: 5, sheet: 4 };
+const KINDS = ["title", "screen", "inbox", ...Object.keys(SECONDS)];
+const secondsOf = (f) => f.seconds ?? SECONDS[f.kind] ?? BEAT;
 const frames = (f) => Math.round(secondsOf(f) * FPS);
 
 const spec = JSON.parse(readFileSync("public/posts.json", "utf8"));
@@ -37,9 +39,7 @@ if (!picked.length) throw new Error(`No post ${only} in public/posts.json`);
 const problems = [];
 for (const p of picked) {
   for (const [i, f] of (p.frames ?? []).entries()) {
-    const file = f.image ?? f.clip;
-    if (file && !existsSync(join("public", file))) problems.push(`post ${p.n} frame ${i + 1}: public/${file} is not there`);
-    if (f.kind === "video" && !(f.seconds > 0)) problems.push(`post ${p.n} frame ${i + 1}: a video frame needs seconds`);
+    if (!KINDS.includes(f.kind)) problems.push(`post ${p.n} frame ${i + 1}: no frame kind "${f.kind}" (${KINDS.join(", ")})`);
   }
   if (!p.caption) problems.push(`post ${p.n}: no caption`);
 }
