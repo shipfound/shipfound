@@ -12,7 +12,7 @@ Grow offers it once a week, pinned first like the App Store and SEO sets. The po
 - **Hooks for one person.** Each slot names the audience its hook is for. The hook is that person's moment in their own words, 12 words at most, lowercase where it reads as a person talking: "shipped it last week. now what?", "things i stopped doing by hand this month", "POV: you just shipped and need customers", "my analytics vs my actual signups". Never the product's name in the hook. Every hook passes the stranger test (routines/video.md, "The words: the stranger test").
 - **The product inside a story, never an ad.** It shows the way a phone shows it: the email at the top of the inbox, the line in the Notes list, the one answering in the chat, the screen on a later slide. The last frame or the caption gives the one next step for the goal: search its name, or "link in bio".
 - **The goal.** `goal.line` says what each week leans toward (downloads, paying users, a following, a launch); every caption's next step follows it.
-- **Stock.** `stock_media` finds licensed photos and footage on Pexels, real people included (founder, Nov 17). Use it for slideshow backgrounds, POV reaction shots and story footage.
+- **Stock.** `stock_media` finds licensed photos and footage on Pixabay, real people included (founder, Nov 17). Use it for slideshow backgrounds, POV reaction shots and story footage.
 
 ## Hard lines here
 

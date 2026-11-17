@@ -226,7 +226,7 @@ Call them by these exact names (the host may add a prefix; see "Hosts").
 | `ideas_run` | none | Start a study in the background, a few minutes. $0.90, charged only when 10 or more posts could be read; at most one a day; always ask first |
 | `shorts_research` | `{ searches }` | The top TikTok posts of the last 180 days for the buyers' searches, slideshows first, the creators behind them (with the email their bio publishes) and the tracking links (shorts routine). $0.03 |
 | `social_set` | `{ tz, goal?, audiences?, remakes? }` | This week's 10 posts: each slot's format, audience and time, the format guides, the goal, the audiences and last weeks' views per format (posts routine). Free |
-| `stock_media` | `{ query, type }` | Licensed portrait photos or footage from Pexels, real people allowed, never AI people (posts routine). Free |
+| `stock_media` | `{ query, type }` | Licensed portrait photos or footage from Pixabay, real people allowed (posts routine). Free |
 | `social_posts_save` | `{ tz, posts }` | Keeps the week's posts with their times, assets and platforms. Free |
 | `social_posts_update` | `{ updates }` | Marks each post scheduled, posted or skipped per platform, with its link, views and likes. Free |
 | `ugc_plan` | `{ use?, platforms?, presenter?, checked?, hook?, lines?, end?, who?, device?, portraitUploaded? }` | An AI presenter video (ugc routine): keeps the founder's answers (paid or organic, meta or tiktok, keep one presenter or a new one), says which questions are open and whether each platform's accounts are ready; then checks the script (never the presenter as a customer) and the presenter, builds the prompt and the kit's `public/ugc.json` (each line with its screen beat), and prices it from Higgsfield's estimate. Free |
