@@ -5,7 +5,7 @@ import { FPS, sec } from "./kit";
 import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
 import { SCREEN, SCREEN_SIZES, Screen, defaultSeconds, screenFrames, type Device } from "./Screen";
-import { End, LABEL, Label, type EndProps } from "./Ugc";
+import { End, type EndProps } from "./Ugc";
 import { EMPTY_POST, H as POST_H, Post, W as POST_W, postFrames, type PostSpec } from "./Posts";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
@@ -160,7 +160,7 @@ export const Root: React.FC = () => (
           />
         ))
       : null}
-    {/* ugc.mjs: the end card at any size and length, and the AI presenter label (src/Ugc.tsx). */}
+    {/* ugc.mjs: the end card at any size and length (src/Ugc.tsx). */}
     <Composition
       id="End"
       component={End}
@@ -171,7 +171,6 @@ export const Root: React.FC = () => (
       defaultProps={{ w: 1080, h: 1920, seconds: 2.5 } as EndProps}
       calculateMetadata={({ props }) => ({ width: props.w, height: props.h, durationInFrames: Math.max(1, sec(props.seconds)) })}
     />
-    <Composition id="Label" component={Label} fps={FPS} width={LABEL.w} height={LABEL.h} durationInFrames={1} defaultProps={{ text: "AI-generated presenter" }} />
     <Composition id="Thumbs" component={Thumbs} durationInFrames={1} fps={FPS} width={16 + FORMATS.length * (THUMB_W + 16)} height={Math.round(THUMBS_H)} />
     <Composition
       id="Frames"
