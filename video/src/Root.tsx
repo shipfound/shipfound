@@ -6,6 +6,7 @@ import { Static } from "./Static";
 import { PREVIEW_SIZES, Preview, previewFrames, type PreviewSpec } from "./Preview";
 import { SCREEN, SCREEN_SIZES, Screen, defaultSeconds, screenFrames, type Device } from "./Screen";
 import { End, HOOK, Hook, type EndProps } from "./Ugc";
+import { EMPTY_POST, H as POST_H, Post, W as POST_W, postFrames, type PostSpec } from "./Posts";
 
 // Square (1:1, ad 1, for the X post), Wide (16:9), and per ad cut n:
 // Square-n (1:1, the X and Reddit feeds), Portrait-n (4:5, the Meta feed),
@@ -118,6 +119,17 @@ export const Root: React.FC = () => (
       height={SHEET_CELL}
       defaultProps={{ cut: "1" }}
       calculateMetadata={({ props }) => ({ height: Math.ceil(sheetFrames(props.cut).length / SHEET_COLS) * SHEET_CELL })}
+    />
+    {/* The week's social posts: --props='{"post":{...}}' (posts.mjs, src/Posts.tsx). */}
+    <Composition
+      id="Post"
+      component={Post}
+      fps={FPS}
+      width={POST_W}
+      height={POST_H}
+      durationInFrames={FPS * 4}
+      defaultProps={{ post: EMPTY_POST } as { post: PostSpec }}
+      calculateMetadata={({ props }) => ({ durationInFrames: Math.max(1, postFrames(props.post)) })}
     />
     {/* The App Store app preview, from the simulator's recordings: --props=public/preview.json (preview.mjs). */}
     {(Object.keys(PREVIEW_SIZES) as (keyof typeof PREVIEW_SIZES)[]).map((size) => (
