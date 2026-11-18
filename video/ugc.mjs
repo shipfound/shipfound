@@ -1,15 +1,15 @@
 // Finishes an AI-presenter clip (the ugc move, routines/video.md "The AI
-// presenter ad") into the ad: the product's real screen on the clip's green
-// screen, timed to the voice, the AI label on every presenter shot, the kit's
-// end card under the last line, in 9:16 and 4:5.
+// presenter ad") into the post or ad: the presenter says the hook full
+// screen, then the product's real screens fill the frame while the presenter
+// keeps talking from a round bubble in the corner (a facecam), the kit's end
+// card under the last line, in 9:16 and 4:5.
 //
 //   npm run ugc -- --clip <clip.mp4> [--script public/ugc.json] [--out out/ugc] [--desktop <dir>]
 //
-// The clip is one generated take, 9:16: a selfie hook, then a hard cut to a
-// device shot (a laptop, or a phone in hand) whose screen is solid green,
-// the camera still, with the presenter's own voice all the way through.
-// The script (public/ugc.json) says what the voice says, line by line, and
-// which of the Screen beats (video.json `screen`) each line is about:
+// The clip is one generated take, 9:16: the presenter talking to the phone
+// camera as a selfie the whole time, in their own voice. The script
+// (public/ugc.json) says what the voice says, line by line, and which of the
+// Screen beats (video.json `screen`) each line is about:
 //   {
 //     "device": "laptop",
 //     "lines": [
@@ -21,16 +21,17 @@
 //   }
 // A line's `at` ([start, end] seconds) pins it when the voice cannot be read
 // from the pauses alone. Lines before the first beat are the hook; the `end`
-// line runs under the end card.
+// line runs under the end card. `face` ({ "x", "y", "size" }, fractions of
+// the frame: the face's centre and the bubble's crop width; default 0.5,
+// 0.33, 0.62) moves the bubble's crop when the face sits elsewhere.
 //
-// Steps: find the cut (the first frame with the green screen), time the
-// speech (silencedetect, fitted to the lines' lengths), retime and render the
-// Screen composition, find the green corners across the device shot (tracked
-// if they move, refused if they move a lot or vanish), composite, and write
-// both shapes, a contact sheet and the timing to --out, then copy them to the
-// Desktop folder the other routines use. Needs ffmpeg and ffprobe.
+// Steps: time the speech (silencedetect, fitted to the lines' lengths), cut
+// to the screens between the hook and the first beat's line, retime and
+// render the Screen composition, composite, and write both shapes, a contact
+// sheet and the timing to --out, then copy them to the Desktop folder the
+// other routines use. Needs ffmpeg and ffprobe.
 
-import { spawn, spawnSync } from "node:child_process";
+import { spawnSync } from "node:child_process";
 import { copyFileSync, existsSync, mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { homedir } from "node:os";
 import { join, resolve } from "node:path";
@@ -81,44 +82,7 @@ if (Math.abs(vs.width / vs.height - 9 / 16) > 0.02) die(`the clip is ${vs.width}
 const W = 1080;
 const H = 1920;
 
-/** Streams the clip's frames as raw RGB at w x h, calling each(frame index, pixels). */
-const frames = (w, h, vf, each) =>
-  new Promise((done, fail) => {
-    const p = spawn("ffmpeg", ["-v", "error", "-i", clip, "-vf", `${vf ? `${vf},` : ""}scale=${w}:${h}:flags=bilinear`, "-fps_mode", "passthrough", "-f", "rawvideo", "-pix_fmt", "rgb24", "-"]);
-    const size = w * h * 3;
-    let buf = Buffer.alloc(0);
-    let n = 0;
-    p.stdout.on("data", (d) => {
-      buf = Buffer.concat([buf, d]);
-      while (buf.length >= size) {
-        each(n++, buf.subarray(0, size));
-        buf = buf.subarray(size);
-      }
-    });
-    p.on("error", fail);
-    p.on("close", (code) => (code === 0 ? done(n) : fail(new Error(`ffmpeg exited ${code}`))));
-  });
-
-const green = (px, k) => px[k + 1] > 150 && px[k + 1] > px[k] + 60 && px[k + 1] > px[k + 2] + 60;
-
-// ─── 1. The cut ─────────────────────────────────────────
-
-const LW = 72;
-const LH = 128;
-const frac = [];
-await frames(LW, LH, "", (n, px) => {
-  let g = 0;
-  for (let k = 0; k < px.length; k += 3) if (green(px, k)) g++;
-  frac[n] = g / (LW * LH);
-});
-const ON = 0.02;
-const cutFrame = frac.findIndex((f, i) => f > ON && frac.slice(i, i + 4).every((v) => v > ON));
-if (cutFrame < 0) die("no green screen found in the clip: the device shot's screen must be solid green");
-if (cutFrame < fps) die(`the green screen is there from ${r2(cutFrame / fps)}s: the clip must open on the presenter, then cut to the device`);
-const cut = cutFrame / fps;
-console.log(`cut: ${r2(cut)}s (frame ${cutFrame})`);
-
-// ─── 2. The speech ──────────────────────────────────────
+// ─── 1. The speech ──────────────────────────────────────
 
 const lines = script.lines ?? [];
 if (lines.length < 3) die("the script needs the hook, a line per screen beat and the end line");
@@ -207,7 +171,9 @@ const timeLines = () => {
 };
 const times = timeLines();
 lines.forEach((l, i) => console.log(`  ${r2(times[i].s).toFixed(2)}-${r2(times[i].e).toFixed(2)}  ${l.end ? "[end] " : beatsOf(l).length ? `[beat ${beatsOf(l).join(",")}] ` : "[hook] "}${l.text ?? ""}`));
-if (times[firstBeatLine].s < cut - 0.3) die(`the line "${lines[firstBeatLine].text}" starts at ${r2(times[firstBeatLine].s)}s, before the cut at ${r2(cut)}s: the hook must end before the device shot`);
+// The cut to the screens: in the pause between the hook and the first beat's line.
+const cut = r2(Math.max(1, (times[firstBeatLine - 1].e + times[firstBeatLine].s) / 2));
+console.log(`cut: ${cut}s`);
 
 // When each beat starts: as its words begin, a moment early, so the screen is there when the voice names it.
 const LEAD = 0.1;
@@ -241,63 +207,6 @@ seconds.forEach((s, b) => s < 0.4 && die(`screen beat ${b} gets ${s}s; under 0.4
 seconds[seconds.length - 1] = r2(endAt - cut - seconds.slice(0, -1).reduce((a, s) => a + s, 0));
 console.log(`beats: ${seconds.join(" + ")} = ${r2(endAt - cut)}s, end card from ${r2(endAt)}s`);
 
-// ─── 3. The corners ─────────────────────────────────────
-
-/** The four corners of the green screen in one 1080x1920 frame, TL TR BL BR, or null. */
-const corners = (px) => {
-  let bx0 = W, by0 = H, bx1 = -1, by1 = -1;
-  for (let y = 0; y < H; y += 8)
-    for (let x = 0; x < W; x += 8)
-      if (green(px, (y * W + x) * 3)) (bx0 = Math.min(bx0, x)), (by0 = Math.min(by0, y)), (bx1 = Math.max(bx1, x)), (by1 = Math.max(by1, y));
-  if (bx1 < 0 || (bx1 - bx0) * (by1 - by0) < 0.01 * W * H) return null;
-  const best = [Infinity, Infinity, Infinity, Infinity];
-  const pts = [null, null, null, null];
-  for (let y = Math.max(0, by0 - 10); y < Math.min(H, by1 + 10); y++)
-    for (let x = Math.max(0, bx0 - 10); x < Math.min(W, bx1 + 10); x++) {
-      if (!green(px, (y * W + x) * 3)) continue;
-      const sc = [x + y, -x + y, x - y, -x - y];
-      for (let c = 0; c < 4; c++) if (sc[c] < best[c]) (best[c] = sc[c]), (pts[c] = [x, y]);
-    }
-  return pts;
-};
-const shotStart = cutFrame + 2;
-const shotEnd = Math.min(frac.length - 2, Math.floor(endAt * fps));
-const STEP = 2;
-const samples = [];
-await frames(W, H, `select='between(n,${shotStart},${shotEnd})*not(mod(n-${shotStart},${STEP}))'`, (k, px) => samples.push({ n: shotStart + k * STEP, c: corners(px) }));
-const lost = samples.filter((s) => !s.c);
-if (lost.length) die(`the green screen is not whole at ${lost.map((s) => `${r2(s.n / fps)}s`).slice(0, 5).join(", ")}: something covers it or the screen leaves the frame. Make the clip again with the device's screen in full view`);
-const median = (v) => [...v].sort((a, b) => a - b)[Math.floor(v.length / 2)];
-const still = [0, 1, 2, 3].map((c) => [median(samples.map((s) => s.c[c][0])), median(samples.map((s) => s.c[c][1]))]);
-const drift = Math.max(...samples.flatMap((s) => s.c.map((p, c) => Math.hypot(p[0] - still[c][0], p[1] - still[c][1]))));
-if (drift > 60) die(`the screen moves ${Math.round(drift)}px during the device shot: the camera must be still. Make the clip again`);
-const tracked = drift > 4;
-console.log(`corners: ${still.map((p) => p.join(",")).join("  ")}  (moves ${r2(drift)}px${tracked ? ", tracked per frame" : ""})`);
-
-// Pushed 8px out from the screen's middle, so no green edge is left.
-const cx = still.reduce((a, p) => a + p[0], 0) / 4;
-const cy = still.reduce((a, p) => a + p[1], 0) / 4;
-const grow = (p) => [p[0] + (p[0] < cx ? -8 : 8), p[1] + (p[1] < cy ? -8 : 8)];
-const NAMES = ["0", "1", "2", "3"];
-let quad;
-if (!tracked) quad = still.map(grow).flatMap((p, c) => [`x${NAMES[c]}=${p[0]}`, `y${NAMES[c]}=${p[1]}`]).join(":");
-else {
-  // Keyframes at each sample, linear between, as a per-frame expression of the screen's own frame count (30 fps from the cut).
-  const keys = samples.map((s) => ({ f: Math.max(0, (s.n / fps - cut) * 30), c: s.c.map(grow) }));
-  const expr = (c, axis) => {
-    let e = String(keys.at(-1).c[c][axis]);
-    for (let k = keys.length - 2; k >= 0; k--) {
-      const a = keys[k];
-      const b = keys[k + 1];
-      const va = a.c[c][axis];
-      const vb = b.c[c][axis];
-      e = `if(lt(in,${b.f.toFixed(2)}),${va}+(${vb - va})*(in-${a.f.toFixed(2)})/${(b.f - a.f).toFixed(2)},${e})`;
-    }
-    return `if(lt(in,${keys[0].f.toFixed(2)}),${keys[0].c[c][axis]},${e})`;
-  };
-  quad = [0, 1, 2, 3].flatMap((c) => [`x${c}='${expr(c, 0)}'`, `y${c}='${expr(c, 1)}'`]).join(":") + ":eval=frame";
-}
-
 // ─── Renders from the kit ───────────────────────────────
 
 const props = (name, value) => {
@@ -313,35 +222,70 @@ const SHAPES = [
   { name: "portrait", w: 1080, h: 1350 },
 ];
 for (const s of SHAPES) remotion(["render", "End", join(out, `end-${s.name}.mp4`), "--codec=h264", "--crf=16", `--props=${props(`end-${s.name}-props`, { w: s.w, h: s.h, seconds: endSeconds + 0.2 })}`]);
-const labelFile = join(out, "label.png");
-remotion(["still", "Label", labelFile, `--props=${props("label-props", { text: script.label ?? "AI-generated presenter" })}`]);
 
-// ─── 4. The composite ───────────────────────────────────
+// ─── 2. The composite ───────────────────────────────────
 
 const shot = r2(endAt - cut);
-// 4:5 keeps the face on the presenter shot and the device on the device shot.
+const tail = r2(dur - endAt);
+// The face's square in the 1080x1920 selfie, for the bubble.
+const face = { x: 0.5, y: 0.33, size: 0.62, ...(script.face ?? {}) };
+const fs = Math.round(W * face.size);
+const fx = Math.round(Math.min(W - fs, Math.max(0, W * face.x - fs / 2)));
+const fy = Math.round(Math.min(H - fs, Math.max(0, H * face.y - fs / 2)));
+// 4:5 keeps the face on the hook.
 const presenterY = Math.round((H - 1350) * (script.presenterCrop ?? 0.3));
-const deviceY = Math.round(Math.min(H - 1350, Math.max(0, cy - 1350 / 2 + 80)));
+const SCREEN_SIZE = device === "phone" ? { w: 1170, h: 2532 } : { w: 1600, h: 1000 };
+const even = (n) => Math.round(n / 2) * 2;
+
+/** Where the screen and the bubble sit in a shape: the screen big, the bubble bottom left above the platform's own buttons. */
+const layout = (s) => {
+  const safe = s.h === 1920 ? 230 : 70;
+  if (device === "phone") {
+    const sh = even(s.h - 2 * safe);
+    const sw = even((sh * SCREEN_SIZE.w) / SCREEN_SIZE.h);
+    const d = even(Math.min(s.w * 0.36, s.w - sw - 40 + sw * 0.35));
+    return { sw, sh, sx: s.w - sw - 50, sy: safe, d, bx: 40, by: s.h - safe - d };
+  }
+  const sw = even(s.w - 80);
+  const sh = even((sw * SCREEN_SIZE.h) / SCREEN_SIZE.w);
+  const d = even(s.w * (s.h === 1920 ? 0.37 : 0.3));
+  const by = s.h - safe - d - 10;
+  const sy = Math.max(safe, Math.round(Math.min((s.h - sh) / 2 - s.h * 0.08, by - 40 - sh)));
+  return { sw, sh, sx: 40, sy, d, bx: 44, by };
+};
+
+/** A white circle on transparent, d across: the bubble's mask, and its ring. */
+const circle = (file, d) => run("ffmpeg", ["-v", "error", "-y", "-f", "lavfi", "-i", `color=c=white:s=${d}x${d}`, "-vf", `format=rgba,geq=r=255:g=255:b=255:a='255*lt(hypot(X-${d / 2},Y-${d / 2}),${d / 2 - 1})'`, "-frames:v", "1", file]);
+
 const made = [];
 for (const s of SHAPES) {
-  const crop = s.h === H ? "" : `,crop=${W}:${s.h}:0:'if(lt(t,${cut.toFixed(3)}),${presenterY},${deviceY})'`;
+  const L = layout(s);
+  const RING = 10;
+  const mask = join(out, `mask-${s.name}.png`);
+  const ring = join(out, `ring-${s.name}.png`);
+  circle(mask, L.d);
+  circle(ring, L.d + 2 * RING);
+  const crop = s.h === H ? "" : `,crop=${W}:${s.h}:0:${presenterY}`;
   const graph = [
-    `[0:v]fps=30,scale=${W}:${H}:flags=lanczos,unsharp=5:5:0.45:5:5:0,setsar=1,split[c1][c2]`,
-    `[c1]trim=0:${cut.toFixed(3)},setpts=PTS-STARTPTS,format=yuv420p[pre]`,
-    `[c2]trim=${cut.toFixed(3)}:${endAt.toFixed(3)},setpts=PTS-STARTPTS,format=rgba[bg]`,
-    // The screen: a transparent 4px pad, so its edges come out soft; onto the quad; a touch soft and dark, like a lit display filmed.
-    `[1:v]fps=30,scale=${W - 8}:${H - 8}:flags=lanczos,setsar=1,format=rgba,pad=${W}:${H}:4:4:color=0x00000000,perspective=${quad}:sense=destination,gblur=sigma=0.9,eq=brightness=-0.03:saturation=0.94,split[sharp][g0]`,
-    `[g0]gblur=sigma=18,colorchannelmixer=aa=0.35[glow]`,
-    `[bg][glow]overlay=0:0[b1]`,
-    `[b1][sharp]overlay=0:0,format=yuv420p,trim=0:${shot},setpts=PTS-STARTPTS[dev]`,
-    `[pre][dev]concat=n=2:v=1:a=0,noise=alls=5:allf=t${crop}[body]`,
-    `[body][3:v]overlay=36:48,setsar=1[lab]`,
-    `[2:v]fps=30,scale=${W}:${s.h},setsar=1,format=yuv420p,trim=0:${endSeconds},setpts=PTS-STARTPTS[end]`,
-    `[lab][end]concat=n=2:v=1:a=0,tpad=stop_mode=clone:stop_duration=0.5[v]`,
+    `[0:v]fps=30,scale=${W}:${H}:flags=lanczos,setsar=1,split[c1][c2]`,
+    `[c1]trim=0:${cut},setpts=PTS-STARTPTS${crop},format=yuv420p[pre]`,
+    // The bubble: the face cropped square from the same take, so the lips stay in sync with the voice.
+    `[c2]trim=${cut},setpts=PTS-STARTPTS,crop=${fs}:${fs}:${fx}:${fy},scale=${L.d}:${L.d}:flags=lanczos,format=rgba[f0]`,
+    `[3:v]format=rgba,alphaextract,scale=${L.d}:${L.d}[m]`,
+    `[f0][m]alphamerge[face]`,
+    // The screens on a dark ground, then the end card, under the bubble.
+    `color=c=0x111111:s=${s.w}x${s.h}:r=30:d=${shot},format=yuv420p[bg]`,
+    `[1:v]fps=30,scale=${L.sw}:${L.sh}:flags=lanczos,setsar=1,trim=0:${shot},setpts=PTS-STARTPTS[scr]`,
+    `[bg][scr]overlay=${L.sx}:${L.sy}:eof_action=repeat,format=yuv420p[mid]`,
+    `[2:v]fps=30,scale=${s.w}:${s.h},setsar=1,format=yuv420p,trim=0:${tail},setpts=PTS-STARTPTS[end]`,
+    `[mid][end]concat=n=2:v=1:a=0[body]`,
+    `[body][4:v]overlay=${L.bx - RING}:${L.by - RING}[ringed]`,
+    `[ringed][face]overlay=${L.bx}:${L.by}:eof_action=pass,format=yuv420p[post]`,
+    `[pre][post]concat=n=2:v=1:a=0,noise=alls=3:allf=t,tpad=stop_mode=clone:stop_duration=0.5[v]`,
     `[0:a]aresample=48000,apad[a]`,
   ].join(";");
   const file = join(out, `ugc-video-${s.name}.mp4`);
-  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-i", labelFile, "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
+  run("ffmpeg", ["-v", "error", "-y", "-i", clip, "-i", screenFile, "-i", join(out, `end-${s.name}.mp4`), "-loop", "1", "-i", mask, "-loop", "1", "-i", ring, "-filter_complex", graph, "-map", "[v]", "-map", "[a]", "-t", dur.toFixed(3), "-c:v", "libx264", "-crf", "17", "-preset", "slow", "-pix_fmt", "yuv420p", "-c:a", "aac", "-b:a", "192k", "-movflags", "+faststart", file]);
   made.push(file);
   // ─── 5. The contact sheet: a frame every half second. ──
   const sheet = join(out, `ugc-sheet-${s.name}.png`);
@@ -349,7 +293,7 @@ for (const s of SHAPES) {
   run("ffmpeg", ["-v", "error", "-y", "-i", file, "-vf", `fps=2,scale=270:-1,tile=8x${Math.ceil(cells / 8)}`, "-frames:v", "1", sheet]);
   made.push(sheet);
 }
-writeFileSync(join(out, "ugc-timing.json"), JSON.stringify({ clip: resolve(clip), device, cut: r2(cut), lines: lines.map((l, i) => ({ text: l.text, s: r2(times[i].s), e: r2(times[i].e) })), seconds, endAt: r2(endAt), corners: still, drift: r2(drift), tracked }, null, 2));
+writeFileSync(join(out, "ugc-timing.json"), JSON.stringify({ clip: resolve(clip), device, cut, lines: lines.map((l, i) => ({ text: l.text, s: r2(times[i].s), e: r2(times[i].e) })), seconds, endAt: r2(endAt), face }, null, 2));
 
 const slug = String(video.product ?? "product").toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "") || "product";
 const desktop = join(homedir(), "Desktop");
@@ -358,4 +302,4 @@ if (dest) {
   mkdirSync(dest, { recursive: true });
   for (const f of made) copyFileSync(f, join(dest, f.split("/").pop()));
 }
-console.log(`\nThe ad is in ${dest ?? out}:\n${made.map((f) => `  ${f.split("/").pop()}`).join("\n")}\nLook at both sheets before anyone sees it: the screen on the device with no green edge, readable, the label on every presenter shot, the end card under the last line.`);
+console.log(`\nThe ad is in ${dest ?? out}:\n${made.map((f) => `  ${f.split("/").pop()}`).join("\n")}\nLook at both sheets before anyone sees it: the face whole and centred in the bubble, the screen readable, the end card under the last line.`);
