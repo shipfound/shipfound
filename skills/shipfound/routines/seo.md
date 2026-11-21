@@ -48,6 +48,7 @@ Input, optional: `read` (step 2 only), `crawl` (step 3 only), `programmatic` (st
     - evidence: an answer page with the product's own facts for that question;
     - entity: the pages in step 10, and the entity checks in `site_fixes`.
 12. **Bing** (`bing`): the same rewrite as step 5, for Bing's search.
+    **Directories** (`directories`), only in a product's first sets, once: the first directories left, in `detail` (name, host, submit `url`, `citedForYou`: how often the AI answers to this product's buyer questions cite it). Fill each in the founder's Chrome as routines/list.md says, from step 3; the founder presses submit. Record each with `module` LISTINGS, the action's `record` as `meta` with `site` set to the directory's host. Once the first batch is done, the set leaves directories out and grow offers them as a move like any other.
 13. **From this week's studies** (`study`): at most two, each with its `key`, `command` and `link`.
     - An idea (`IDEA:...`): run the ideas routine with its key (routines/ideas.md, from step 5). A feature people ask for is planned and built only after the founder's yes; one the product already does is said on the site.
     - A pattern from products a step ahead (`RESEARCH:...`): the routine its `command` names, with `meta.research` set to its key on every record (routines/research.md, step 6).
