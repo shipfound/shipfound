@@ -101,13 +101,31 @@ Payments need no code. When goals are listed, Shipfound proposes a soft `payment
 
 The defaults are guesses: `signup` waits for an `sf('signup')` most sites never send, and `payment` counts a return from any checkout to any page. Once tracking is live, read the repo and redefine both, and add `signin`, with `goals_save` `{ name: "signup" | "payment" | "signin", ... }` (same name: redefined). Add nothing to the site.
 
-- **Signup.** Find where an account is created: the signup page, its form, the API call, and where the browser goes after it succeeds. Pick the first that holds:
+#### Every way in
+
+A signup goal that counts one way in misses the rest. One site counted only its email form while most people signed up with GitHub and Google. Another counted the form sent on /register, which also fired when an existing email was sent again. So list every way first, then map the goals.
+
+Before you save a goal in the signup or paying stage, find in the code, each with file:line:
+
+- [ ] The call that creates the user. Grep for it (`createUser`, `prisma.user.create`, `insert into users`, `auth.signUp`, the auth library's create-user hook). Every caller of it is a way in.
+- [ ] Every OAuth callback: Google, GitHub, Apple, Microsoft, Discord. Where does a new account land, and is it the same page a returning one lands on?
+- [ ] Invites and team joins: an accepted invite creates an account too.
+- [ ] Magic links and one-time codes.
+- [ ] Anything else that makes an account: an API, a CLI, a mobile app, an import.
+- [ ] Every way a payment is confirmed: the hosted checkout and where the buyer comes back, a plan change billed in place, the payment webhook, an app store purchase.
+- [ ] For each way: what the browser sees after it succeeds, and whether that also happens when it fails or for someone who already has an account.
+
+Then pass the list to `goals_save` as `ways`, each `{ way, where: "file:line", covered }`. `covered` is the goal that counts that way, or `"server"` when the product's server sends the event (routines/users.md). Pass `alsoCounts` too: what else the goal can count besides a new account or a payment, or `"nothing"`. The save is refused while any way has nothing counting it, and the reply names the way. When a way needs a goal that does not exist yet, save it in the same call with `alsoSave`.
+
+A server event is exact: it fires once, after the account is really created. When the site's server sends no events yet, the reply says to run the users routine. Offer it to the founder in one line, above all when a goal also counts what is not a new account.
+
+- **Signup.** For each way in, find where the browser goes after it succeeds. Pick the first that holds:
   1. The site already calls `sf(...)` on success: `EVENT` with that name.
-  2. Only new accounts reach a page (`/welcome`, `/onboarding`, `/verify-email`, `/check-your-email`): `PAGEVIEW` on it. Not a page that logins also reach, such as `/app` or `/dashboard`.
-  3. Otherwise the form sent on the signup page, which t.js reports as `form_submit` with that page's path: `EVENT` `form_submit@/register` (the real path from the code, with `*` for locale prefixes). It also counts rejected submits, so say that in the note.
-  Signup only through OAuth buttons (Google, GitHub) has no page or form of its own: say so and leave the goal as it is.
+  2. Only new accounts reach a page (`/welcome`, `/onboarding`, `/verify-email`, `/check-your-email`, the page a new OAuth account lands on such as `/auth/social/new`): `PAGEVIEW` on it. Not a page that logins also reach, such as `/app` or `/dashboard`.
+  3. Otherwise the form sent on the signup page, which t.js reports as `form_submit` with that page's path: `EVENT` `form_submit@/register` (the real path from the code, with `*` for locale prefixes). It also counts rejected submits, and an existing email sent again when the API answers the same either way: say so in `alsoCounts`.
+  Each way can be its own goal in the signup stage; the stage counts a visit once. An OAuth way with no page that only new accounts reach cannot be seen from the browser: cover it with `"server"` (the users routine) and say so.
 - **Sign-in.** If the site has a login, add a soft `signin` goal the same way, from the login code: an `sf(...)` call on success, else the login form sent on its page (`form_submit@/login`, the real path). It counts the sessions that signed in, so returning users show next to new ones. A rejected password counts too; say that in the note. Never make it the headline: it is not a conversion. Login only through OAuth buttons: say so and add nothing.
-- **Payment.** Find the checkout call (Stripe `success_url`, Dodo `return_url`, Paddle `successUrl`, Lemon Squeezy `redirect_url`, Polar `success_url`) and the path the buyer comes back to. `CHECKOUT` with that path (`/billing*`); the query string is not stored, so match the path only. A success page only buyers reach (`/thank-you`, `/checkout/success`) is surer: `PAGEVIEW` on it. A plan change that bills in place, with no checkout page, is not seen from outside: say so.
+- **Payment.** Find the checkout call (Stripe `success_url`, Dodo `return_url`, Paddle `successUrl`, Lemon Squeezy `redirect_url`, Polar `success_url`) and the path the buyer comes back to. `CHECKOUT` with that path (`/billing*`); the query string is not stored, so match the path only. A success page only buyers reach (`/thank-you`, `/checkout/success`) is surer: `PAGEVIEW` on it. A plan change that bills in place, with no checkout page, is not seen from outside: cover it with `"server"` (the `paid` event from the webhook, routines/users.md) and say so. Save the payment goal with `ways` too.
 - Put the evidence in `note`: the file and line, and what happens there.
 - `payment` may already be hard. Redefining it puts it back to soft, so show the founder the new definition and ask first.
 
@@ -122,7 +140,7 @@ The funnel made at install (visit, engaged, CTA click, signup, activated, trial,
 3. **Save each path** with `funnels_save` `{ name, steps, strict?, windowDays? }`, two to eight steps, ending at the signup or the payment:
    - Name it by where it starts and ends: "Home to signup", "Pricing to payment", "Free tool to signup", "Articles to signup".
    - A step is a goal's definition: `PAGEVIEW` on a path (`/tools/*` with a wildcard), `EVENT` (`form_submit@/register`), `CTA` (the button's `data-sf`), `CHECKOUT` for a payment.
-   - Put other ways that count as the same step in `any`: signing up with the form or with GitHub or Google (the page a new social account lands on), two buttons that both start a signup.
+   - Put other ways that count as the same step in `any`: signing up with the form or with GitHub or Google (the page a new social account lands on), two buttons that both start a signup. A signup or payment step holds every way in from `goals_save`; the reply names any it leaves out.
    - Put where you found each step in `evidence`: `app/register/page.tsx:39`.
    - Keep the steps a visitor really passes in order, and the window as short as the path: a day for a signup that happens in one visit, longer for a trial that ends in a payment.
    - A path that goes through two ways at its start (a button that opens the signup page, a line to paste into a coding agent) is two funnels, so each way's loss shows.
