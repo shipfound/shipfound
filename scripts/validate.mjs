@@ -96,6 +96,7 @@ const TOOLS = {
   shipped: 0,
   tracking_install: 0,
   tracking_check: 0,
+  tracking_repo_check: 0,
   analytics: 0,
   users_activation: 0,
   payments_connect: 0,
